@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">欢迎使用蓝色手柄</string>
+    <string name="app_name">蓝色手柄</string>
+    <string name="connect_type">接入方式</string>
+    <string name="menu_handle">手柄</string> 
+    <string name="menu_ppt">PPT</string> 
+    <string name="menu_player">千千静听</string>
+    <string name="menu_donate">捐赠</string>
+    <string name="menu_exit">返回</string>
+    
+    <string name="title_setting_demo_preference">设置</string>  
+    <string name="summary_setting_demo_preference">在这里你可以对蓝色手柄进行配置</string>  
+    <string name="title_check_box">是否启用按键震动</string>  
+    <string name="summary_check_box">启动按键震动后，点击手柄中的按键将会有震动提示</string>  
+    <string name="title_list_preference">连接方式</string>  
+    <string name="summary_list_preference">在这里可以选择手柄接入电脑的方式</string>  
+    <string name="dialog_title_list_preference">接入方式</string>  
+      
+      
+    <string name="title_edit_text_preference">title_edit_text_preference</string>  
+    <string name="summary_edit_text_preference">summary_edit_text_preference</string>  
+    <string name="dialog_title_edit_text_preference">dialog_title_edit_text_preference</string>  
+    <string name="common_settings">普通设置</string>  
+    <string name="advanced_settings">高级设置</string>  
+    <string name="media_volume_title">media_volume_title</string>  
+    <string name="media_volume_summary">media_volume_summary</string>  
+    <string name="seek_bar_preference_title">seek_bar_preference</string>  
+</resources>

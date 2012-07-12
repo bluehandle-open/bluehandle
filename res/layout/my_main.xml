@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--  需要设置命名空间  :umadsdk  --> 
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:umadsdk="http://schemas.android.com/apk/res/com.whyun.bluetooth" 
+    android:orientation="vertical" 
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent">
+ 
+	<net.youmi.android.AdView 
+	    android:id="@+id/adView"   
+	    android:layout_width="fill_parent"   
+	    android:layout_height="wrap_content" 
+	    umadsdk:textColor="#ffffff" 
+	    umadsdk:backgroundColor="#4076AA" 
+		umadsdk:backgroundTransparent="155" />   
+	<LinearLayout
+	  xmlns:android="http://schemas.android.com/apk/res/android"
+	  android:gravity="center"
+	  android:layout_width="fill_parent"
+	  android:layout_height="fill_parent">
+	  <ImageView android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:background="@drawable/start" android:id="@+id/imgBtn" />
+	</LinearLayout>
+	
+	<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/footer"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    >
+    
+	    <ImageButton
+	        android:id="@+id/juanzhu"
+	        android:focusable="true"
+	        android:layout_alignParentLeft="true"
+	        android:background="@drawable/bottom_juanzhu_selector"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        >
+	    </ImageButton>
+	    <ImageButton
+	        android:id="@+id/share"
+	        android:focusable="true"
+	        android:layout_toRightOf="@id/juanzhu"
+	        android:background="@drawable/bottom_share_selector"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        >
+	    </ImageButton>
+	    <ImageButton
+	        android:id="@+id/pcdownload"
+	        android:focusable="true"
+	        android:layout_toRightOf="@id/share"
+	        android:background="@drawable/bottom_pcdownload_selector"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1.5"
+	        >
+	    </ImageButton>
+    	<ImageButton
+	        android:id="@+id/shezhi"
+	        android:focusable="true"
+	        android:layout_toRightOf="@id/pcdownload"
+	        android:background="@drawable/bottom_shezhi_selector"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        >
+	    </ImageButton>
+	    <ImageButton
+	        android:id="@+id/tuichu"
+	        android:focusable="true"
+	        android:layout_toRightOf="@id/shezhi"
+	        android:background="@drawable/bottom_tuichu_selector"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        >
+	    </ImageButton>
+	</LinearLayout>
+ 
+</RelativeLayout>  

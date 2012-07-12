@@ -1,0 +1,107 @@
+body {
+	height:100%;
+	margin:0;
+	padding:0;
+}
+#contentBody {
+	width:702.5px;
+	height:419px;
+	margin-left:auto;
+	margin-right:auto;
+	position:relative;
+}
+
+#contentBody img {
+	width:100%;
+	height:100%;
+}
+
+#contentBody div {
+	position:absolute;
+}
+
+footer {
+	position:absolute;
+	text-align:center;
+	bottom:0;
+	width:100%;
+	height:10px;
+}
+
+.test {
+	background-color:#0ff;
+}
+
+.button {
+	position:absolute;	
+	cursor:pointer;
+}
+
+.clicked {
+	opacity:0.45;
+	background-color:#996600;
+}
+
+#left {
+	left:2.8%;top:41.06%;width:7.23%;height:19.32%;
+}
+ 
+ #top { 
+	left:14.92%;
+	top:15.46%;
+	width:9.32%;
+	height:14.98%;
+ }
+
+ #right {
+	left:29.84%;
+	top:41.06%;
+	width:7.23%;
+	height:19.32%;
+ }
+
+ #bottom {
+	left:14.92%;
+	top:70.53%;
+	width:9.32%;
+	height:14.98%;
+ } 
+
+ #select {
+	left:36.36%;
+	top:81.2%;
+	width:11.42%;
+	height:13.53%;
+ }
+
+ #start {
+	left:49.65%;
+	top:81.2%;
+	width:11.42%;
+	height:13.53%;
+ }
+
+ .function {
+	width:9.56%;
+	height:21.26%;
+ }
+
+ #aBtn {
+	left:64.34%;
+	top:38.16%;
+ }
+
+ #bBtn {
+	left:75.99%;
+	top:66.18%;
+ }
+
+ #xBtn {
+	left:87.41%;
+	top:38.16%;
+ }
+
+  #yBtn {
+	left:75.99%;
+	top:11.59%;
+ }

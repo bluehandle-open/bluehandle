@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+	android:key="setting_demo_preference" android:title="@string/title_setting_demo_preference"
+	android:summary="@string/summary_setting_demo_preference">
+	
+	<PreferenceCategory xmlns:android="http://schemas.android.com/apk/res/android"
+		android:key="common_settings" android:title="@string/common_settings">
+		
+		<CheckBoxPreference android:key="use_shake"
+			android:title="@string/title_check_box" android:summary="@string/summary_check_box"
+			 />
+		<ListPreference android:key="connect_type" android:numeric="integer"
+			android:title="@string/title_list_preference" android:summary="@string/summary_list_preference"
+			android:entries="@array/connects" android:entryValues="@array/connects_value"
+			android:dialogTitle="@string/dialog_title_list_preference" />
+		<Preference android:key="wifi_setting" android:title="网络设置"  
+        	android:summary="点击进入系统wifi和蓝牙设置界面">
+    	</Preference> 
+			
+	</PreferenceCategory>
+<!-- 
+	<PreferenceCategory xmlns:android="http://schemas.android.com/apk/res/android"
+		android:key="advanced_settings" android:title="@string/advanced_settings">
+
+		<VolumePreference android:key="media_volume"
+			android:title="@string/media_volume_title" android:summary="@string/media_volume_summary"
+			android:dialogTitle="@string/media_volume_title" android:persistent="false"
+			android:order="3" android:streamType="music" />
+		<SeekBarPreference android:key="seek_bar_preference"
+			android:title="@string/seek_bar_preference_title"></SeekBarPreference>
+
+	</PreferenceCategory>
+ -->	
+</PreferenceScreen>
