@@ -18,17 +18,20 @@
     	</Preference> 
 			
 	</PreferenceCategory>
-<!-- 
+
 	<PreferenceCategory xmlns:android="http://schemas.android.com/apk/res/android"
 		android:key="advanced_settings" android:title="@string/advanced_settings">
-
+		<!-- 
 		<VolumePreference android:key="media_volume"
 			android:title="@string/media_volume_title" android:summary="@string/media_volume_summary"
 			android:dialogTitle="@string/media_volume_title" android:persistent="false"
 			android:order="3" android:streamType="music" />
 		<SeekBarPreference android:key="seek_bar_preference"
 			android:title="@string/seek_bar_preference_title"></SeekBarPreference>
-
+		-->
+		<Preference android:key="remove_ad" android:title="去除广告"  
+        	android:summary="去除广告您需要花费100个积分">
+    	</Preference> 
 	</PreferenceCategory>
- -->	
+	
 </PreferenceScreen>

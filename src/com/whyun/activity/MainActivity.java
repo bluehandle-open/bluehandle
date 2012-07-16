@@ -3,7 +3,8 @@ package com.whyun.activity;
 import java.io.IOException;
 
 import net.youmi.android.AdManager;
-//import net.youmi.android.appoffers.YoumiOffersManager;
+import net.youmi.android.AdView;
+import net.youmi.android.appoffers.YoumiOffersManager;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -22,8 +23,10 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager.LayoutParams;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.whyun.IBlueToothConst;
 import com.whyun.activity.component.ActivityUtil;
@@ -51,6 +54,7 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 	private MyLog logger = MyLog.getLogger(MainActivity.class);
 	
 	private Activity activityNow = this;
+	private SharedPreferences settings;
 	
 	/** 服务器线程监听句柄. */
 	private Handler myHandler = new Handler() {
@@ -103,7 +107,7 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.my_main);
 		
-//		YoumiOffersManager.init(MainActivity.this, "0874deea1c82005e", "8eef5acdfa4fdb3a");
+		YoumiOffersManager.init(MainActivity.this, "0874deea1c82005e", "8eef5acdfa4fdb3a");
 		// 应用Id 应用密码 广告请求间隔(s) 测试模式
 		AdManager.init(MainActivity.this,"0874deea1c82005e", "8eef5acdfa4fdb3a", 30, false);
 
@@ -124,12 +128,33 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 		
 		exit = (ImageButton)findViewById(EXIT_ID);
 		exit.setOnClickListener(new ClickEvent());
+		settings = PreferenceManager.getDefaultSharedPreferences(this);
 		
-		initConnectType();
+		initConnectType();		
+	}
+	
+	
+	
+	private void showAd() {
+		LinearLayout head = (LinearLayout)findViewById(R.id.head);
+		if (settings.getBoolean(IMyPreference.REMOVE_AD, false)) {
+			head.removeAllViews();
+			logger.debug("remove ad already");
+		} else {
+	        LinearLayout layout=new LinearLayout(this);   
+	        layout.setOrientation(LinearLayout.VERTICAL);   
+	        //layout.setBackgroundResource(R.drawable.bg);   
+	        //初始化广告视图，可以使用其他的构造函数设置广告视图的背景色、透明度及字体颜色  
+	        AdView adView = new AdView(this);   
+	        LayoutParams params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);       
+	        layout.addView(adView, params);
+			
+			head.addView(layout);
+		}
 	}
 	
 	private void initConnectType() {
-		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+		
 		String typeNow = settings.getString(IMyPreference.CONNECT_TYPE,"0");
 		logger.info("typeNow:" + typeNow);
 		ConnectSetting.getInstance().setConnectType(Integer.valueOf(typeNow));
@@ -228,6 +253,7 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		showAd();
 	}
 	
 	private void bindService() {

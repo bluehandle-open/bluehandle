@@ -114,7 +114,7 @@ containing a value of this type.
         public static final int xinlang=0x7f020043;
     }
     public static final class id {
-        public static final int TextViewInfo=0x7f070011;
+        public static final int TextViewInfo=0x7f070012;
         public static final int adView=0x7f070000;
         public static final int btnA=0x7f070006;
         public static final int btnB=0x7f070007;
@@ -126,16 +126,17 @@ containing a value of this type.
         public static final int btnUp=0x7f070001;
         public static final int btnX=0x7f070005;
         public static final int btnY=0x7f070008;
-        public static final int imageView1=0x7f070013;
-        public static final int imgBtn=0x7f07000c;
-        public static final int juanzhu=0x7f07000d;
-        public static final int pcdownload=0x7f07000e;
-        public static final int progressBar1=0x7f070012;
+        public static final int head=0x7f07000c;
+        public static final int imageView1=0x7f070014;
+        public static final int imgBtn=0x7f07000d;
+        public static final int juanzhu=0x7f07000e;
+        public static final int pcdownload=0x7f07000f;
+        public static final int progressBar1=0x7f070013;
         public static final int share=0x7f07000b;
-        public static final int shezhi=0x7f07000f;
-        public static final int textView1=0x7f070014;
-        public static final int tuichu=0x7f070010;
-        public static final int webview=0x7f070015;
+        public static final int shezhi=0x7f070010;
+        public static final int textView1=0x7f070015;
+        public static final int tuichu=0x7f070011;
+        public static final int webview=0x7f070016;
     }
     public static final class layout {
         public static final int ad=0x7f030000;

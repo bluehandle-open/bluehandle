@@ -49,5 +49,6 @@ public interface IBlueToothConst {
 	public static final String URL_DOWNLOAD = "http://whyun.com/sub/0/download.php";
 	public static final String SAVE_FILE_NAME = "bule_handle_pc.7z";
 	public static final String SAVE_URL_FILE = "download.txt";
+	public static final int REMOVE_AD_COINS = 50;
 	
 }
