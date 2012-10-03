@@ -1,6 +1,10 @@
 package com.whyun.message.key;
 
-public interface KeyMap {
+import android.annotation.SuppressLint;
+import java.util.HashMap;
+import java.util.Map;
+
+public final class KeyMap {
 	public static final int KeyLButton = 1;//鼠标左键
 	public static final int KeyRButton = 2;//鼠标右键
 	public static final int KeyCancel = 3;//CANCEL
@@ -11,7 +15,7 @@ public interface KeyMap {
 	public static final int KeyReturn = 13;//ENTER
 	public static final int KeyShift = 16;//SHIFT
 	public static final int KeyControl = 17;//CTRL
-	public static final int KeyMenu = 18;//菜单键
+	public static final int KeyAlt = 18;//菜单键
 	public static final int KeyPause = 19;//PAUSE
 	public static final int KeyCapital = 20;// CAPS LOCK
 	public static final int KeyEscape = 27;//ESC
@@ -28,10 +32,16 @@ public interface KeyMap {
 	public static final int KeyPrint = 42;// PRINT SCREEN
 	public static final int KeyExecute = 43;//EXECUTE
 	public static final int KeySnapshot= 44 ;// SNAP SHOT
-	public static final int KeyInser = 45;//INS
-	public static final int KeyDelete = 46;//DEL
+	public static final int KeyInser = 155;//INS
+	public static final int KeyDelete = 127;//DEL
 	public static final int KeyHelp = 47;//HELP
 	public static final int KeyNumlock = 144; // NUMLOCK
+	public static final int KeyMaoHao = 59;//冒号------
+	public static final int KeySmaller = 60;//<----
+	public static final int KeyEqual = 61;//=------
+	public static final int KeyBigger = 62;//>
+	public static final int KeyQuestion = 63;//?-----
+	public static final int KeyAt = 64;//@
 	public static final int KeyA = 65;//A
 	public static final int KeyB = 66;//B
 	public static final int KeyC = 67;//C
@@ -80,7 +90,7 @@ public interface KeyMap {
 	public static final int KeyNumpad9 = 105;//9
 	public static final int KeyMultiply = 106;//乘号(*)
 	public static final int KeyAdd = 107;//加号(+)
-	public static final int KeySeparator = 108;//ENTER（在数字小键盘上）
+	public static final int KeyVertical = 108;//|
 	public static final int KeySubtract = 109;//减号(-)
 	public static final int KeyDecimal = 110;//小数点(.)
 	public static final int KeyDivide = 111;//除号(/)
@@ -100,5 +110,131 @@ public interface KeyMap {
 	public static final int KeyF14 = 125;//F14
 	public static final int KeyF15 = 126;//F15
 	public static final int KeyF16 = 127;//F16
+	public static final int KeyWave = 192;//~
+	public static final int KeyReduce = 45;//-
+	
+	public static final HashMap<String,Integer> KEY_MAP 
+		= new HashMap<String,Integer>(){
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+			{
+				put ("lButton",KeyLButton);
+				put ("rButton",KeyRButton);
+				put ("cancel",KeyCancel);
+				put ("mButton",KeyMButton);
+				put ("Backspace",KeyBack);
+				put ("Tab",KeyTab);
+				put ("clear",KeyClear);
+				put ("Enter",KeyReturn);
+				put ("shift",KeyShift);
+				put (" Ctrl ",KeyControl);
+				put (" Alt ",KeyAlt);
+				put ("pause",KeyPause);
+				put ("CapsLock",KeyCapital);
+				put ("escape",KeyEscape);
+				put ("空格",KeySpace);
+				put ("PgUp",KeyPageUp);
+				put ("PgDn",KeyPageDown);
+				put (" End ",KeyEnd);
+				put ("Home",KeyHome);
+				put ("向左",KeyLeft);
+				put ("向上",KeyUp);
+				put ("向右",KeyRight);
+				put ("向下",KeyDown);
+				put ("select",KeySelect);
+				put ("print",KeyPrint);
+				put ("execute",KeyExecute);
+				put ("Insert",KeyInser);
+				put ("Delete",KeyDelete);
+				put ("help",KeyHelp);
+				put ("numlock",KeyNumlock);
+				put(";",KeyMaoHao);
+				put("&#060;",KeySmaller);
+				put("=",KeyEqual);
+				put(">",KeyBigger);
+				put ("A",KeyA);
+				put ("B",KeyB);
+				put ("C",KeyC);
+				put ("D",KeyD);
+				put ("E",KeyE);
+				put ("F",KeyF);
+				put ("G",KeyG);
+				put ("H",KeyH);
+				put ("I",KeyI);
+				put ("J",KeyJ);
+				put ("K",KeyK);
+				put ("L",KeyL);
+				put ("M",KeyM);
+				put ("N",KeyN);
+				put ("O",KeyO);
+				put ("P",KeyP);
+				put ("Q",KeyQ);
+				put ("R",KeyR);
+				put ("S",KeyS);
+				put ("T",KeyT);
+				put ("U",KeyU);
+				put ("V",KeyV);
+				put ("W",KeyW);
+				put ("X",KeyX);
+				put ("Y",KeyY);
+				put ("Z",KeyZ);
+				put ("0",Key0);
+				put ("1",Key1);
+				put ("2",Key2);
+				put ("3",Key3);
+				put ("4",Key4);
+				put ("5",Key5);
+				put ("6",Key6);
+				put ("7",Key7);
+				put ("8",Key8);
+				put ("9",Key9);
+				put ("numpad0",KeyNumpad0);
+				put ("numpad1",KeyNumpad1);
+				put ("numpad2",KeyNumpad2);
+				put ("numpad3",KeyNumpad3);
+				put ("numpad4",KeyNumpad4);
+				put ("numpad5",KeyNumpad5);
+				put ("numpad6",KeyNumpad6);
+				put ("numpad7",KeyNumpad7);
+				put ("numpad8",KeyNumpad8);
+				put ("numpad9",KeyNumpad9);
+				put ("multiply",KeyMultiply);
+				put ("add",KeyAdd);
+				put ("|",KeyVertical);
+				put ("-",KeySubtract);
+				put ("decimal",KeyDecimal);
+				put ("divide",KeyDivide);
+				put ("F1",KeyF1);
+				put ("F2",KeyF2);
+				put ("F3",KeyF3);
+				put ("F4",KeyF4);
+				put ("F5",KeyF5);
+				put ("F6",KeyF6);
+				put ("F7",KeyF7);
+				put ("F8",KeyF8);
+				put ("F9",KeyF9);
+				put ("F10",KeyF10);
+				put ("F11",KeyF11);
+				put ("F12",KeyF12);
+				put ("F13",KeyF13);
+				put ("F14",KeyF14);
+				put ("F15",KeyF15);
+				put ("F16",KeyF16);
+				put("~",KeyWave);
+				put("-",KeyReduce);
+				put("？",KeyQuestion);
+			}
+		
+	};	
+	@SuppressLint("UseSparseArrays")
+	public static final HashMap<Integer,String> CODE_2_KEY_MAP = new HashMap<Integer,String>();
+	
+	static {
+		 for (Map.Entry<String, Integer> element : KEY_MAP.entrySet()) {
+			 CODE_2_KEY_MAP.put(element.getValue(), element.getKey());
+		 }
+	}
 
 }
