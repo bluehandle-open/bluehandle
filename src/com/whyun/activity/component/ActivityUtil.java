@@ -1,5 +1,7 @@
 package com.whyun.activity.component;
 
+import net.youmi.android.appoffers.YoumiOffersManager;
+import net.youmi.android.appoffers.YoumiPointsManager;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -52,5 +54,48 @@ public final class ActivityUtil {
 		TextView tv=(TextView)toastRoot.findViewById(R.id.TextViewInfo);
 		tv.setText(txt);
 		toast.show();
+	}
+	
+	public static void notEnoughCoins(final Activity activity, int coinsNow) {
+		
+		new AlertDialog.Builder(activity)
+		.setMessage("你当前的积分不足(当前积分："+coinsNow+")，点击确定将打开积分墙.")
+		.setTitle("积分不足")
+		.setNegativeButton("取消",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,
+							int which) {
+					}
+				})
+		.setPositiveButton("确定",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,
+							int whichButton) {
+						YoumiOffersManager.showOffers(activity,
+								YoumiOffersManager.TYPE_REWARD_OFFERS);
+					}
+				}).show();
+	}
+	
+	public static void confirmSpend(final Activity activity,final int neededCoins) {
+		new AlertDialog.Builder(activity)
+		.setMessage("当前操作要消费" + neededCoins + "个积分，"
+				+ "点击确定将会将其扣除.")
+		.setTitle("去除广告")
+		.setNegativeButton("取消",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,
+							int which) {
+					}
+				})
+		.setPositiveButton("确定",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,
+							int whichButton) {
+						YoumiPointsManager.spendPoints(activity,
+								neededCoins);
+						
+					}
+				}).show();
 	}
 }

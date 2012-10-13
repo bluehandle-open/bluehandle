@@ -100,5 +100,14 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        
+        <activity
+            android:name=".KeyListActivity"
+            android:screenOrientation="landscape">           
+        </activity>
+        <activity
+            android:name=".KeyAddActivity"
+            android:screenOrientation="landscape">            
+        </activity>
 	</application>	
 </manifest>

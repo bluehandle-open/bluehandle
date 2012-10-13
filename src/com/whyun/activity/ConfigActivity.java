@@ -123,6 +123,10 @@ public class ConfigActivity extends PreferenceActivity implements
 				}
 			}
 			
+		} else if ("manage_user_key".equals(preference.getKey())) {
+			Intent intent = new Intent();
+			intent.setClass(ConfigActivity.this, KeyListActivity.class);
+			startActivity(intent);
 		}
 		return true;
 	}

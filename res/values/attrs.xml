@@ -8,4 +8,7 @@
   <!--广告背景透明度[只对文字广告有效]，默认为 255，设置范围0-255  --> 
   <attr name="backgroundTransparent"  format="integer"/> 
  </declare-styleable> 
+ <declare-styleable name="MyButton">
+     <attr name = "keyname" format = "string" />       
+ </declare-styleable>  
 </resources> 

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="fill_parent"
+     android:layout_height="wrap_content">
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/head"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        <TextView android:text="按键名"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText android:id="@+id/keynameInput"
+            android:minWidth="200dip"
+           	android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+        <ImageView
+			android:src = "@drawable/up"
+			android:scaleType="centerInside"
+			android:layout_width = "48dip"
+			android:layout_height = "40dip" />
+		<ScrollView
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:id="@+id/keyboardUp" />
+	</LinearLayout>
+	<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+        <ImageView
+			android:src = "@drawable/down"
+			android:scaleType="centerInside"
+			android:layout_width = "40dip"
+			android:layout_height = "48dip" />
+		<ScrollView
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:id="@+id/keyboardDown" />
+	</LinearLayout>
+	<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+        <ImageView
+			android:src = "@drawable/left"
+			android:scaleType="centerInside"
+			android:layout_width = "40dip"
+			android:layout_height = "48dip" />
+		<ScrollView
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:id="@+id/keyboardLeft" />
+	</LinearLayout>
+	<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+        <ImageView
+			android:src = "@drawable/right"
+			android:scaleType="centerInside"
+			android:layout_width = "48dip"
+			android:layout_height = "40dip" />
+		<ScrollView
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:id="@+id/keyboardRight" />
+	</LinearLayout>
+	<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+        <ImageView
+			android:src = "@drawable/circle_a"
+			android:scaleType="centerInside"
+			android:layout_width = "40dip"
+			android:layout_height = "40dip" />
+		<ScrollView
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:id="@+id/keyboardA" />
+	</LinearLayout>
+	<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+        <ImageView
+			android:src = "@drawable/circle_b"
+			android:scaleType="centerInside"
+			android:layout_width = "40dip"
+			android:layout_height = "40dip" />
+		<ScrollView
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:id="@+id/keyboardB" />
+	</LinearLayout>
+	<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+        <ImageView
+			android:src = "@drawable/circle_x"
+			android:scaleType="centerInside"
+			android:layout_width = "40dip"
+			android:layout_height = "40dip" />
+		<ScrollView
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:id="@+id/keyboardX" />
+	</LinearLayout>
+	<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+        <ImageView
+			android:src = "@drawable/circle_y"
+			android:scaleType="centerInside"
+			android:layout_width = "40dip"
+			android:layout_height = "40dip" />
+		<ScrollView
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:id="@+id/keyboardY" />
+	</LinearLayout>
+	<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+        <ImageView
+			android:src = "@drawable/start_label"
+			android:layout_width = "wrap_content"
+			android:layout_height = "wrap_content" />
+		<ScrollView
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:id="@+id/keyboardStart" />
+	</LinearLayout>
+	<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+        <ImageView
+			android:src = "@drawable/select_label"
+			android:layout_width = "wrap_content"
+			android:layout_height = "wrap_content" />
+		<ScrollView
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:id="@+id/keyboardSelect" />
+	</LinearLayout>
+</LinearLayout>
+</ScrollView>

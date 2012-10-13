@@ -1,8 +1,9 @@
 package com.whyun.message.key;
 
-import android.annotation.SuppressLint;
 import java.util.HashMap;
 import java.util.Map;
+
+import android.annotation.SuppressLint;
 
 public final class KeyMap {
 	public static final int KeyLButton = 1;//鼠标左键
@@ -151,7 +152,7 @@ public final class KeyMap {
 				put ("help",KeyHelp);
 				put ("numlock",KeyNumlock);
 				put(";",KeyMaoHao);
-				put("&#060;",KeySmaller);
+				put("<",KeySmaller);
 				put("=",KeyEqual);
 				put(">",KeyBigger);
 				put ("A",KeyA);
@@ -228,6 +229,9 @@ public final class KeyMap {
 			}
 		
 	};	
+	/**
+	 * 键盘码到键盘名的映射
+	 * */
 	@SuppressLint("UseSparseArrays")
 	public static final HashMap<Integer,String> CODE_2_KEY_MAP = new HashMap<Integer,String>();
 	
@@ -236,5 +240,4 @@ public final class KeyMap {
 			 CODE_2_KEY_MAP.put(element.getValue(), element.getKey());
 		 }
 	}
-
 }

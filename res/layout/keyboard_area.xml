@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:keyboard="http://schemas.android.com/apk/res/com.whyun.bluetooth"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+    <LinearLayout
+	    android:layout_width="fill_parent"  
+	    android:layout_height="wrap_content">
+	    <TextView
+		android:id="@+id/firstKey"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:hint="第一个按钮"
+		android:layout_weight="1"
+		android:background="@drawable/circle_bg2"
+		/> 
+		<TextView
+		android:id="@+id/secondKey"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:hint="第二个按钮"
+		android:layout_weight="1"
+		android:background="@drawable/circle_bg2" />
+		<TextView
+		android:id="@+id/thirdKey"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:hint="第三个按钮"
+		android:layout_weight="1"
+		android:background="@drawable/circle_bg2" />
+	</LinearLayout>
+	<LinearLayout
+	    android:layout_width="fill_parent"  
+	    android:layout_height="wrap_content"
+	    android:id="@+id/keyboard"
+	     
+	    android:orientation="vertical"> 
+	    <LinearLayout
+		    android:layout_width="fill_parent"  
+		    android:layout_height="wrap_content" android:gravity="center">
+		    <Button android:text="关闭 " android:layout_width="80dip" android:id="@+id/closePanel"
+		         android:layout_height="wrap_content" android:padding="10dip" />
+			<Button android:text="清除 " android:layout_width="80dip" android:id="@+id/clearInput"
+			     android:layout_height="wrap_content" android:padding="10dip" /> 
+		</LinearLayout> 
+		<TableLayout
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" android:stretchColumns="*">
+	
+		    <TableRow
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content" >
+	        
+				<com.whyun.activity.component.MyButton keyboard:keyname="F1" android:text="F1"  android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton keyboard:keyname="F2" android:text="F2" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton keyboard:keyname="F3" android:text="F3" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton keyboard:keyname="F4" android:text="F4" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton keyboard:keyname="F5" android:text="F5" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton keyboard:keyname="F6" android:text="F6" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton keyboard:keyname="F7" android:text="F7" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton keyboard:keyname="F8" android:text="F8" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton keyboard:keyname="F9" android:text="F9" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton keyboard:keyname="F10" android:text="F10" android:padding="1dip" />            
+		    </TableRow>
+		    <TableRow>        
+				<com.whyun.activity.component.MyButton android:text="1" keyboard:keyname="1"  android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text="2" keyboard:keyname="2" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text="3" keyboard:keyname="3" android:padding="1dip" /> 
+	             <com.whyun.activity.component.MyButton android:text="4" keyboard:keyname="4" android:padding="1dip" /> 
+	             <com.whyun.activity.component.MyButton android:text="5" keyboard:keyname="5" android:padding="1dip" /> 
+	             <com.whyun.activity.component.MyButton android:text="6" keyboard:keyname="6" android:padding="1dip" /> 
+	             <com.whyun.activity.component.MyButton android:text="7" keyboard:keyname="7" android:padding="1dip" /> 
+	             <com.whyun.activity.component.MyButton android:text="8" keyboard:keyname="8" android:padding="1dip" /> 
+	             <com.whyun.activity.component.MyButton android:text="9" keyboard:keyname="9" android:padding="1dip" /> 
+	            <com.whyun.activity.component.MyButton android:text="0" keyboard:keyname="0" android:padding="1dip" />
+		            
+		    </TableRow>   
+		    <TableRow>        
+				<com.whyun.activity.component.MyButton android:text="Q" keyboard:keyname="Q"  android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text="W"  keyboard:keyname="W" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text="E" keyboard:keyname="E" android:padding="1dip" /> 
+	             <com.whyun.activity.component.MyButton android:text="R" keyboard:keyname="R" android:padding="1dip" /> 
+	             <com.whyun.activity.component.MyButton android:text="T" keyboard:keyname="T" android:padding="1dip" /> 
+	             <com.whyun.activity.component.MyButton android:text="Y" keyboard:keyname="Y" android:padding="1dip" /> 
+	             <com.whyun.activity.component.MyButton android:text="U" keyboard:keyname="U" android:padding="1dip" /> 
+	             <com.whyun.activity.component.MyButton android:text="I" keyboard:keyname="I" android:padding="1dip" /> 
+	             <com.whyun.activity.component.MyButton android:text="O" keyboard:keyname="O" android:padding="1dip" /> 
+	            <com.whyun.activity.component.MyButton android:text="P" keyboard:keyname="P" android:padding="1dip" />            
+		    </TableRow> 
+		    <TableRow>        
+				<com.whyun.activity.component.MyButton  android:text="A" keyboard:keyname="A" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text="S" keyboard:keyname="S" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text="D" keyboard:keyname="D" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text="F" keyboard:keyname="F" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text="G" keyboard:keyname="G" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text="H" keyboard:keyname="H" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text="J" keyboard:keyname="J" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text="K" keyboard:keyname="K" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text="L" keyboard:keyname="L" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text=";" keyboard:keyname=";" android:padding="1dip" />  
+		    </TableRow>
+		    
+		    <TableRow>        
+				<com.whyun.activity.component.MyButton android:text="shift" keyboard:keyname="shift" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text="Z" keyboard:keyname="Z" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text="X" keyboard:keyname="X" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text="C" keyboard:keyname="C" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text="V" keyboard:keyname="V" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text="B" keyboard:keyname="B" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text="N" keyboard:keyname="N" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text="M" keyboard:keyname="M" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text="&#060;" keyboard:keyname="&#060;"  android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text=">" keyboard:keyname=">" android:padding="1dip" />          
+		    </TableRow>
+		    <!-- 间隔线  -->
+		   
+		</TableLayout>
+		<TableLayout
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content">
+		    <TableRow android:gravity="left">        
+				<com.whyun.activity.component.MyButton android:text="~" keyboard:keyname="~" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text="-" keyboard:keyname="-" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text="=" keyboard:keyname="=" android:padding="1dip" />         
+		        <com.whyun.activity.component.MyButton android:text="Backspace" keyboard:keyname="Backspace"  android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text="Tab" keyboard:keyname="Tab" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text="|" keyboard:keyname="|" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text="CapsLock" keyboard:keyname="CapsLock" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text="Enter" keyboard:keyname="Enter" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text="？" keyboard:keyname="？" android:padding="1dip" /> 
+	        </TableRow>
+		</TableLayout>
+		<TableLayout
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" android:stretchColumns="*">
+		    <TableRow android:gravity="left">        
+				<com.whyun.activity.component.MyButton android:text=" Ctrl " keyboard:keyname=" Ctrl " android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text=" Alt " keyboard:keyname=" Alt " android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text="PgUp" keyboard:keyname="PgUp" android:padding="1dip" />         
+		        <com.whyun.activity.component.MyButton android:text="PgDn" keyboard:keyname="PgDn"  android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text="Insert" keyboard:keyname="Insert" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text="Delete" keyboard:keyname="Delete" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text="Home" keyboard:keyname="Home" android:padding="1dip" /> 
+		        <com.whyun.activity.component.MyButton android:text=" End " keyboard:keyname=" End " android:padding="1dip" />	        
+	        </TableRow>
+		</TableLayout>
+		<TableLayout
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" android:stretchColumns="*">
+		    <TableRow android:gravity="left">
+				<com.whyun.activity.component.MyButton android:text="空格" keyboard:keyname="空格" android:padding="1dip" />
+				<com.whyun.activity.component.MyButton android:text="向上" keyboard:keyname="向上" android:padding="1dip" />
+		        <com.whyun.activity.component.MyButton android:text="向下" keyboard:keyname="向下" android:padding="1dip" />
+		        <com.whyun.activity.component.MyButton android:text="向左" keyboard:keyname="向左" android:padding="1dip" />
+		        <com.whyun.activity.component.MyButton android:text="向右" keyboard:keyname="向右" android:padding="1dip" />
+	        </TableRow>
+		</TableLayout>
+		
+	</LinearLayout>	
+</LinearLayout>
