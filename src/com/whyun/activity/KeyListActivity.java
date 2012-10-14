@@ -24,10 +24,12 @@ import com.whyun.activity.component.top.impl.TopTianJia;
 import com.whyun.bluetooth.R;
 import com.whyun.message.bean.KeyInfo;
 import com.whyun.message.data.KeyTableOperator;
+import com.whyun.util.MyLog;
 
 public class KeyListActivity extends Activity {
 	
 	private ListView keyList;
+	private static final MyLog logger = MyLog.getLogger(KeyListActivity.class);
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,7 @@ public class KeyListActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				int coinsNow = YoumiPointsManager.queryPoints(KeyListActivity.this);
-				if (coinsNow < IBlueToothConst.ADD_USER_KEY_COINS) {
+				if (coinsNow < IBlueToothConst.ADD_USER_KEY_COINS && !IBlueToothConst.COIN_DEBUG) {
 					ActivityUtil.notEnoughCoins(KeyListActivity.this, coinsNow);
 				} else {
 					Intent intent = new Intent();
@@ -131,6 +133,7 @@ public class KeyListActivity extends Activity {
 			String keys = "";
 			keys += "up:" + info.getUp1() + "+" + info.getUp2() + "+" + info.getUp3();
 			keys += "...";
+			logger.debug("keys:" + keys);
 			viewHolder.keys.setText(keys);
 			viewHolder.keysName.setText(info.getKeyname());
 			viewHolder.modify.setOnClickListener(new OnClickListener(){

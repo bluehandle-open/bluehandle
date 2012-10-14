@@ -5,6 +5,7 @@ import com.whyun.util.MyLog;
 public interface IBlueToothConst {
 	public static String uuidString  = "00001101-0000-1000-8000-00805F9B34FB";
 	public static final boolean isDebug = true;
+	public static final boolean COIN_DEBUG = true;
 	public static final int CONNECTED = 1;
 	public static final int FAILED = 0;
 	
@@ -13,11 +14,11 @@ public interface IBlueToothConst {
 	
 	public static final byte sendServerSign = 0x01;
 	public static final byte sendKey = 0x02;
-	public static final byte handleKeySet = 0x10;
+	public static final int handleKeySet = -1;
 	//public static final byte handleKeyGet = 0x11;
-	public static final byte pptKeySet = 0x20;
+	public static final int pptKeySet = -2;
 	//public static final byte pptKeyGet = 0x21;
-	public static final byte playerKeySet = 0x30;
+	public static final int playerKeySet = -3;
 	
 	public static final String upBtn = "top";//0
 	public static final String downBtn = "bottom";//1

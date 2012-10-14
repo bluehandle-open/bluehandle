@@ -40,7 +40,7 @@ public class KeyCommunication extends AbstractMessage implements IBlueToothConst
 		byte[] totalMessage = new byte[len];
 		totalMessage[0] = totalLen;
 		totalMessage[1] = type;
-		totalMessage[len-1] = 10;
+		totalMessage[len-1] = 10;//以\r\n结尾要发送的数据，因为电脑端读取数据的时候是按行读取的
 		totalMessage[len-2] = 13;
 		System.arraycopy(body, 0, totalMessage, 2, len-4);
 		try {
@@ -52,11 +52,15 @@ public class KeyCommunication extends AbstractMessage implements IBlueToothConst
 	}
 	
 	/**
-	 * Send msg.
+	 * 根据按键名称获取要所有按钮的按键配置的byte数组，然后组织成数据包，发送到电脑端。
+	 * 数据包正文部分第一个字节是敲击键类型，可选值为{@link IBlueToothConst.toPress}/
+	 * {@link IBlueToothConst.toRelease}/{@link IBlueToothConst.toPreassRelease},
+	 * 剩余部分是当前的按钮对应的快捷键的byte数组。
 	 * 
 	 * @param os 输出流对象
 	 * @param keyName 按键名称
-	 * @param pressType 按键方式
+	 * @param pressType 按键方式。可选值为{@link IBlueToothConst.toPress}/
+	 * {@link IBlueToothConst.toRelease}/{@link IBlueToothConst.toPreassRelease}
 	 * @param useDefaultSet 是否使用默认设置，默认设置为手柄
 	 */
 	public static void sendMsg(OutputStream os, String keyName,byte pressType) {
@@ -66,7 +70,7 @@ public class KeyCommunication extends AbstractMessage implements IBlueToothConst
 			int len = keyBody.length + 1;
 			byte[] body = new byte[len];
 			
-			byte handleType = keySet.getTypeNow();
+			int handleType = keySet.getTypeNow();
 			if (handleType == handleKeySet) {
 				body[0] = pressType;
 			} else {

@@ -56,7 +56,7 @@ public class KeyboardView {
 				KeyMap.KEY_MAP.get(firstInput.getText().toString()));
 		newValues.put(fieldNamePrefix + "key2",
 				KeyMap.KEY_MAP.get(secondInput.getText().toString()));
-		newValues.put(fieldNamePrefix + "key2",
+		newValues.put(fieldNamePrefix + "key3",
 				KeyMap.KEY_MAP.get(thirdInput.getText().toString()));
 		
 		return newValues;
@@ -132,7 +132,7 @@ public class KeyboardView {
     		firstInput.setBackgroundDrawable(noneSelectedBg);
     		secondInput.setBackgroundDrawable(noneSelectedBg);
     		thirdInput.setBackgroundDrawable(selectedBg);
-    		selectedView = secondInput;
+    		selectedView = thirdInput;
     		break;
     	}
     }
@@ -141,7 +141,6 @@ public class KeyboardView {
 
 		@Override
 		public void onClick(View v) {
-			logger.debug(v.toString());
 			keyboard.setVisibility(View.VISIBLE);
 			if (v == firstInput) {				
 				showSelected(1);

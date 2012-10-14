@@ -19,9 +19,11 @@ import com.whyun.activity.component.top.impl.TopQueDing;
 import com.whyun.bluetooth.R;
 import com.whyun.message.bean.KeyInfo;
 import com.whyun.message.data.KeyTableOperator;
+import com.whyun.util.MyLog;
 
 public class KeyAddActivity extends Activity {
 	public static final String KEY_RECORD = "keyRecord";
+	private static final MyLog logger = MyLog.getLogger(KeyAddActivity.class);
 	private boolean isModify; 
 	private KeyboardView keyboardViewUp;
 	private KeyboardView keyboardViewDown;
@@ -72,11 +74,17 @@ public class KeyAddActivity extends Activity {
 		setContentView(R.layout.listadd);
 		operator = new KeyTableOperator(this);
 		
+		if (IBlueToothConst.COIN_DEBUG) {
+			YoumiPointsManager.awardPoints(KeyAddActivity.this,
+					IBlueToothConst.ADD_USER_KEY_COINS);
+		}
+		
 		final KeyInfo info = (KeyInfo)getIntent().getSerializableExtra(KEY_RECORD);
 		String title = "添加自定义按键";
 		keynameInput = (EditText)findViewById(R.id.keynameInput);
 		
 		if (info != null) {
+			logger.debug("要修改的info up：" + info.getUp1() + ":" +info.getUp2() + ":" + info.getUp3());
 			isModify = true;
 			title = "按键[" + info.getKeyname() + "]修改";
 			keynameInput.setText(info.getKeyname());
@@ -144,8 +152,10 @@ public class KeyAddActivity extends Activity {
 				values = keyboardViewSelect.getContentValues(values);
 				boolean operResult = false;
 				final ContentValues valuesFinal =  values;
+
 				if (isModify) {
 					operResult = operator.updateKey(info.getKeyId(), values);
+					showResult(operResult);
 				} else {
 					new AlertDialog.Builder(KeyAddActivity.this)
 					.setMessage("当前操作要消费" + IBlueToothConst.ADD_USER_KEY_COINS + "个积分，"
@@ -170,7 +180,7 @@ public class KeyAddActivity extends Activity {
 							}).show();
 					
 				}
-				showResult(operResult);
+				
 			}}).getView());		
 	}
 

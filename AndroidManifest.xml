@@ -102,12 +102,12 @@
         </activity>
         
         <activity
-            android:name=".KeyListActivity"
-            android:screenOrientation="landscape">           
+            android:name="com.whyun.activity.KeyListActivity"
+            android:screenOrientation="portrait">           
         </activity>
         <activity
-            android:name=".KeyAddActivity"
-            android:screenOrientation="landscape">            
+            android:name="com.whyun.activity.KeyAddActivity"
+            android:screenOrientation="portrait">            
         </activity>
 	</application>	
 </manifest>

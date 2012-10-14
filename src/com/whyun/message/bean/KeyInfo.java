@@ -1,8 +1,10 @@
 package com.whyun.message.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import com.whyun.message.data.KeyTableOperator;
+import com.whyun.message.key.KeyMap;
 
 public class KeyInfo implements Serializable {
 
@@ -484,5 +486,33 @@ public class KeyInfo implements Serializable {
 			}
 		}
 		return key;
+	}
+	
+	public byte[] getBytes(String keyField) {
+		byte[] bytes = null;
+		ArrayList<Byte> list = new ArrayList<Byte>(3);
+		String first = getKey(keyField,1);
+		if (!"".equals(first)) {
+			list.add(KeyMap.KEY_MAP.get(first));
+		}
+		String second = getKey(keyField,2);
+		if (!"".equals(second)) {
+			list.add(KeyMap.KEY_MAP.get(second));
+		}
+		String third = getKey(keyField,3);
+		if (!"".equals(KeyMap.KEY_MAP.get(third))) {
+			list.add(KeyMap.KEY_MAP.get(third));
+		}
+		if (list.size() > 0) {
+			bytes = new byte[3];
+			int i = 0;
+			for (byte element:list) {
+				bytes[i++] = element;
+			}
+		} else {
+			bytes = null;
+		}
+		
+		return bytes;
 	}
 }

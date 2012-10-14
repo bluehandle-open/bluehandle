@@ -35,7 +35,7 @@ public class ButtonTouchListener implements View.OnTouchListener {
 	public boolean onTouch(View v, MotionEvent event) {
 		int id = event.getAction();
 		logger.info("[motion type]" + id);
-		byte keyType = handleKeys.getTypeNow();
+		int keyType = handleKeys.getTypeNow();
 		switch (id) {
 		case MotionEvent.ACTION_DOWN: {
 			logger.info("press " + buttonId);

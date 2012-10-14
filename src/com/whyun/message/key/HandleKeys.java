@@ -8,6 +8,8 @@ import android.content.SharedPreferences.Editor;
 import com.whyun.IBlueToothConst;
 import com.whyun.activity.IMyPreference;
 import com.whyun.message.RecieveKeySetting;
+import com.whyun.message.bean.KeyInfo;
+import com.whyun.message.data.KeyTableOperator;
 
 //import com.sunny.message.RecieveKeySetting;
 
@@ -19,18 +21,18 @@ public class HandleKeys  implements IBlueToothConst {
 	/** The instance. */
 	private volatile static HandleKeys instance = null;
 	
-	/** The keys. */
+	/** 每个按钮对应一个byte数组. */
 	private  Map<String,byte[]> keys = new HashMap<String,byte[]>();
 	
 	/** 当前的按键设置，默认为手柄. */
-	private byte typeNow = handleKeySet;
+	private int typeNow = handleKeySet;
 	
 	/**
 	 * 获取现在的按键类型.
 	 * 
 	 * @return the type now
 	 */
-	public byte getTypeNow() {
+	public int getTypeNow() {
 		return typeNow;
 	}
 
@@ -70,14 +72,14 @@ public class HandleKeys  implements IBlueToothConst {
 	}
 		
 	/**
-	 * Clear setting.
+	 * 将当前的按键设置清空
 	 */
 	public  void clearSetting() {
 		keys = new HashMap<String,byte[]>();
 	}
 
 	/**
-	 * Gets the keys.
+	 * 获取当前所有的按键设置
 	 * 
 	 * @return the keys
 	 */
@@ -86,18 +88,18 @@ public class HandleKeys  implements IBlueToothConst {
 	}
 	
 	/**
-	 * Gets the key body.
+	 * 获取指定的按钮的按键设置
 	 * 
-	 * @param index the index
+	 * @param index 按钮名
 	 * 
-	 * @return the key body
+	 * @return 返回的当前的按钮对应的快捷键byte数组
 	 */
 	public byte[] getKeyBody(String index) {
 		return keys.get(index);
 	}
 
 	/**
-	 * Sets the keys.
+	 * 批量设置所有按键
 	 * 
 	 * @param _keys the _keys
 	 */
@@ -106,12 +108,12 @@ public class HandleKeys  implements IBlueToothConst {
 	}
 	
 	/**
-	 * Sets the keys.
+	 * 设置内置按键
 	 * 
 	 * @param message the message
-	 * @param type the type
+	 * @param type 当前的按键类型，可选类型handleKeySet、pptKeySet、playerKeySet
 	 */
-	public void setKeys(byte[] message, byte type,Editor editor) {
+	public void setKeys(byte[] message, int type,Editor editor) {
 		if (type == handleKeySet) {
 			typeNow = handleKeySet;
 			keys.put(upBtn,new byte[]{ message[0]});
@@ -157,7 +159,7 @@ public class HandleKeys  implements IBlueToothConst {
 	}
 	
 	/**
-	 * Sets the keys.
+	 * 根据电脑端接收到的消息来设置按键，现在这个逻辑不用了。
 	 * 
 	 * @param settingMessage the new keys
 	 */
@@ -167,5 +169,25 @@ public class HandleKeys  implements IBlueToothConst {
 		byte[] message = settingMessage.getBody();
 			
 		setKeys(message,type,null);
+	}
+	
+	public void setKeys(KeyInfo info,Editor editor) {
+		keys.put(upBtn,info.getBytes(KeyTableOperator.KEY_TABLE_UP_FIELD));
+		keys.put(downBtn,info.getBytes(KeyTableOperator.KEY_TABLE_DOWN_FIELD));
+		keys.put(leftBtn,info.getBytes(KeyTableOperator.KEY_TABLE_LEFT_FIELD));
+		keys.put(rightBtn,info.getBytes(KeyTableOperator.KEY_TABLE_DOWN_FIELD));
+		
+		keys.put(selectGunBtn,info.getBytes(KeyTableOperator.KEY_TABLE_X_FIELD));
+		keys.put(dropGunBtn,info.getBytes(KeyTableOperator.KEY_TABLE_Y_FIELD));
+
+		keys.put(fireBtn,info.getBytes(KeyTableOperator.KEY_TABLE_A_FIELD));
+		keys.put(jumpBtn,info.getBytes(KeyTableOperator.KEY_TABLE_B_FIELD));
+
+		keys.put(selectBtn,info.getBytes(KeyTableOperator.KEY_TABLE_SELECT_FIELD));
+		keys.put(startBtn,info.getBytes(KeyTableOperator.KEY_TABLE_START_FIELD));
+		
+		if (editor != null) {
+			editor.putInt(IMyPreference.KEY_TYPE,info.getKeyId());
+		}
 	}
 }

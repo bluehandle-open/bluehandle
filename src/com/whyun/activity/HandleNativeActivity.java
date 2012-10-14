@@ -1,5 +1,7 @@
 package com.whyun.activity;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -14,6 +16,8 @@ import com.whyun.activity.component.ActivityUtil;
 import com.whyun.bluetooth.R;
 import com.whyun.communication.util.SocketThreadUtil;
 import com.whyun.event.ButtonTouchListener;
+import com.whyun.message.bean.KeyInfo;
+import com.whyun.message.data.KeyTableOperator;
 import com.whyun.message.key.HandleKeys;
 
 public class HandleNativeActivity extends Activity implements IBlueToothConst,IMyPreference {
@@ -28,12 +32,13 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 	private ImageView btnStart;
 	private ImageView btnSelect;
 	private boolean useShake;
-	private static final int HANDLE_ID = Menu.FIRST + 1;
-	private static final int PPT_ID = Menu.FIRST + 2;
-	private static final int PLAYER_ID = Menu.FIRST + 3;
-	private static final int EXIT_ID = Menu.FIRST + 4;
+	private static final int HANDLE_ID = -4;
+	private static final int PPT_ID = -3;
+	private static final int PLAYER_ID = -2;
+	private static final int EXIT_ID = -1;
 	private HandleKeys keySet = HandleKeys.getInstance();
 	private SharedPreferences settings = null;
+	private KeyTableOperator keyTableOperator;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +72,19 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 	private void init() {
 		settings = PreferenceManager.getDefaultSharedPreferences(this);
 		useShake = settings.getBoolean(USE_SHAKE, false);
+		
+		keyTableOperator = new KeyTableOperator(this);
 		int keyType = settings.getInt(KEY_TYPE,handleKeySet);
-		setTitleNow(keyType);
+		String title = null;
+		if (keyType >= 0) {
+			KeyInfo info = keyTableOperator.getKeySettingInfo(keyType);
+			if (info != null) {
+				title = info.getKeyname();
+			}
+		} else {
+			
+		}
+		setTitleNow(keyType,title);
 	}
 
 	@Override
@@ -80,26 +96,38 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 	/**设置菜单*/
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		menu.add(0,HANDLE_ID,0,R.string.menu_handle);
-		menu.add(0, PPT_ID, 0, R.string.menu_ppt);
-		menu.add(0, PLAYER_ID, 1, R.string.menu_player);
-		menu.add(0, EXIT_ID, 2, R.string.menu_exit);
+		int index = 0;
+		menu.add(0,HANDLE_ID,index++,R.string.menu_handle);
+		menu.add(0, PPT_ID, index++, R.string.menu_ppt);
+		menu.add(0, PLAYER_ID, index++, R.string.menu_player);
+		ArrayList<KeyInfo> list = keyTableOperator.getAllList();
+		if (list != null && list.size() > 0) {
+			
+			for (KeyInfo info:list) {
+				menu.add(0,info.getKeyId(),index++,info.getKeyname());					
+			}
+		}
+		menu.add(0, EXIT_ID, index++, R.string.menu_exit);
 		
 		return true;
 	}
 	
-	private void setTitleNow(int keyType) {
-		switch (keyType) {
-		case handleKeySet:
-			setTitle("设置为手柄按键");			
-			break;
-		case pptKeySet:
-			setTitle("设置为PPT按键");			
-			break;
-		case playerKeySet:
-			setTitle("设置为千千静听按键");			
-			break;
-		}
+	private void setTitleNow(int keyType, String title) {
+		if (title != null) {
+			setTitle(title);
+		} else {
+			switch (keyType) {
+			case handleKeySet:
+				setTitle("设置为手柄按键");			
+				break;
+			case pptKeySet:
+				setTitle("设置为PPT按键");			
+				break;
+			case playerKeySet:
+				setTitle("设置为千千静听按键");			
+				break;
+			}
+		}		
 	}
 	
 	/**菜单监听函数*/
@@ -122,6 +150,10 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 			break;
 		case EXIT_ID:
 			ActivityUtil.exit(this,"点击确定后，您本次和电脑间的连接将会结束!");
+			break;
+		default:
+			KeyInfo info = keyTableOperator.getKeySettingInfo(id);
+			keySet.setKeys(info, editor);
 			break;
 		}
 		return super.onOptionsItemSelected(item);
