@@ -19,6 +19,7 @@ import com.whyun.event.ButtonTouchListener;
 import com.whyun.message.bean.KeyInfo;
 import com.whyun.message.data.KeyTableOperator;
 import com.whyun.message.key.HandleKeys;
+import com.whyun.util.MyLog;
 
 public class HandleNativeActivity extends Activity implements IBlueToothConst,IMyPreference {
 	private ImageView btnUp;
@@ -39,6 +40,7 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 	private HandleKeys keySet = HandleKeys.getInstance();
 	private SharedPreferences settings = null;
 	private KeyTableOperator keyTableOperator;
+	private static final MyLog logger = MyLog.getLogger(HandleNativeActivity.class);
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +79,9 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 		int keyType = settings.getInt(KEY_TYPE,handleKeySet);
 		String title = null;
 		if (keyType >= 0) {
+			keyTableOperator.reGetReadDb();
 			KeyInfo info = keyTableOperator.getKeySettingInfo(keyType);
+			keyTableOperator.readFinish();
 			if (info != null) {
 				title = info.getKeyname();
 			}
@@ -100,7 +104,9 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 		menu.add(0,HANDLE_ID,index++,R.string.menu_handle);
 		menu.add(0, PPT_ID, index++, R.string.menu_ppt);
 		menu.add(0, PLAYER_ID, index++, R.string.menu_player);
+		keyTableOperator.reGetReadDb();
 		ArrayList<KeyInfo> list = keyTableOperator.getAllList();
+		keyTableOperator.readFinish();
 		if (list != null && list.size() > 0) {
 			
 			for (KeyInfo info:list) {
@@ -152,8 +158,16 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 			ActivityUtil.exit(this,"点击确定后，您本次和电脑间的连接将会结束!");
 			break;
 		default:
+			logger.debug("the selected id now is " + id);
+			keyTableOperator.reGetReadDb();
 			KeyInfo info = keyTableOperator.getKeySettingInfo(id);
-			keySet.setKeys(info, editor);
+			keyTableOperator.readFinish();
+			if (info != null) {
+				keySet.setKeys(info, editor);
+			} else {
+				logger.warn("the selected menu may has dirty data");
+			}
+			
 			break;
 		}
 		return super.onOptionsItemSelected(item);

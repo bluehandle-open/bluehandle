@@ -6,15 +6,15 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 
-import android.util.Log;
-
 import com.whyun.IBlueToothConst;
 import com.whyun.message.key.HandleKeys;
 import com.whyun.message.util.MessageTool;
+import com.whyun.util.MyLog;
 
 public class KeyCommunication extends AbstractMessage implements IBlueToothConst {
-	private static final String TAG = "AbstractMessage";
+
 	private static HandleKeys keySet = HandleKeys.getInstance();
+	private static final MyLog logger = MyLog.getLogger(KeyCommunication.class);
 	
 	public KeyCommunication(byte totalLen, byte type, byte[] body) {
 		super(totalLen, type, body);		
@@ -22,24 +22,24 @@ public class KeyCommunication extends AbstractMessage implements IBlueToothConst
 	
 	private void printSelf(byte[] message) {
 		if (isDebug && message != null && message.length > 2) {
-			Log.i(TAG,"the length of the message is " + message[0]);
-			Log.i(TAG,"the type of the message is " + message[1]);
+			logger.debug("the length of the message is " + message[0]);
+			logger.debug("the type of the message is " + message[1]);
 			
 			String body = "the message body is: ";
-			for(int i=2,len=message.length;i<len-2;i++) {
+			for(int i=2,len=message.length;i<len-2;i++) {//最后两字节是\r\n
 				body += (message[i] + " ");
 			}
-			Log.i(TAG,body);
+			logger.debug(body);
 		} else {
-			Log.i(TAG,"wrong message.");
+			logger.debug("wrong message.");
 		}
 	}
 
 	public void sendSelf(OutputStream os) {
 		int len = body.length + 4;
 		byte[] totalMessage = new byte[len];
-		totalMessage[0] = totalLen;
-		totalMessage[1] = type;
+		totalMessage[0] = totalLen;//总长度
+		totalMessage[1] = type;//按键的触发方式，按下、弹起或者按下后弹起
 		totalMessage[len-1] = 10;//以\r\n结尾要发送的数据，因为电脑端读取数据的时候是按行读取的
 		totalMessage[len-2] = 13;
 		System.arraycopy(body, 0, totalMessage, 2, len-4);
@@ -82,13 +82,14 @@ public class KeyCommunication extends AbstractMessage implements IBlueToothConst
 				new KeyCommunication((byte)(len+2),sendKey,body);
 			message.sendSelf(os);
 		} else {
-			Log.i(serverSign,"the key is not setted,can't be sended.");
+			logger.debug("the key is not setted,can't be sended.");
 		}
 
 	}
 	
 	/**
 	 * 接收并解析PC端发送过来的报文，如果报文是设置按键，则更新手机端按键设置。
+	 * 现在这个逻辑已经不再使用了。
 	 *
 	 * @param is 输入流
 	 * @throws IOException Signals that an I/O exception has occurred.
@@ -97,14 +98,14 @@ public class KeyCommunication extends AbstractMessage implements IBlueToothConst
 		BufferedReader brd = new BufferedReader(new InputStreamReader(is));
 
 		String messageStr = brd.readLine();
-		Log.i(serverSign, "get a message.");
+		logger.debug( "get a message.");
 		AbstractMessage message = MessageTool.getMessage(messageStr);
 		if (message instanceof RecieveKeySetting) {//设置按键信息
 
 			// TODO check the valid of message
 			keySet.setKeys((RecieveKeySetting) message);
 			//keySetted = true;
-			Log.i(serverSign, "set the key setting.");
+			logger.debug( "set the key setting.");
 		}
 	}
 

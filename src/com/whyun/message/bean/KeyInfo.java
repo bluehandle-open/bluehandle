@@ -5,10 +5,12 @@ import java.util.ArrayList;
 
 import com.whyun.message.data.KeyTableOperator;
 import com.whyun.message.key.KeyMap;
+import com.whyun.util.MyLog;
 
 public class KeyInfo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static final MyLog logger = MyLog.getLogger(KeyInfo.class);
 
 	private int keyId;
 	private String keyname;
@@ -490,8 +492,9 @@ public class KeyInfo implements Serializable {
 	
 	public byte[] getBytes(String keyField) {
 		byte[] bytes = null;
-		ArrayList<Byte> list = new ArrayList<Byte>(3);
+		ArrayList<Byte> list = new ArrayList<Byte>();
 		String first = getKey(keyField,1);
+		logger.debug("first key is "+first);
 		if (!"".equals(first)) {
 			list.add(KeyMap.KEY_MAP.get(first));
 		}
@@ -508,6 +511,7 @@ public class KeyInfo implements Serializable {
 			int i = 0;
 			for (byte element:list) {
 				bytes[i++] = element;
+				logger.debug("key" + i + " is " + element);
 			}
 		} else {
 			bytes = null;

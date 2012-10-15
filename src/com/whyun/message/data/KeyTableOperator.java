@@ -33,11 +33,13 @@ public class KeyTableOperator {
 	public static final String KEY_TABLE_FIELD_NAME = "name";
 	
 	private KeyDBHelper dbHelper;
+	private SQLiteDatabase dbRead;
 	
 	
 	public KeyTableOperator(Context context) {
 		if (context != null) {
 			dbHelper = new KeyDBHelper(context);
+			dbRead = dbHelper.getReadableDatabase();
 		} else {
 			
 		}
@@ -86,11 +88,11 @@ public class KeyTableOperator {
 	
 	public Cursor getAll() {
 		Cursor cursor = null;
-		if (dbHelper != null) {
-			SQLiteDatabase db = dbHelper.getReadableDatabase();
-			cursor = db.rawQuery("select * from " + KEY_TABLE_NAME,
+		if (dbRead != null) {
+			
+			cursor = dbRead.rawQuery("select * from " + KEY_TABLE_NAME,
 					null);
-//			db.close();
+//			dbRead.close();
 		} else {
 			
 		}
@@ -116,11 +118,12 @@ public class KeyTableOperator {
 	
 	public Cursor getKeySetting(int id) {
 		Cursor cursor = null;
-		if (dbHelper != null) {
-			SQLiteDatabase db = dbHelper.getReadableDatabase();
-			cursor = db.query(KEY_TABLE_NAME,
+		if (dbRead != null) {
+			
+			cursor = dbRead.query(KEY_TABLE_NAME,
 					null,"id=?",new String[]{id+""},null,null,null);
-			db.close();
+			logger.debug("id:" + id + " data len:" + cursor.getCount());
+//			dbRead.close();
 		} else {
 			
 		}
@@ -131,7 +134,7 @@ public class KeyTableOperator {
 		Cursor c = getKeySetting(id);
 		KeyInfo info = null;
 		
-		if (c != null && c.getCount() > 0) {
+		if (c != null && c.moveToFirst()) {
 			info = cursor2Info(c);			
 		}	
 		if (c != null) {
@@ -143,6 +146,7 @@ public class KeyTableOperator {
 	public static KeyInfo cursor2Info(Cursor cursor) {
 		KeyInfo info = null;
 		if (cursor != null) {
+			logger.debug("the cursor's count is " + cursor.getCount());
 			info = new KeyInfo();
 			info.setKeyId(cursor.getInt(
 					cursor.getColumnIndex(KeyTableOperator.KEY_TABLE_ID)));
@@ -223,7 +227,22 @@ public class KeyTableOperator {
 		return info;
 	}
 	
+	public void reGetReadDb() {
+		if (dbRead == null) {
+			dbRead = dbHelper.getReadableDatabase();
+		} else {
+			logger.debug("read handle has acquried.");
+		}		
+	}
 	
+	public void readFinish() {
+		if (dbRead != null) {
+			dbRead.close();
+			dbRead = null;
+		} else {
+			logger.debug("read handle has finished.");
+		}
+	}
 	
 	private static class KeyDBHelper extends SQLiteOpenHelper {
 		
