@@ -164,7 +164,7 @@ public class KeyTableOperator {
 					(byte)cursor.getInt(cursor.getColumnIndex(KeyTableOperator.KEY_TABLE_DOWN_FIELD + "key1"))));
 			info.setDown2(KeyMap.CODE_2_KEY_MAP.get(
 					(byte)cursor.getInt(cursor.getColumnIndex(KeyTableOperator.KEY_TABLE_DOWN_FIELD + "key2"))));
-			info.setDown1(KeyMap.CODE_2_KEY_MAP.get(
+			info.setDown3(KeyMap.CODE_2_KEY_MAP.get(
 					(byte)cursor.getInt(cursor.getColumnIndex(KeyTableOperator.KEY_TABLE_DOWN_FIELD + "key3"))));
 			
 			info.setLeft1(KeyMap.CODE_2_KEY_MAP.get(
