@@ -495,16 +495,19 @@ public class KeyInfo implements Serializable {
 		ArrayList<Byte> list = new ArrayList<Byte>();
 		String first = getKey(keyField,1);
 		logger.debug("first key is "+first);
-		if (!"".equals(first)) {
-			list.add(KeyMap.KEY_MAP.get(first));
+		Byte firstByte = KeyMap.KEY_MAP.get(first);
+		if (firstByte != null) {
+			list.add(firstByte);
 		}
 		String second = getKey(keyField,2);
-		if (!"".equals(second)) {
-			list.add(KeyMap.KEY_MAP.get(second));
+		Byte secondByte = KeyMap.KEY_MAP.get(second);
+		if (secondByte != null) {
+			list.add(secondByte);
 		}
 		String third = getKey(keyField,3);
-		if (!"".equals(KeyMap.KEY_MAP.get(third))) {
-			list.add(KeyMap.KEY_MAP.get(third));
+		Byte thridByte = KeyMap.KEY_MAP.get(third);
+		if (thridByte != null) {
+			list.add(thridByte);
 		}
 		if (list.size() > 0) {
 			bytes = new byte[3];
