@@ -128,10 +128,11 @@ public class KeyListActivity extends Activity {
 			cursor.moveToPosition(position);
 
 			final KeyInfo info = KeyTableOperator.cursor2Info(cursor);
+			logger.debug(info.toString());
 			cursor.close();
 			
 			String keys = "";
-			keys += "up:" + info.getUp1() + "+" + info.getUp2() + "+" + info.getUp3();
+			keys += "上:" + info.getUp1() + "+" + info.getUp2() + "+" + info.getUp3();
 			keys += "...";
 			logger.debug("keys:" + keys);
 			viewHolder.keys.setText(keys);
