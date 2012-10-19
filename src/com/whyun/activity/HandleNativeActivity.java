@@ -164,6 +164,7 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 			keyTableOperator.readFinish();
 			if (info != null) {
 				keySet.setKeys(info, editor);
+				setTitle("设置为" + info.getKeyname() + "按键");
 			} else {
 				logger.warn("the selected menu may has dirty data");
 			}
