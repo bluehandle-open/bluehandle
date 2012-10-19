@@ -84,7 +84,7 @@ public class KeyAddActivity extends Activity {
 		keynameInput = (EditText)findViewById(R.id.keynameInput);
 		
 		if (info != null) {
-			logger.debug("要修改的info up：" + info.getUp1() + ":" +info.getUp2() + ":" + info.getUp3());
+			logger.debug("要修改的info：" + info.toString());
 			isModify = true;
 			title = "按键[" + info.getKeyname() + "]修改";
 			keynameInput.setText(info.getKeyname());
