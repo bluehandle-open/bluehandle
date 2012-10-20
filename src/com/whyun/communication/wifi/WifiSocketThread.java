@@ -3,14 +3,11 @@ package com.whyun.communication.wifi;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
 import java.net.Socket;
 
-import android.util.Log;
-
-import com.whyun.IBlueToothConst;
 import com.whyun.communication.ISocketThread;
 import com.whyun.message.KeyCommunication;
+import com.whyun.util.MyLog;
 
 public class WifiSocketThread implements ISocketThread {
 
@@ -19,6 +16,7 @@ public class WifiSocketThread implements ISocketThread {
 	private InputStream is;
 	private volatile static WifiSocketThread instance = null;
 	private volatile boolean isInit = false;
+	private static final MyLog logger = MyLog.getLogger(WifiSocketThread.class);
 	
 	public static WifiSocketThread getInstance() {
 		if (instance == null) {
@@ -69,8 +67,8 @@ public class WifiSocketThread implements ISocketThread {
 				os.close();
 				is.close();
 				client.close();
-				Log.i(IBlueToothConst.serverSign,"close thread.");
-				System.out.println("this state is "+Thread.currentThread().getState());
+				logger.debug("close thread.");
+				logger.debug("this state is "+Thread.currentThread().getState());
 				instance = null;
 				isInit = false;				
 			} catch (IOException e) {
