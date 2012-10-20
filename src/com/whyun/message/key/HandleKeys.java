@@ -172,10 +172,11 @@ public class HandleKeys  implements IBlueToothConst {
 	}
 	
 	public void setKeys(KeyInfo info,Editor editor) {
+		typeNow = info.getKeyId();
 		keys.put(upBtn,info.getBytes(KeyTableOperator.KEY_TABLE_UP_FIELD));
 		keys.put(downBtn,info.getBytes(KeyTableOperator.KEY_TABLE_DOWN_FIELD));
 		keys.put(leftBtn,info.getBytes(KeyTableOperator.KEY_TABLE_LEFT_FIELD));
-		keys.put(rightBtn,info.getBytes(KeyTableOperator.KEY_TABLE_DOWN_FIELD));
+		keys.put(rightBtn,info.getBytes(KeyTableOperator.KEY_TABLE_RIGHT_FIELD));
 		
 		keys.put(selectGunBtn,info.getBytes(KeyTableOperator.KEY_TABLE_X_FIELD));
 		keys.put(dropGunBtn,info.getBytes(KeyTableOperator.KEY_TABLE_Y_FIELD));
