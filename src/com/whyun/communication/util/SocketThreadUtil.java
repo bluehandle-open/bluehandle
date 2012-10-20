@@ -26,5 +26,6 @@ public class SocketThreadUtil {
 		
 		IServer server = ConnectSetting.getInstance().getServer();
 		server.stopServer();
+		logger.debug("shut down the connection");
 	}
 }
