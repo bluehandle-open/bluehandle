@@ -522,4 +522,19 @@ public class KeyInfo implements Serializable {
 		
 		return bytes;
 	}
+
+	@Override
+	public String toString() {
+		String str = "up1:"+up1+",up2:" + up2+",up3"+up3;
+		str += "down1:"+down1+",down2:" + down2+",down3"+ down3;
+		str += "left1:"+left1+",left2:" + left2+",left3"+ left3;
+		str += "right1:"+right1+",right2:" + right2+",right3" + right3;
+		str += "a1:"+a1+",a2:" + a2+",a3"+ a3;
+		str += "b1:"+b1+",b2:" + b2+",b3"+ b3;
+		str += "x1:"+x1+",x2:" + x2+",x3"+ x3;
+		str += "y1:"+y1+",y2:" + y2+",y3"+ y3;
+		str += "start1:"+start1+",start2:" + start2+",start3"+ start3;
+		str += "select1:"+select1+",select2:" + select2+",select3"+ select3;
+		return str;
+	}	
 }
