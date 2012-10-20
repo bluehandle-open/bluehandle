@@ -32,8 +32,9 @@
         <ImageView
 			android:src = "@drawable/up"
 			android:scaleType="centerInside"
-			android:layout_width = "48dip"
-			android:layout_height = "40dip" />
+			android:layout_width = "40dip"
+			android:layout_height = "48dip"
+			android:paddingTop="5dip" />
 		<ScrollView
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
@@ -47,7 +48,8 @@
 			android:src = "@drawable/down"
 			android:scaleType="centerInside"
 			android:layout_width = "40dip"
-			android:layout_height = "48dip" />
+			android:layout_height = "48dip"
+			android:paddingTop="5dip" />
 		<ScrollView
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
@@ -60,8 +62,9 @@
         <ImageView
 			android:src = "@drawable/left"
 			android:scaleType="centerInside"
-			android:layout_width = "40dip"
-			android:layout_height = "48dip" />
+			android:layout_width = "48dip"
+			android:layout_height = "40dip"
+			android:paddingTop="5dip" />
 		<ScrollView
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
@@ -75,7 +78,8 @@
 			android:src = "@drawable/right"
 			android:scaleType="centerInside"
 			android:layout_width = "48dip"
-			android:layout_height = "40dip" />
+			android:layout_height = "40dip"
+			android:paddingTop="5dip" />
 		<ScrollView
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
@@ -89,7 +93,8 @@
 			android:src = "@drawable/circle_a"
 			android:scaleType="centerInside"
 			android:layout_width = "40dip"
-			android:layout_height = "40dip" />
+			android:layout_height = "40dip"
+			android:paddingTop="5dip" />
 		<ScrollView
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
@@ -103,7 +108,8 @@
 			android:src = "@drawable/circle_b"
 			android:scaleType="centerInside"
 			android:layout_width = "40dip"
-			android:layout_height = "40dip" />
+			android:layout_height = "40dip"
+			android:paddingTop="5dip" />
 		<ScrollView
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
@@ -117,7 +123,8 @@
 			android:src = "@drawable/circle_x"
 			android:scaleType="centerInside"
 			android:layout_width = "40dip"
-			android:layout_height = "40dip" />
+			android:layout_height = "40dip"
+			android:paddingTop="5dip" />
 		<ScrollView
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
@@ -131,7 +138,8 @@
 			android:src = "@drawable/circle_y"
 			android:scaleType="centerInside"
 			android:layout_width = "40dip"
-			android:layout_height = "40dip" />
+			android:layout_height = "40dip"
+			android:paddingTop="5dip" />
 		<ScrollView
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
