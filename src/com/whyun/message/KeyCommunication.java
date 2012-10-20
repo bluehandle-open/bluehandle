@@ -39,7 +39,7 @@ public class KeyCommunication extends AbstractMessage implements IBlueToothConst
 		int len = body.length + 4;
 		byte[] totalMessage = new byte[len];
 		totalMessage[0] = totalLen;//总长度
-		totalMessage[1] = type;//按键的触发方式，按下、弹起或者按下后弹起
+		totalMessage[1] = type;//消息类型
 		totalMessage[len-1] = 10;//以\r\n结尾要发送的数据，因为电脑端读取数据的时候是按行读取的
 		totalMessage[len-2] = 13;
 		System.arraycopy(body, 0, totalMessage, 2, len-4);
@@ -79,7 +79,7 @@ public class KeyCommunication extends AbstractMessage implements IBlueToothConst
 			
 			System.arraycopy(keyBody, 0, body, 1, len-1);
 			KeyCommunication message =
-				new KeyCommunication((byte)(len+2),sendKey,body);
+				new KeyCommunication((byte)(len+2),sendKey/*消息类型为发送按键*/,body);
 			message.sendSelf(os);
 		} else {
 			logger.debug("the key is not setted,can't be sended.");
