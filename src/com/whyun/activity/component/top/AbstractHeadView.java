@@ -15,35 +15,48 @@ public abstract class AbstractHeadView {
 	private String titleString;
 	private int buttonId;
 	private OnClickListener clickListener;
+	private boolean hideReturn;
 	
 	protected static final int BUTTON_QUE_DING = 1;
 	protected static final int BUTTON_TIAN_JIA = 2;
+	protected static final int BUTTON_CUSTOM_JIA = 3;
 	
 	protected AbstractHeadView(Activity activity, String title,
-			int buttonId, OnClickListener clickListener) {
+			int buttonId, OnClickListener clickListener, boolean hideReturn) {
 		this.activity = activity;
 		this.titleString = title;
 		this.buttonId = buttonId;
 		this.clickListener = clickListener;
+		this.hideReturn = hideReturn;
 		
 		init();
+	}
+	
+	protected AbstractHeadView(Activity activity, String title,
+			int buttonId, OnClickListener clickListener) {
+		this(activity, title, buttonId, clickListener, false);
 	}
 	
 	private void init() {
 		view = LayoutInflater.from(activity).inflate(R.layout.headview,/**读取headview.xml来构建布局*/
 				null);
 		ImageButton backButton = (ImageButton) view.findViewById(R.id.backbutton);
-		backButton.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				switch (v.getId()) {
-				case R.id.backbutton:
-					activity.finish();
-					break;
+		if (!hideReturn) {
+			backButton.setVisibility(View.VISIBLE);
+			backButton.setOnClickListener(new OnClickListener() {
+	
+				@Override
+				public void onClick(View v) {
+					switch (v.getId()) {
+					case R.id.backbutton:
+						activity.finish();
+						break;
+					}
 				}
-			}
-		});/** 返回按钮监听事件 */	
+			});/** 返回按钮监听事件 */	
+		} else {
+			backButton.setVisibility(View.GONE);
+		}
 		
 		TextView title = (TextView) view.findViewById(R.id.title);
 		title.setText(titleString);
@@ -55,6 +68,9 @@ public abstract class AbstractHeadView {
 			break;
 		case BUTTON_TIAN_JIA:
 			button = (ImageButton)view.findViewById(R.id.tianjiabutton);
+			break;
+		case BUTTON_CUSTOM_JIA:
+			button = (ImageButton)view.findViewById(R.id.custombutton);
 			break;
 		}
 		if (button != null) {

@@ -6,21 +6,18 @@ xmlns:umadsdk="http://schemas.android.com/apk/res/com.whyun.bluetooth"
     android:orientation="vertical" 
     android:layout_width="fill_parent" 
     android:layout_height="fill_parent">
- <!-- 
-	<net.youmi.android.AdView 
-	    android:id="@+id/adView"   
-	    android:layout_width="fill_parent"   
-	    android:layout_height="wrap_content" 
-	    umadsdk:textColor="#ffffff" 
-	    umadsdk:backgroundColor="#4076AA" 
-		umadsdk:backgroundTransparent="155" />    -->
 	<LinearLayout
-        android:id="@+id/head"
+        android:id="@+id/top"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
     </LinearLayout>
 	<LinearLayout
-	  xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/head"
+        android:layout_below="@id/top"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+    </LinearLayout>
+	<LinearLayout
 	  android:gravity="center"
 	  android:layout_width="fill_parent"
 	  android:layout_height="fill_parent">
@@ -30,7 +27,6 @@ xmlns:umadsdk="http://schemas.android.com/apk/res/com.whyun.bluetooth"
 	</LinearLayout>
 	
 	<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@drawable/footer"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"

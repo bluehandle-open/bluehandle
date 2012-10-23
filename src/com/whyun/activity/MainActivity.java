@@ -23,6 +23,8 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.View.OnClickListener;
 import android.view.WindowManager.LayoutParams;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -30,6 +32,7 @@ import android.widget.LinearLayout;
 
 import com.whyun.IBlueToothConst;
 import com.whyun.activity.component.ActivityUtil;
+import com.whyun.activity.component.top.impl.TopCustom;
 import com.whyun.bluetooth.R;
 import com.whyun.communication.ConnectSetting;
 import com.whyun.communication.IServer;
@@ -105,11 +108,22 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.my_main);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.my_main);		
 		
 		YoumiOffersManager.init(MainActivity.this, "0874deea1c82005e", "8eef5acdfa4fdb3a");
 		// 应用Id 应用密码 广告请求间隔(s) 测试模式
 		AdManager.init(MainActivity.this,"0874deea1c82005e", "8eef5acdfa4fdb3a", 30, false);
+		
+		LinearLayout top = (LinearLayout)findViewById(R.id.top);
+		top.addView(new TopCustom(this,"蓝色手柄", new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent();
+				intent.setClass(MainActivity.this, KeyListActivity.class);
+				startActivity(intent);
+			}}).getView());
 
 		img = (ImageView)findViewById(R.id.imgBtn);		
 		img.setOnClickListener(new ClickEvent());//注册开始按钮监听事件��ʼl��		
@@ -136,6 +150,7 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 	
 	
 	private void showAd() {
+		
 		LinearLayout head = (LinearLayout)findViewById(R.id.head);
 		if (settings.getBoolean(IMyPreference.REMOVE_AD, false)) {
 			head.removeAllViews();
