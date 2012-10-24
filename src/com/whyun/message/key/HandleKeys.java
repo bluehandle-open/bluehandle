@@ -25,7 +25,7 @@ public class HandleKeys  implements IBlueToothConst {
 	private  Map<String,byte[]> keys = new HashMap<String,byte[]>();
 	
 	/** 当前的按键设置，默认为手柄. */
-	private int typeNow = handleKeySet;
+	private int typeNow = SET_KEY_HANDLE;
 	
 	/**
 	 * 获取现在的按键类型.
@@ -111,11 +111,11 @@ public class HandleKeys  implements IBlueToothConst {
 	 * 设置内置按键
 	 * 
 	 * @param message the message
-	 * @param type 当前的按键类型，可选类型handleKeySet、pptKeySet、playerKeySet
+	 * @param type 当前的按键类型，可选类型handleKeySet、SET_KEY_PPT、SET_KEY_PLAYER
 	 */
 	public void setKeys(byte[] message, int type,Editor editor) {
-		if (type == handleKeySet) {
-			typeNow = handleKeySet;
+		if (type == SET_KEY_HANDLE) {
+			typeNow = SET_KEY_HANDLE;
 			keys.put(upBtn,new byte[]{ message[0]});
 			keys.put(downBtn,new byte[]{ message[1]});
 			keys.put(leftBtn,new byte[]{ message[2]});
@@ -132,8 +132,8 @@ public class HandleKeys  implements IBlueToothConst {
 			if (editor != null) {
 				editor.putInt(IMyPreference.KEY_TYPE, typeNow);
 			}
-		} else if (type == pptKeySet) {
-			typeNow = pptKeySet;
+		} else if (type == SET_KEY_PPT) {
+			typeNow = SET_KEY_PPT;
 			keys.put(upBtn,new byte[]{ 38});//up arrow
 			keys.put(downBtn,new byte[]{ 40});//down arrow
 			keys.put(leftBtn,new byte[]{ 37});//left arrow
@@ -143,8 +143,8 @@ public class HandleKeys  implements IBlueToothConst {
 			if (editor != null) {
 				editor.putInt(IMyPreference.KEY_TYPE, typeNow);
 			}
-		} else if (type == playerKeySet) {
-			typeNow = playerKeySet;
+		} else if (type == SET_KEY_PLAYER) {
+			typeNow = SET_KEY_PLAYER;
 			keys.put(upBtn,new byte[]{ 17,18,38});//crtl + alt + up(turn up)
 			keys.put(downBtn,new byte[]{ 17,18,40});//crtl + alt + down(turn down)
 			keys.put(leftBtn,new byte[]{ 17,18,37});//crtl + alt + left(previous)

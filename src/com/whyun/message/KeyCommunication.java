@@ -71,7 +71,7 @@ public class KeyCommunication extends AbstractMessage implements IBlueToothConst
 			byte[] body = new byte[len];
 			
 			int handleType = keySet.getTypeNow();
-			if (handleType == handleKeySet) {
+			if (handleType == SET_KEY_HANDLE) {
 				body[0] = pressType;
 			} else {
 				body[0] = toPreassRelease;
@@ -85,6 +85,11 @@ public class KeyCommunication extends AbstractMessage implements IBlueToothConst
 			logger.debug("the key is not setted,can't be sended.");
 		}
 
+	}
+	
+	public static void sendMsg(OutputStream os,AbstractMessage message)
+			throws IOException {
+		os.write(message.getData());
 	}
 	
 	/**

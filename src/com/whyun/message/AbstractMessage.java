@@ -28,5 +28,16 @@ public abstract class AbstractMessage {
 
 	public byte[] getBody() {
 		return body;
-	}	
+	}
+	
+	public byte[] getData() {
+		byte[] data = new byte[totalLen];
+		data[0] = totalLen;
+		data[1] = type;
+		if (body != null) {
+			System.arraycopy(body, 0, data, 2, body.length);
+		}
+		
+		return data;
+	}
 }

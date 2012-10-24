@@ -8,6 +8,7 @@ import java.io.OutputStream;
 
 import com.whyun.IBlueToothConst;
 import com.whyun.communication.ISocketThread;
+import com.whyun.message.FinishMessage;
 //import com.whyun.message.AbstractMessage;
 import com.whyun.message.KeyCommunication;
 //import com.whyun.message.RecieveKeySetting;
@@ -113,6 +114,7 @@ public class ServerSocketThread implements IBlueToothConst,ISocketThread {
 				Thread.currentThread().interrupt();
 				socketInitialized = false;
 				
+				KeyCommunication.sendMsg(os, new FinishMessage());
 				os.close();
 				is.close();
 				socket.close();

@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 
 import com.whyun.communication.ISocketThread;
+import com.whyun.message.FinishMessage;
 import com.whyun.message.KeyCommunication;
 import com.whyun.util.MyLog;
 
@@ -64,6 +65,7 @@ public class WifiSocketThread implements ISocketThread {
 		if (isInit) {
 			Thread.currentThread().interrupt();
 			try {
+				KeyCommunication.sendMsg(os, new FinishMessage());
 				os.close();
 				is.close();
 				client.close();

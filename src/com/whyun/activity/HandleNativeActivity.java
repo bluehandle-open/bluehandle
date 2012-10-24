@@ -76,7 +76,7 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 		useShake = settings.getBoolean(USE_SHAKE, false);
 		
 		keyTableOperator = new KeyTableOperator(this);
-		int keyType = settings.getInt(KEY_TYPE,handleKeySet);
+		int keyType = settings.getInt(KEY_TYPE,SET_KEY_HANDLE);
 		String title = null;
 		if (keyType >= 0) {
 			keyTableOperator.reGetReadDb();
@@ -123,13 +123,13 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 			setTitle(title);
 		} else {
 			switch (keyType) {
-			case handleKeySet:
+			case SET_KEY_HANDLE:
 				setTitle("设置为手柄按键");			
 				break;
-			case pptKeySet:
+			case SET_KEY_PPT:
 				setTitle("设置为PPT按键");			
 				break;
-			case playerKeySet:
+			case SET_KEY_PLAYER:
 				setTitle("设置为千千静听按键");			
 				break;
 			}
@@ -144,15 +144,15 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 		
 		case HANDLE_ID:
 			setTitle("设置为手柄按键");
-			keySet.setKeys(DEFAULT_HANDLE_SET, handleKeySet,editor);			
+			keySet.setKeys(DEFAULT_HANDLE_SET, SET_KEY_HANDLE,editor);			
 			break;
 		case PPT_ID:
 			setTitle("设置为PPT按键");
-			keySet.setKeys(null,pptKeySet,editor);
+			keySet.setKeys(null,SET_KEY_PPT,editor);
 			break;
 		case PLAYER_ID:
 			setTitle("设置为千千静听按键");
-			keySet.setKeys(null,playerKeySet,editor);
+			keySet.setKeys(null,SET_KEY_PLAYER,editor);
 			break;
 		case EXIT_ID:
 			ActivityUtil.exit(this,"点击确定后，您本次和电脑间的连接将会结束!");

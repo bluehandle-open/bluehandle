@@ -39,7 +39,7 @@ public class ButtonTouchListener implements View.OnTouchListener {
 		switch (id) {
 		case MotionEvent.ACTION_DOWN: {
 			logger.info("press " + buttonId);
-			if (keyType == IBlueToothConst.handleKeySet) {
+			if (keyType == IBlueToothConst.SET_KEY_HANDLE) {
 				serverThread.sendMsg(buttonId, IBlueToothConst.toPress);
 			} else {
 				serverThread.sendMsg(buttonId, IBlueToothConst.toPreassRelease);
@@ -53,7 +53,7 @@ public class ButtonTouchListener implements View.OnTouchListener {
 			break;
 		}
 		case MotionEvent.ACTION_UP: {
-			if (keyType == IBlueToothConst.handleKeySet) {
+			if (keyType == IBlueToothConst.SET_KEY_HANDLE) {
 				logger.info("release " + buttonId);
 				serverThread.sendMsg(buttonId,IBlueToothConst.toRelease);
 			} else {
