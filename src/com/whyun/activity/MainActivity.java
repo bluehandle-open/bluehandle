@@ -13,6 +13,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
+import android.content.SharedPreferences.Editor;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
@@ -75,7 +76,7 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 				prgd.dismiss();
 				break;
 			case FAILED:
-				ActivityUtil.toastShow(activityNow,"开启服务失败或者您主动关闭了服务");
+				ActivityUtil.toastShow(MainActivity.this,"开启服务失败或者您主动关闭了服务");
 				prgd.dismiss();
 				break;
 			}
@@ -144,10 +145,20 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 		exit.setOnClickListener(new ClickEvent());
 		settings = PreferenceManager.getDefaultSharedPreferences(this);
 		
-		initConnectType();		
+		initConnectType();
+		showGuide();
 	}
 	
-	
+	private void showGuide() {
+		if (settings.getBoolean(IMyPreference.FIRST_OPEN, true)) {
+			Intent intent = new Intent();
+			intent.setClass(MainActivity.this, GuideActivity.class);
+			Editor editor = settings.edit();
+			editor.putBoolean(IMyPreference.FIRST_OPEN, false);
+			editor.commit();
+			startActivity(intent);
+		}
+	}
 	
 	private void showAd() {
 		
@@ -172,7 +183,7 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 		
 		String typeNow = settings.getString(IMyPreference.CONNECT_TYPE,"0");
 		logger.info("typeNow:" + typeNow);
-		ConnectSetting.getInstance().setConnectType(Integer.valueOf(typeNow));
+		ConnectSetting.getInstance().setConnectType(Integer.parseInt(typeNow));
 	}
 	
 	private void acceptConnection() {//启动服务器端线程

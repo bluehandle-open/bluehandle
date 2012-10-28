@@ -5,4 +5,5 @@ public interface IMyPreference {
 	public static final String CONNECT_TYPE = "connect_type";
 	public static final String KEY_TYPE = "keyType";
 	public static final String REMOVE_AD = "remove_ad";
+	public static final String FIRST_OPEN = "first_open";
 }

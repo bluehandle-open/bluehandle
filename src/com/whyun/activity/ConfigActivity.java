@@ -46,6 +46,7 @@ public class ConfigActivity extends PreferenceActivity implements
 
 	@Override
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
+		logger.debug("onPreferenceChange begin");
 		String key = preference.getKey();
 		String valueNow = newValue.toString();
 		logger.info("valueNow:" + valueNow);
@@ -57,9 +58,13 @@ public class ConfigActivity extends PreferenceActivity implements
 				logger.warn("transform to integer error:",e);
 				typeNow = 0;
 			}
-			connectSetting.setConnectType(typeNow);
 			logger.info("typeNow:" + typeNow);
-		}
+			connectSetting.setConnectType(typeNow);
+			Editor editor = settings.edit();
+			editor.putString(CONNECT_TYPE, typeNow+"");
+			editor.commit();
+			logger.debug("set connect type:" + typeNow);
+		} 
 		return true;
 	}
 	
@@ -73,7 +78,7 @@ public class ConfigActivity extends PreferenceActivity implements
 	public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
 			Preference preference) {
 		logger.info("preference key is:"+preference.getKey());
-		if (preference.getKey().equals("wifi_setting")) {
+		if ("wifi_setting".equals(preference.getKey())) {
 			startActivity(new
             Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
 		} else if (REMOVE_AD.equals(preference.getKey())) {
@@ -127,6 +132,8 @@ public class ConfigActivity extends PreferenceActivity implements
 			Intent intent = new Intent();
 			intent.setClass(ConfigActivity.this, KeyListActivity.class);
 			startActivity(intent);
+		} else {
+			logger.debug("onPreferenceTreeClick other key");
 		}
 		return true;
 	}
