@@ -183,7 +183,8 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 		
 		String typeNow = settings.getString(IMyPreference.CONNECT_TYPE,"0");
 		logger.info("typeNow:" + typeNow);
-		ConnectSetting.getInstance().setConnectType(Integer.parseInt(typeNow));
+		index = Integer.parseInt(typeNow);
+		ConnectSetting.getInstance().setConnectType(index);
 	}
 	
 	private void acceptConnection() {//启动服务器端线程
