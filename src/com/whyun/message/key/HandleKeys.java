@@ -131,6 +131,7 @@ public class HandleKeys  implements IBlueToothConst {
 			keys.put(startBtn,new byte[]{ message[5]});
 			if (editor != null) {
 				editor.putInt(IMyPreference.KEY_TYPE, typeNow);
+				editor.commit();
 			}
 		} else if (type == SET_KEY_PPT) {
 			typeNow = SET_KEY_PPT;
@@ -142,6 +143,7 @@ public class HandleKeys  implements IBlueToothConst {
 			keys.put(dropGunBtn,new byte[]{ 16, 116});// shift+F5(begin fullscreen) (Y)
 			if (editor != null) {
 				editor.putInt(IMyPreference.KEY_TYPE, typeNow);
+				editor.commit();
 			}
 		} else if (type == SET_KEY_PLAYER) {
 			typeNow = SET_KEY_PLAYER;
@@ -153,6 +155,7 @@ public class HandleKeys  implements IBlueToothConst {
 			keys.put(dropGunBtn,new byte[]{ 17,18,117});//crtl + alt + f6(stop) (Y)
 			if (editor != null) {
 				editor.putInt(IMyPreference.KEY_TYPE, typeNow);
+				editor.commit();
 			}
 		}
 
@@ -189,6 +192,7 @@ public class HandleKeys  implements IBlueToothConst {
 		
 		if (editor != null) {
 			editor.putInt(IMyPreference.KEY_TYPE,info.getKeyId());
+			editor.commit();
 		}
 	}
 }
