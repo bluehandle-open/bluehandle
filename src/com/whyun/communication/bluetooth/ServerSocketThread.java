@@ -115,6 +115,11 @@ public class ServerSocketThread implements IBlueToothConst,ISocketThread {
 				socketInitialized = false;
 				
 				KeyCommunication.sendMsg(os, new FinishMessage());
+				Thread.currentThread();
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {					
+				}
 				os.close();
 				is.close();
 				socket.close();

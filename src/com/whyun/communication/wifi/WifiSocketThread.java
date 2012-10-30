@@ -66,6 +66,11 @@ public class WifiSocketThread implements ISocketThread {
 			Thread.currentThread().interrupt();
 			try {
 				KeyCommunication.sendMsg(os, new FinishMessage());
+				Thread.currentThread();
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {					
+				}
 				os.close();
 				is.close();
 				client.close();
