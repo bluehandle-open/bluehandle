@@ -116,6 +116,7 @@ public class HandleKeys  implements IBlueToothConst {
 	public void setKeys(byte[] message, int type,Editor editor) {
 		if (type == SET_KEY_HANDLE) {
 			typeNow = SET_KEY_HANDLE;
+			message = DEFAULT_HANDLE_SET;
 			keys.put(upBtn,new byte[]{ message[0]});
 			keys.put(downBtn,new byte[]{ message[1]});
 			keys.put(leftBtn,new byte[]{ message[2]});
