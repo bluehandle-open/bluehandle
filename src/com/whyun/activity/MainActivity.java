@@ -145,7 +145,7 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 		exit.setOnClickListener(new ClickEvent());
 		settings = PreferenceManager.getDefaultSharedPreferences(this);
 		
-		initConnectType();
+		
 		showGuide();
 	}
 	
@@ -280,6 +280,7 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		initConnectType();
 		showAd();
 	}
 	
