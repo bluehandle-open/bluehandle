@@ -85,8 +85,9 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 			if (info != null) {
 				title = info.getKeyname();
 			}
+			keySet.setKeys(info, null);
 		} else {
-			
+			keySet.setKeys(null, keyType, null);
 		}
 		setTitleNow(keyType,title);
 	}
