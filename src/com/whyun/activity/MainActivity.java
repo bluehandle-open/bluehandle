@@ -13,10 +13,11 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
-import android.content.SharedPreferences.Editor;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -24,8 +25,8 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.view.WindowManager.LayoutParams;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -104,6 +105,7 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 			logger.info("服务结束");
 		}
 	};
+	private WifiManager wifiManager;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -145,7 +147,7 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 		exit.setOnClickListener(new ClickEvent());
 		settings = PreferenceManager.getDefaultSharedPreferences(this);
 		
-		
+		wifiManager = (WifiManager)MainActivity.this.getSystemService(Context.WIFI_SERVICE);
 		showGuide();
 	}
 	
@@ -229,7 +231,11 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 					startActivityForResult(cwjIntent,1);
 				} else {
 					logger.info("当前为wifi方式");
-					acceptConnection();
+					if (wifiManager.getWifiState() != WifiManager.WIFI_STATE_ENABLED) {
+						ActivityUtil.toastShow(MainActivity.this, "当前wifi不能用，请启用wifi完毕后重试");
+					} else {
+						acceptConnection();
+					}					
 				}
 			} else if (v == pcdownload) {
 				
