@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -214,6 +215,11 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 		new Thread(server).start();
 	}
 	
+	private String intToIp(int i)	  
+    {   
+		return ( i & 0xFF)+ "." + ((i >> 8 ) & 0xFF) + "." + ((i >> 16 ) & 0xFF) +"."+((i >> 24 ) & 0xFF);
+	}  
+	
 	/**
 	 * 允许pc端连接android蓝牙设置或者wifi的事件监听类.
 	 */
@@ -234,6 +240,9 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 					if (wifiManager.getWifiState() != WifiManager.WIFI_STATE_ENABLED) {
 						ActivityUtil.toastShow(MainActivity.this, "当前wifi不能用，请启用wifi完毕后重试");
 					} else {
+						WifiInfo  wifiinfo= wifiManager.getConnectionInfo();
+						String ip=intToIp(wifiinfo.getIpAddress());  
+						ActivityUtil.toastShow(MainActivity.this, "当前wifi的ip地址：" + ip);  
 						acceptConnection();
 					}					
 				}
