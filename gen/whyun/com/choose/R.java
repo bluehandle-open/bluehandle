@@ -233,7 +233,8 @@ containing a value of this type.
         public static final int title=0x7f09000e;
         public static final int top=0x7f09002a;
         public static final int tuichu=0x7f09002f;
-        public static final int webview=0x7f090034;
+        public static final int updatetv=0x7f090034;
+        public static final int webview=0x7f090035;
     }
     public static final class layout {
         public static final int ad=0x7f030000;
@@ -248,7 +249,8 @@ containing a value of this type.
         public static final int my_main=0x7f030009;
         public static final int my_toast=0x7f03000a;
         public static final int notify_content=0x7f03000b;
-        public static final int web=0x7f03000c;
+        public static final int scroll_dialog=0x7f03000c;
+        public static final int web=0x7f03000d;
     }
     public static final class string {
         public static final int advanced_settings=0x7f050013;
@@ -258,14 +260,12 @@ containing a value of this type.
         public static final int dialog_title_edit_text_preference=0x7f050011;
         public static final int dialog_title_list_preference=0x7f05000e;
         public static final int hello=0x7f050000;
-        public static final int media_volume_summary=0x7f050015;
-        public static final int media_volume_title=0x7f050014;
+        public static final int help_settings=0x7f050014;
         public static final int menu_donate=0x7f050006;
         public static final int menu_exit=0x7f050007;
         public static final int menu_handle=0x7f050003;
         public static final int menu_player=0x7f050005;
         public static final int menu_ppt=0x7f050004;
-        public static final int seek_bar_preference_title=0x7f050016;
         public static final int summary_check_box=0x7f05000b;
         public static final int summary_edit_text_preference=0x7f050010;
         public static final int summary_list_preference=0x7f05000d;

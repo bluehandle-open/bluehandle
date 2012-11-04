@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -174,5 +175,14 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {   
+			//按下的如果是BACK，同时没有重复
+			ActivityUtil.exit(this,"点击确定后，您本次和电脑间的连接将会结束!");
+            return true;
+		}  
+		return super.onKeyDown(keyCode, event);
+	}   
 	
 }

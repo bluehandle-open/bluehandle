@@ -11,7 +11,7 @@
 			 />
 		<ListPreference android:key="connect_type" android:numeric="integer"
 			android:title="@string/title_list_preference" android:summary="@string/summary_list_preference"
-			android:entries="@array/connects" android:entryValues="@array/connects_value"
+			android:entries="@array/connects" android:entryValues="@array/connects_value" android:defaultValue="0"
 			android:dialogTitle="@string/dialog_title_list_preference" />
 		<Preference android:key="wifi_setting" android:title="网络设置"  
         	android:summary="点击进入系统wifi和蓝牙设置界面">
@@ -36,5 +36,14 @@
         	android:summary="添加修改自定义按键，每添加一套按键花费10个积分">
     	</Preference> 
 	</PreferenceCategory>
-	
+	<PreferenceCategory xmlns:android="http://schemas.android.com/apk/res/android"
+		android:key="help_settings" android:title="@string/help_settings">
+		
+		<Preference android:key="help_activity" android:title="帮助向导"  
+        	android:summary="点击查看帮助向导">
+    	</Preference> 
+    	<Preference android:key="app_about" android:title="关于"  
+        	android:summary="点击查看关于信息">
+    	</Preference> 
+	</PreferenceCategory>
 </PreferenceScreen>
