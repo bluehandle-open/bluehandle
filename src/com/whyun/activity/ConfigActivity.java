@@ -7,6 +7,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
@@ -15,6 +18,7 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
+import android.view.LayoutInflater;
 
 import com.whyun.IBlueToothConst;
 import com.whyun.bluetooth.R;
@@ -132,9 +136,45 @@ public class ConfigActivity extends PreferenceActivity implements
 			Intent intent = new Intent();
 			intent.setClass(ConfigActivity.this, KeyListActivity.class);
 			startActivity(intent);
+		} else if ("help_activity".equals(preference.getKey())) {
+			Intent intent = new Intent();
+			intent.setClass(ConfigActivity.this, GuideActivity.class);
+			startActivity(intent);
+		} else if ("app_about".equals(preference.getKey())) {
+			AlertDialog.Builder ad = new AlertDialog.Builder(this);
+			ad.setIcon(R.drawable.icon);
+			ad.setTitle("关于");
+			ad.setView(LayoutInflater.from(this).inflate(
+					R.layout.scroll_dialog, null));
+
+			ad.setPositiveButton("OK",
+					new android.content.DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int arg1) {
+
+						}
+					});
+			ad.setMessage("版本：" + ConfigActivity.this.getVersionName() + "\n"
+					+ "作者：白一梓\n如果有任何问题，请发送邮件bluehandle@googlegroups.com");
+			ad.show();
 		} else {
 			logger.debug("onPreferenceTreeClick other key");
 		}
 		return true;
+	}
+	
+	private String getVersionName() {
+		String version = "";
+		// 获取packagemanager的实例
+		PackageManager packageManager = getPackageManager();
+		// getPackageName()是你当前类的包名，0代表是获取版本信息
+		PackageInfo packInfo;
+		try {
+			packInfo = packageManager.getPackageInfo(getPackageName(), 0);
+			version = packInfo.versionName;
+		} catch (NameNotFoundException e) {
+			logger.warn(e.getMessage(), e);
+		}
+
+		return version;
 	}
 }
