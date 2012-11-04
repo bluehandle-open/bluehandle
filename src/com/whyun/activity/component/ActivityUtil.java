@@ -24,8 +24,8 @@ public final class ActivityUtil {
 	public static void exit(Activity activity,String title) {
 		final Activity activityNow = activity;
 		new AlertDialog.Builder(activity)
-		.setMessage("确定退出程序？")
-		.setTitle(title == null ? "" : title)
+		.setMessage(title == null ? "" : title)
+		.setTitle("确定退出程序？")
 		.setNegativeButton("取消",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog,
