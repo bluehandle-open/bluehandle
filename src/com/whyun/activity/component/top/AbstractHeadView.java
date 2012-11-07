@@ -1,9 +1,12 @@
 package com.whyun.activity.component.top;
 
 import android.app.Activity;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -40,6 +43,13 @@ public abstract class AbstractHeadView {
 	private void init() {
 		view = LayoutInflater.from(activity).inflate(R.layout.headview,/**读取headview.xml来构建布局*/
 				null);
+		WindowManager manage = activity.getWindowManager();
+		Display display = manage.getDefaultDisplay();
+		int screenWidth = display.getWidth();
+		LayoutParams para = new LayoutParams(screenWidth,LayoutParams.WRAP_CONTENT);
+		para.width = screenWidth;
+		view.setLayoutParams(para);
+		
 		ImageButton backButton = (ImageButton) view.findViewById(R.id.backbutton);
 		if (!hideReturn) {
 			backButton.setVisibility(View.VISIBLE);
