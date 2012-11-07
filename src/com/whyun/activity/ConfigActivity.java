@@ -83,8 +83,15 @@ public class ConfigActivity extends PreferenceActivity implements
 			Preference preference) {
 		logger.info("preference key is:"+preference.getKey());
 		if ("wifi_setting".equals(preference.getKey())) {
-			startActivity(new
-            Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+			String a = android.os.Build.VERSION.RELEASE;
+			if (a.startsWith("2.") || a.startsWith("1.")) {
+				startActivity(new
+			            Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+			} else {
+				Intent settingsIntent = new Intent("android.settings.SETTINGS");  
+				startActivity(settingsIntent); 
+			}
+			
 		} else if (REMOVE_AD.equals(preference.getKey())) {
 			int coinsNow = YoumiPointsManager.queryPoints(ConfigActivity.this);
 			if (!settings.getBoolean(REMOVE_AD, false)) {
