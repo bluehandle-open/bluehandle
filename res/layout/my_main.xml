@@ -7,7 +7,7 @@ xmlns:umadsdk="http://schemas.android.com/apk/res/com.whyun.bluetooth"
     android:layout_width="fill_parent" 
     android:layout_height="fill_parent">
 	<LinearLayout
-	    android:scaleType="fitXY" android:gravity="fill_horizontal"
+	    android:gravity="fill_horizontal"
         android:id="@+id/top"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
