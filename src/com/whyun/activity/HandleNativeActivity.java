@@ -5,11 +5,15 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.whyun.IBlueToothConst;
@@ -17,6 +21,7 @@ import com.whyun.activity.component.ActivityUtil;
 import com.whyun.bluetooth.R;
 import com.whyun.communication.util.SocketThreadUtil;
 import com.whyun.event.ButtonTouchListener;
+import com.whyun.event.MySensorEventListener;
 import com.whyun.message.bean.KeyInfo;
 import com.whyun.message.data.KeyTableOperator;
 import com.whyun.message.key.HandleKeys;
@@ -41,11 +46,23 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 	private HandleKeys keySet = HandleKeys.getInstance();
 	private SharedPreferences settings = null;
 	private KeyTableOperator keyTableOperator;
+	
+	private boolean useGravity;
+	private int gravitySenstivity;
+	
+	/** SensorManager管理器 **/
+	private SensorManager mSensorMgr = null;
+	private Sensor mSensor = null;
+	private MySensorEventListener sensorEventListener;
+	
 	private static final MyLog logger = MyLog.getLogger(HandleNativeActivity.class);
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.handle);
 		btnUp = (ImageView)findViewById(R.id.btnUp);
 		btnDown = (ImageView)findViewById(R.id.btnDwon);
@@ -91,6 +108,23 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 			keySet.setKeys(null, keyType, null);
 		}
 		setTitleNow(keyType,title);
+		
+		useGravity = settings.getBoolean(ENABLE_GRAVITY, false);
+		if (useGravity) {
+			gravitySenstivity = settings.getInt(SENSITIVITY_VOLUME, 0);
+			logger.debug(SENSITIVITY_VOLUME+gravitySenstivity);
+			/** 得到SensorManager对象 **/
+			mSensorMgr = (SensorManager) getSystemService(Activity.SENSOR_SERVICE);
+			mSensor = mSensorMgr.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+			sensorEventListener = new MySensorEventListener(this);
+			// 注册listener，第三个参数是检测的精确度
+			// SENSOR_DELAY_FASTEST 最灵敏 因为太快了没必要使用
+			// SENSOR_DELAY_GAME 游戏开发中使用
+			// SENSOR_DELAY_NORMAL 正常速度
+			// SENSOR_DELAY_UI 最慢的速度
+			mSensorMgr.registerListener(sensorEventListener, mSensor,
+					SensorManager.SENSOR_DELAY_GAME);		
+		}
 	}
 
 	@Override
@@ -184,5 +218,22 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 		}  
 		return super.onKeyDown(keyCode, event);
 	}   
-	
+	@Override
+	public void onResume() {
+		if (useGravity) {
+			mSensorMgr.registerListener(sensorEventListener, mSensor,
+				SensorManager.SENSOR_DELAY_GAME);
+		}
+
+		super.onResume();
+	}
+
+	@Override
+	public void onPause() {
+		if (useGravity) {
+			mSensorMgr.unregisterListener(sensorEventListener);
+		}
+
+		super.onPause();
+	}
 }

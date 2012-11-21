@@ -17,11 +17,14 @@
     <string name="summary_list_preference">在这里可以选择手柄接入电脑的方式</string>  
     <string name="dialog_title_list_preference">接入方式</string>  
       
-      
+    <string name="enable_gravity">启用重力感应</string> 
     <string name="title_edit_text_preference">title_edit_text_preference</string>  
     <string name="summary_edit_text_preference">summary_edit_text_preference</string>  
-    <string name="dialog_title_edit_text_preference">dialog_title_edit_text_preference</string>  
+    <string name="dialog_title_edit_text_preference">dialog_title_edit_text_preference</string>
+    <string name="sensitivity_volume">重力感应灵敏度</string>
+    <string name="sensitivity_volume_summary">设置重力感应的灵敏度</string>
     <string name="common_settings">普通设置</string>  
+    <string name="gravity_settings">重力感应设置</string>
     <string name="advanced_settings">高级设置</string>  
     <string name="help_settings">帮助</string>
 </resources>
