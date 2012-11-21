@@ -116,7 +116,8 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 			/** 得到SensorManager对象 **/
 			mSensorMgr = (SensorManager) getSystemService(Activity.SENSOR_SERVICE);
 			mSensor = mSensorMgr.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-			sensorEventListener = new MySensorEventListener(this);
+			int timeInFrame = 100 - settings.getInt(SENSITIVITY_VOLUME, 50);
+			sensorEventListener = new MySensorEventListener(this,timeInFrame);
 			// 注册listener，第三个参数是检测的精确度
 			// SENSOR_DELAY_FASTEST 最灵敏 因为太快了没必要使用
 			// SENSOR_DELAY_GAME 游戏开发中使用
