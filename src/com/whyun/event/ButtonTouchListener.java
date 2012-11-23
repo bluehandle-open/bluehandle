@@ -62,6 +62,9 @@ public class ButtonTouchListener implements View.OnTouchListener {
 			
 			break;
 		}
+		case MotionEvent.ACTION_POINTER_1_DOWN: {
+			break;
+		}
 		}
 		return true;
 	}
