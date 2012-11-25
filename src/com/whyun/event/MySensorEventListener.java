@@ -11,16 +11,29 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.whyun.IBlueToothConst;
 import com.whyun.bluetooth.R;
+import com.whyun.communication.ConnectSetting;
+import com.whyun.communication.ISocketThread;
+import com.whyun.communication.ServerFactory;
+import com.whyun.util.MyLog;
 
 public class MySensorEventListener implements SensorEventListener {
-	//private Activity activity;
+	private static final MyLog logger = MyLog.getLogger(MySensorEventListener.class);
+	
+	private ISocketThread serverThread = ServerFactory
+			.getSocketThread(ConnectSetting.getInstance().getConnectType());
+	
 	/** 每50帧刷新一次屏幕 **/
 	private  int timeInFrame = 50;
 
 	/** 手机屏幕宽高 **/
 	int mScreenWidth = 0;
 	int mScreenHeight = 0;
+	
+	/** 小球的宽高*/
+	private int mBallWidth;
+	private int mBallHeight;
 
 	/** 小球资源文件越界区域 **/
 	private int mScreenBallWidth = 0;
@@ -53,6 +66,13 @@ public class MySensorEventListener implements SensorEventListener {
 		mScreenWidth = display.getWidth();
 		mScreenHeight = display.getHeight();
 		
+		int w=View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED);
+		int h=View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED);
+		img.measure(w, h);
+		mBallWidth=img.getMeasuredWidth();
+		mBallHeight=img.getMeasuredHeight();
+		logger.debug("mBallWidth:"+mBallWidth+",mBallHeight:"+mBallHeight);
+		
 		this.timeInFrame = timeInFrame;
 	}
 	public MySensorEventListener(Activity activity) {
@@ -69,17 +89,19 @@ public class MySensorEventListener implements SensorEventListener {
 				.getLayoutParams();
 		int left = (int) mPosX;
 		int top = (int) mPosY;
-		int right = (int) (mScreenWidth - mPosX - img.getWidth());
-		int bottom = (int) (mScreenHeight - mPosY - img.getHeight());
+		int right = (int) (mScreenWidth - mPosX - mBallWidth);
+		int bottom = (int) (mScreenHeight - mPosY - mBallHeight);
 		if (left - mLastX != 0) {
 			params.setMargins(left, top, right, bottom);
-//			 System.out.println("left:"+left+",top:"+top+",right:"+right+",bottom:"+bottom
+//			logger.debug("left:"+left+",top:"+top+",right:"+right+",bottom:"+bottom
 //			 +";mScreenBallWidth:"+mScreenBallWidth+",mScreenBallHeight:"+mScreenBallHeight);
 			ballLay.setLayoutParams(params);
 			if (left - mLastX > 0) {
-				System.out.println("move right");
+				serverThread.sendMsg(IBlueToothConst.leftBtn,
+						IBlueToothConst.toPreassRelease);
 			} else {
-				System.out.println("move left");
+				serverThread.sendMsg(IBlueToothConst.rightBtn,
+						IBlueToothConst.toPreassRelease);
 			}
 			mLastX = left;
 		}
@@ -96,10 +118,10 @@ public class MySensorEventListener implements SensorEventListener {
 		
 		/** 得到小球越界区域 **/
 		if (mScreenBallWidth == 0) {
-			mScreenBallWidth = mScreenWidth - img.getWidth();
+			mScreenBallWidth = mScreenWidth - mBallWidth;
 		}
 		if (mScreenBallHeight == 0) {
-			mScreenBallHeight = mScreenHeight - img.getHeight();
+			mScreenBallHeight = mScreenHeight - mBallHeight;
 		}
 		// 检测小球是否超出边界
 		if (mPosX < 0) {

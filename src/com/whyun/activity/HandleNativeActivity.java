@@ -1,8 +1,12 @@
 package com.whyun.activity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnKeyListener;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.hardware.Sensor;
@@ -11,16 +15,23 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.SimpleAdapter;
 
 import com.whyun.IBlueToothConst;
 import com.whyun.activity.component.ActivityUtil;
+import com.whyun.activity.component.MenuAdapter;
+import com.whyun.activity.component.top.AbstractHeadView;
+import com.whyun.activity.component.top.impl.TopQieHuan;
 import com.whyun.bluetooth.R;
 import com.whyun.communication.util.SocketThreadUtil;
-import com.whyun.event.ButtonTouchListener;
 import com.whyun.event.MySensorEventListener;
 import com.whyun.message.bean.KeyInfo;
 import com.whyun.message.data.KeyTableOperator;
@@ -28,16 +39,7 @@ import com.whyun.message.key.HandleKeys;
 import com.whyun.util.MyLog;
 
 public class HandleNativeActivity extends Activity implements IBlueToothConst,IMyPreference {
-	private ImageView btnUp;
-	private ImageView btnDown;
-	private ImageView btnLeft;
-	private ImageView btnRight;
-	private ImageView btnX;
-	private ImageView btnY;
-	private ImageView btnA;
-	private ImageView btnB;
-	private ImageView btnStart;
-	private ImageView btnSelect;
+
 	private boolean useShake;
 	private static final int HANDLE_ID = -4;
 	private static final int PPT_ID = -3;
@@ -54,6 +56,12 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 	private SensorManager mSensorMgr = null;
 	private Sensor mSensor = null;
 	private MySensorEventListener sensorEventListener;
+	private LinearLayout top;
+	private AbstractHeadView headView;
+	
+	private AlertDialog menuDialog;// menu菜单Dialog
+	private GridView menuGrid;
+	private View menuView;
 	
 	private static final MyLog logger = MyLog.getLogger(HandleNativeActivity.class);
 	
@@ -63,30 +71,10 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		setContentView(R.layout.handle);
-		btnUp = (ImageView)findViewById(R.id.btnUp);
-		btnDown = (ImageView)findViewById(R.id.btnDwon);
-		btnLeft = (ImageView)findViewById(R.id.btnLeft);
-		btnRight = (ImageView)findViewById(R.id.btnRight);
-		btnX = (ImageView)findViewById(R.id.btnX);
-		btnY = (ImageView)findViewById(R.id.btnY);
-		btnA = (ImageView)findViewById(R.id.btnA);
-		btnB = (ImageView)findViewById(R.id.btnB);
-		btnStart = (ImageView)findViewById(R.id.btnStart);
-		btnSelect = (ImageView)findViewById(R.id.btnSelect);
+		setContentView(R.layout.handle);		
 				
 		init();
 		
-		btnUp.setOnTouchListener(new ButtonTouchListener(HandleNativeActivity.this,useShake,upBtn));
-		btnDown.setOnTouchListener(new ButtonTouchListener(HandleNativeActivity.this,useShake,downBtn));
-		btnLeft.setOnTouchListener(new ButtonTouchListener(HandleNativeActivity.this,useShake,leftBtn));
-		btnRight.setOnTouchListener(new ButtonTouchListener(HandleNativeActivity.this,useShake,rightBtn));
-		btnX.setOnTouchListener(new ButtonTouchListener(HandleNativeActivity.this,useShake,selectGunBtn));
-		btnY.setOnTouchListener(new ButtonTouchListener(HandleNativeActivity.this,useShake,dropGunBtn));
-		btnA.setOnTouchListener(new ButtonTouchListener(HandleNativeActivity.this,useShake,fireBtn));
-		btnB.setOnTouchListener(new ButtonTouchListener(HandleNativeActivity.this,useShake,jumpBtn));
-		btnStart.setOnTouchListener(new ButtonTouchListener(HandleNativeActivity.this,useShake,startBtn));
-		btnSelect.setOnTouchListener(new ButtonTouchListener(HandleNativeActivity.this,useShake,selectBtn));
 	}
 	
 	private void init() {
@@ -107,7 +95,16 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 		} else {
 			keySet.setKeys(null, keyType, null);
 		}
-		setTitleNow(keyType,title);
+		
+		headView = new TopQieHuan(this,getTitle(keyType, title),new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				showMenu();
+			}
+			
+		});
+		top.addView(headView.getView());
 		
 		useGravity = settings.getBoolean(ENABLE_GRAVITY, false);
 		if (useGravity) {
@@ -126,6 +123,65 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 			mSensorMgr.registerListener(sensorEventListener, mSensor,
 					SensorManager.SENSOR_DELAY_GAME);		
 		}
+		
+		menuView = View.inflate(this, R.layout.gridview_menu, null);
+		// 创建AlertDialog
+		menuDialog = new AlertDialog.Builder(this).create();
+		menuDialog.setView(menuView);
+		menuDialog.setOnKeyListener(new OnKeyListener() {
+			public boolean onKey(DialogInterface dialog, int keyCode,
+					KeyEvent event) {
+				if (keyCode == KeyEvent.KEYCODE_MENU)// 监听按键
+					dialog.dismiss();
+				return false;
+			}
+		});
+
+		menuGrid = (GridView) menuView.findViewById(R.id.gridview);
+		menuGrid.setAdapter(getMenuAdapter());
+		
+		menuGrid.setOnItemClickListener(new OnItemClickListener(){
+
+			@Override
+			public void onItemClick(AdapterView<?> adapterView, View view, int position,
+					long id) {
+				Editor editor = settings.edit();//获取编辑器
+				
+				switch ((int)id) {
+				case HANDLE_ID:
+					setTitle("设置为手柄按键");
+					keySet.setKeys(DEFAULT_HANDLE_SET, SET_KEY_HANDLE,editor);			
+					break;
+				case PPT_ID:
+					setTitle("设置为PPT按键");
+					keySet.setKeys(null,SET_KEY_PPT,editor);
+					break;
+				case PLAYER_ID:
+					setTitle("设置为千千静听按键");
+					keySet.setKeys(null,SET_KEY_PLAYER,editor);
+					break;
+				case EXIT_ID:
+					ActivityUtil.exit(HandleNativeActivity.this,
+							"点击确定后，您本次和电脑间的连接将会结束!");
+					break;
+				default:
+					logger.debug("the selected id now is " + id);
+					keyTableOperator.reGetReadDb();
+					KeyInfo info = keyTableOperator.getKeySettingInfo((int)id);
+					keyTableOperator.readFinish();
+					if (info != null) {
+						keySet.setKeys(info, editor);
+						setTitle("设置为" + info.getKeyname() + "按键");
+					} else {
+						logger.warn("the selected menu may has dirty data");
+					}
+					
+					break;
+				}
+				
+			}
+			
+		});
 	}
 
 	@Override
@@ -134,81 +190,97 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 		SocketThreadUtil.close();
 	}
 	
-	/**设置菜单*/
-	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
-		int index = 0;
-		menu.add(0,HANDLE_ID,index++,R.string.menu_handle);
-		menu.add(0, PPT_ID, index++, R.string.menu_ppt);
-		menu.add(0, PLAYER_ID, index++, R.string.menu_player);
+	private SimpleAdapter getMenuAdapter() {
+		ArrayList<HashMap<String, Object>> datas = new ArrayList<HashMap<String, Object>>();
+		
+		HashMap<String, Object> elementHandle = new HashMap<String, Object>();
+		elementHandle.put(MenuAdapter.MAP_ITEM_IMAGE, R.drawable.menu_shoubing);
+		elementHandle.put(MenuAdapter.MAP_ITEM_TEXT, "手柄");
+		elementHandle.put(MenuAdapter.MAP_ITEM_ID, HANDLE_ID);
+		datas.add(elementHandle);
+		
+		HashMap<String, Object> elementPlayer = new HashMap<String, Object>();
+		elementPlayer.put(MenuAdapter.MAP_ITEM_IMAGE, R.drawable.menu_player);
+		elementPlayer.put(MenuAdapter.MAP_ITEM_TEXT, "千千静听");
+		elementPlayer.put(MenuAdapter.MAP_ITEM_ID, PLAYER_ID);
+		datas.add(elementPlayer);
+		
+		HashMap<String, Object> elementPpt = new HashMap<String, Object>();
+		elementPpt.put(MenuAdapter.MAP_ITEM_IMAGE, R.drawable.menu_ppt);
+		elementPpt.put(MenuAdapter.MAP_ITEM_TEXT, "PPT");
+		elementPpt.put(MenuAdapter.MAP_ITEM_ID, PPT_ID);
+		datas.add(elementPpt);
+		
 		keyTableOperator.reGetReadDb();
 		ArrayList<KeyInfo> list = keyTableOperator.getAllList();
 		keyTableOperator.readFinish();
 		if (list != null && list.size() > 0) {
 			
 			for (KeyInfo info:list) {
-				menu.add(0,info.getKeyId(),index++,info.getKeyname());					
+				HashMap<String, Object> element = new HashMap<String, Object>();
+				element.put(MenuAdapter.MAP_ITEM_IMAGE, R.drawable.menu_custom);
+				element.put(MenuAdapter.MAP_ITEM_TEXT, info.getKeyname());
+				element.put(MenuAdapter.MAP_ITEM_ID, info.getKeyId());
+				datas.add(element);
 			}
 		}
-		menu.add(0, EXIT_ID, index++, R.string.menu_exit);
 		
-		return true;
+		HashMap<String, Object> elementEixt = new HashMap<String, Object>();
+		elementEixt.put(MenuAdapter.MAP_ITEM_IMAGE, R.drawable.menu_tuichu);
+		elementEixt.put(MenuAdapter.MAP_ITEM_TEXT, "退出");
+		elementEixt.put(MenuAdapter.MAP_ITEM_ID, EXIT_ID);
+		datas.add(elementEixt);
+		
+		SimpleAdapter simperAdapter = new MenuAdapter(this, datas);
+		return simperAdapter;
+		
 	}
 	
-	private void setTitleNow(int keyType, String title) {
+	@Override
+	public void setTitle(CharSequence title) {
+		if (headView != null) {
+			headView.setTitle(title);
+		}
+	}
+
+	/**设置菜单*/
+	public boolean onCreateOptionsMenu(Menu menu) {
+		menu.add("menu");// 必须创建一项
+		return super.onCreateOptionsMenu(menu);
+	}
+	
+	private String getTitle(int keyType, String title) {
+		String tileNow = null;
 		if (title != null) {
-			setTitle(title);
+			tileNow = (title);
 		} else {
 			switch (keyType) {
 			case SET_KEY_HANDLE:
-				setTitle("设置为手柄按键");			
+				tileNow = ("设置为手柄按键");			
 				break;
 			case SET_KEY_PPT:
-				setTitle("设置为PPT按键");			
+				tileNow = ("设置为PPT按键");			
 				break;
 			case SET_KEY_PLAYER:
-				setTitle("设置为千千静听按键");			
+				tileNow = ("设置为千千静听按键");			
 				break;
 			}
-		}		
+		}
+		return tileNow;
 	}
 	
-	/**菜单监听函数*/
-	public boolean onOptionsItemSelected(MenuItem item) {
-		Editor editor = settings.edit();//获取编辑器
-		int id = item.getItemId();
-		switch (id) {
-		
-		case HANDLE_ID:
-			setTitle("设置为手柄按键");
-			keySet.setKeys(DEFAULT_HANDLE_SET, SET_KEY_HANDLE,editor);			
-			break;
-		case PPT_ID:
-			setTitle("设置为PPT按键");
-			keySet.setKeys(null,SET_KEY_PPT,editor);
-			break;
-		case PLAYER_ID:
-			setTitle("设置为千千静听按键");
-			keySet.setKeys(null,SET_KEY_PLAYER,editor);
-			break;
-		case EXIT_ID:
-			ActivityUtil.exit(this,"点击确定后，您本次和电脑间的连接将会结束!");
-			break;
-		default:
-			logger.debug("the selected id now is " + id);
-			keyTableOperator.reGetReadDb();
-			KeyInfo info = keyTableOperator.getKeySettingInfo(id);
-			keyTableOperator.readFinish();
-			if (info != null) {
-				keySet.setKeys(info, editor);
-				setTitle("设置为" + info.getKeyname() + "按键");
-			} else {
-				logger.warn("the selected menu may has dirty data");
-			}
-			
-			break;
+	private void showMenu() {
+		if (menuDialog == null) {
+			menuDialog = new AlertDialog.Builder(this).setView(menuView).show();
+		} else {
+			menuDialog.show();
 		}
-		return super.onOptionsItemSelected(item);
+	}
+	
+	@Override
+	public boolean onMenuOpened(int featureId, Menu menu) {
+		showMenu();
+		return false;// 返回为true 则显示系统menu
 	}
 	
 	public boolean onKeyDown(int keyCode, KeyEvent event) {

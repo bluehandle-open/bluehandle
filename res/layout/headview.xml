@@ -33,5 +33,9 @@
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
 			android:background="@drawable/button_custom_selector"
 			android:visibility="gone" />
+		<ImageButton android:id="@+id/qiehuanbutton"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:background="@drawable/button_qiehuan_selector"
+			android:visibility="gone" />
 	</LinearLayout>
 </LinearLayout>

@@ -23,6 +23,7 @@ public abstract class AbstractHeadView {
 	protected static final int BUTTON_QUE_DING = 1;
 	protected static final int BUTTON_TIAN_JIA = 2;
 	protected static final int BUTTON_CUSTOM_JIA = 3;
+	protected static final int BUTTON_QIE_HUAN = 4;
 	
 	protected AbstractHeadView(Activity activity, String title,
 			int buttonId, OnClickListener clickListener, boolean hideReturn) {
@@ -82,6 +83,9 @@ public abstract class AbstractHeadView {
 		case BUTTON_CUSTOM_JIA:
 			button = (ImageButton)view.findViewById(R.id.custombutton);
 			break;
+		case BUTTON_QIE_HUAN:
+			button = (ImageButton)view.findViewById(R.id.qiehuanbutton);
+			break;
 		}
 		if (button != null) {
 			button.setVisibility(View.VISIBLE);
@@ -93,5 +97,12 @@ public abstract class AbstractHeadView {
 	
 	public View getView() {
 		return view;
+	}
+	
+	public void setTitle(CharSequence text) {
+		if (view != null) {
+			TextView textView = (TextView)view.findViewById(R.id.title);
+			textView.setText(text);
+		}
 	}
 }
