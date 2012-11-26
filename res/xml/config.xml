@@ -26,7 +26,7 @@
 		<com.whyun.activity.component.SeekBarPreference 
 			android:dialogTitle="@string/sensitivity_volume" android:title="@string/sensitivity_volume" 
 			android:summary="@string/sensitivity_volume_summary" android:key="sensitivity_volume"
-			android:dialogLayout="@layout/seekbar">		    
+			android:dialogLayout="@layout/seekbar" android:dependency="enable_gravity">		    
 		</com.whyun.activity.component.SeekBarPreference> 
 		
 	</PreferenceCategory>
