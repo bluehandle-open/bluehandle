@@ -9,6 +9,6 @@ public class TopQieHuan  extends AbstractHeadView {
 
 	public TopQieHuan(Activity activity, String title,
 			OnClickListener clickListener) {
-		super(activity, title, BUTTON_QIE_HUAN, clickListener);
+		super(activity, title, BUTTON_QIE_HUAN, clickListener,true);
 	}
 }

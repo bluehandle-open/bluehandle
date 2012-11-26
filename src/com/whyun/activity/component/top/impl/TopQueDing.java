@@ -9,7 +9,7 @@ public class TopQueDing  extends AbstractHeadView {
 
 	public TopQueDing(Activity activity, String title,
 			OnClickListener clickListener) {
-		super(activity, title, BUTTON_QUE_DING, clickListener,true);
+		super(activity, title, BUTTON_QUE_DING, clickListener);
 	}
 
 }
