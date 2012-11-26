@@ -23,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 
 import com.whyun.IBlueToothConst;
@@ -32,6 +33,7 @@ import com.whyun.activity.component.top.AbstractHeadView;
 import com.whyun.activity.component.top.impl.TopQieHuan;
 import com.whyun.bluetooth.R;
 import com.whyun.communication.util.SocketThreadUtil;
+import com.whyun.event.ButtonTouchListener;
 import com.whyun.event.MySensorEventListener;
 import com.whyun.message.bean.KeyInfo;
 import com.whyun.message.data.KeyTableOperator;
@@ -74,7 +76,8 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 		setContentView(R.layout.handle);		
 				
 		init();
-		
+		RelativeLayout contanier = (RelativeLayout)findViewById(R.id.handleContanier);
+		contanier.setOnTouchListener(new ButtonTouchListener(this,useShake));
 	}
 	
 	private void init() {
@@ -104,6 +107,7 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 			}
 			
 		});
+		top = (LinearLayout)findViewById(R.id.top);
 		top.addView(headView.getView());
 		
 		useGravity = settings.getBoolean(ENABLE_GRAVITY, false);
@@ -178,7 +182,7 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 					
 					break;
 				}
-				
+				menuDialog.dismiss();
 			}
 			
 		});

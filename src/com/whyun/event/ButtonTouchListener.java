@@ -50,7 +50,7 @@ public class ButtonTouchListener implements View.OnTouchListener {
 	private int[] startLocation = new int[2];
 	private int[] selectLocation = new int[2];
 	
-	public ButtonTouchListener(Activity activity, boolean useShake,String id) {
+	public ButtonTouchListener(Activity activity, boolean useShake) {
 //		this.buttonId = id;
 		this.useShake = useShake;
 		this.activity= activity;
@@ -187,7 +187,13 @@ public class ButtonTouchListener implements View.OnTouchListener {
 			break;
 		case MotionEvent.ACTION_POINTER_2_UP:
 			buttonProcess(event.getX(pointerId),event.getY(pointerId),false);
-			break;		
+			break;	
+		case MotionEvent.ACTION_POINTER_3_DOWN:
+			buttonProcess(event.getX(pointerId),event.getY(pointerId),true);
+			break;
+		case MotionEvent.ACTION_POINTER_3_UP:
+			buttonProcess(event.getX(pointerId),event.getY(pointerId),false);
+			break;
 		}
 		return true;
 	}
