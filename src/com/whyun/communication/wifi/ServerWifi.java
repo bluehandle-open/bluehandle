@@ -35,7 +35,7 @@ public class ServerWifi implements IServer {
 					Thread.currentThread();
 					Thread.sleep(10);
 					client = server.accept();
-					client.getChannel().configureBlocking(false);
+					//client.getChannel().configureBlocking(false);
 					Log.i(IBlueToothConst.serverSign, "find a connection...");
 					WifiSocketThread wifi = WifiSocketThread.getInstance();
 					wifi.init(client);
