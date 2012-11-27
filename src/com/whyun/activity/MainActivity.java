@@ -1,6 +1,7 @@
 package com.whyun.activity;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 
 import net.youmi.android.AdManager;
 import net.youmi.android.AdView;
@@ -62,29 +63,38 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 	private Activity activityNow = this;
 	private SharedPreferences settings;
 	
-	/** 服务器线程监听句柄. */
-	private Handler myHandler = new Handler() {
-		
-		@Override
+	static class MyHandler extends Handler {
+		WeakReference<MainActivity> mActivity;  
+		  
+        MyHandler(MainActivity activity) {  
+                mActivity = new WeakReference<MainActivity>(activity);  
+        }
+        @Override
 		public void handleMessage(Message msg) {			
 			super.handleMessage(msg);
-			switch (msg.what) {
-			case CONNECTED://连接成功
-				//显示手柄界面的acitivty////////////
-				Intent intent = new Intent();
-				//intent.setClass(MainActivity.this, HandleWebActivity.class);
-				intent.setClass(MainActivity.this, HandleNativeActivity.class);
-				startActivity(intent);
-				prgd.dismiss();
-				break;
-			case FAILED:
-				ActivityUtil.toastShow(MainActivity.this,"开启服务失败或者您主动关闭了服务");
-				prgd.dismiss();
-				break;
+			MainActivity theActivity = mActivity.get();
+			if (theActivity != null) {
+				switch (msg.what) {
+				case CONNECTED://连接成功
+					theActivity.dismissDlg();
+					//显示手柄界面的acitivty////////////
+					Intent intent = new Intent();
+					//intent.setClass(MainActivity.this, HandleWebActivity.class);
+					intent.setClass(theActivity, HandleNativeActivity.class);
+					theActivity.startActivity(intent);
+					
+					break;
+				case FAILED:
+					ActivityUtil.toastShow(theActivity,"开启服务失败或者您主动关闭了服务");
+					theActivity.dismissDlg();
+					break;
+				}
 			}
+			
 		}
-		
-	};	
+	}
+	
+	
 	private DownloadService downLoadService;  
 	private boolean flag = false;
 	private ImageButton pcdownload;
@@ -152,6 +162,12 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 		showGuide();
 	}
 	
+	public void dismissDlg() {
+		if (prgd != null) {
+			prgd.dismiss();
+		}
+	}
+	
 	private void showGuide() {
 		if (settings.getBoolean(IMyPreference.FIRST_OPEN, true)) {
 			Intent intent = new Intent();
@@ -209,7 +225,7 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
                 prgd.dismiss();
             }
         });
-		server = ServerFactory.getServer(myHandler, index);
+		server = ServerFactory.getServer(new MyHandler(this), index);
 		connectSetting.setServer(server);
 		threadSocket = ServerFactory.getSocketThread(index);
 		new Thread(server).start();
@@ -327,6 +343,7 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 	@Override
 	protected void onDestroy() {		
 		super.onDestroy();
+		dismissDlg();
 		logger.info("destroy occured.");
 		if (threadSocket != null) {
 			threadSocket.close();
