@@ -12,6 +12,8 @@ import android.content.SharedPreferences.Editor;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -64,6 +66,11 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 	private AlertDialog menuDialog;// menu菜单Dialog
 	private GridView menuGrid;
 	private View menuView;
+	
+	/**电源管理**/
+	private PowerManager pManager ;
+	private WakeLock mWakeLock ;
+	private static final String PM_TAG = "myPowerManager";
 	
 	private static final MyLog logger = MyLog.getLogger(HandleNativeActivity.class);
 	
@@ -305,6 +312,10 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 		}
 
 		super.onResume();
+		pManager = ((PowerManager) getSystemService(POWER_SERVICE));//禁止休眠
+        mWakeLock = pManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK
+                | PowerManager.ON_AFTER_RELEASE, PM_TAG);
+        mWakeLock.acquire();
 	}
 
 	@Override
@@ -314,5 +325,8 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 		}
 
 		super.onPause();
+		if(null != mWakeLock){
+            mWakeLock.release();
+        }
 	}
 }
