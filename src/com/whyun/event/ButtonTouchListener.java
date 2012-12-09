@@ -81,6 +81,8 @@ public class ButtonTouchListener implements View.OnTouchListener {
 			btnStart.getLocationOnScreen(startLocation);
 			btnSelect.getLocationOnScreen(selectLocation);
 			locationInit = true;
+			logger.debug("right location:"+rightLocation + ",down location:"+downLocation
+					+",rightHeight:"+btnRight.getHeight()+"rightWidth:"+btnRight.getWidth());
 		}
 	}
 	
@@ -110,6 +112,7 @@ public class ButtonTouchListener implements View.OnTouchListener {
 	}
 	
 	private void buttonProcess(float x, float y, boolean isDown) {
+		logger.debug("event x:"+x+",y:"+y);
 		initLocation();
 		
 		if (upLocation[0] <= x && x <= upLocation[0] + btnUp.getWidth()
@@ -146,18 +149,20 @@ public class ButtonTouchListener implements View.OnTouchListener {
 		}
 		if (startLocation[0] <= x && x <= startLocation[0] + btnStart.getWidth()
 				&& startLocation[1] <= y && y <= startLocation[1] + btnStart.getHeight()) {
-			sendMessage(IBlueToothConst.selectBtn,isDown);
+			sendMessage(IBlueToothConst.startBtn,isDown);
 		}
 		if (selectLocation[0] <= x && x <= selectLocation[0] + btnSelect.getWidth()
 				&& selectLocation[1] <= y && y <= selectLocation[1] + btnSelect.getHeight()) {
-			sendMessage(IBlueToothConst.startBtn,isDown);
+			sendMessage(IBlueToothConst.selectBtn,isDown);
 		}
 	}
 
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
 		int action = event.getAction();
-		logger.info("[motion type]" + action);
+		if (action != 2) {
+			logger.info("[motion type]" + action);
+		}
 		
 		float x = event.getX();
 		float y = event.getY();

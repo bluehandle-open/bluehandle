@@ -25,6 +25,7 @@ public class MySensorEventListener implements SensorEventListener {
 			.getSocketThread(ConnectSetting.getInstance().getConnectType());
 	
 	/** 每50帧刷新一次屏幕 **/
+	private static final int RE_DRAW_INTERVAL = 50;
 	private  int timeInFrame = 50;
 
 	/** 手机屏幕宽高 **/
@@ -53,7 +54,8 @@ public class MySensorEventListener implements SensorEventListener {
 	private ImageView img;
 	private LinearLayout ballLay;
 
-	private long lastDrawTime;
+	private long lastDrawTime = 0;
+	private long lastSendTime = 0;
 	public MySensorEventListener(Activity activity,int timeInFrame) {
 		//this.activity = activity;
 		img = (ImageView) activity.findViewById(R.id.imgBall);
@@ -83,27 +85,30 @@ public class MySensorEventListener implements SensorEventListener {
 		
 	}
 	
-	private void draw() {
+	private void sendMessage(int left) {
+
+		if (left - mLastX > 0) {
+			serverThread.sendMsg(IBlueToothConst.leftBtn,
+					IBlueToothConst.toPreassRelease);
+		} else if (left - mLastX < 0) {
+			serverThread.sendMsg(IBlueToothConst.rightBtn,
+					IBlueToothConst.toPreassRelease);
+		} else {
+			//logger.debug("not moved!");
+		}
+
+	}
+	
+	private void draw(int left, int top, int right, int bottom) {
 		
 		RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) ballLay
 				.getLayoutParams();
-		int left = (int) mPosX;
-		int top = (int) mPosY;
-		int right = (int) (mScreenWidth - mPosX - mBallWidth);
-		int bottom = (int) (mScreenHeight - mPosY - mBallHeight);
+		
 		if (left - mLastX != 0) {
 			params.setMargins(left, top, right, bottom);
 //			logger.debug("left:"+left+",top:"+top+",right:"+right+",bottom:"+bottom
 //			 +";mScreenBallWidth:"+mScreenBallWidth+",mScreenBallHeight:"+mScreenBallHeight);
-			ballLay.setLayoutParams(params);
-			if (left - mLastX > 0) {
-				serverThread.sendMsg(IBlueToothConst.leftBtn,
-						IBlueToothConst.toPreassRelease);
-			} else {
-				serverThread.sendMsg(IBlueToothConst.rightBtn,
-						IBlueToothConst.toPreassRelease);
-			}
-			mLastX = left;
+			ballLay.setLayoutParams(params);			
 		}
 	}
 
@@ -135,9 +140,21 @@ public class MySensorEventListener implements SensorEventListener {
 			mPosY = mScreenBallHeight;
 		}
 		long timeNow = System.currentTimeMillis();
-		if (timeNow - lastDrawTime > timeInFrame) {
-			lastDrawTime = timeNow;
-			draw();
+		if (timeNow - lastDrawTime > RE_DRAW_INTERVAL) {
+			int left = (int) mPosX;
+			int top = (int) mPosY;
+			int right = (int) (mScreenWidth - mPosX - mBallWidth);
+			int bottom = (int) (mScreenHeight - mPosY - mBallHeight);
+			
+			draw(left,top,right,bottom);
+			if (timeNow - lastSendTime > timeInFrame) {
+				sendMessage(left);
+				lastSendTime = timeNow;
+			} else {
+				//logger.debug("has not reached next send time!");
+			}
+			lastDrawTime = timeNow;	
+			mLastX = left;
 		}
 	}	
 }
