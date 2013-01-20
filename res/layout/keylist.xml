@@ -14,7 +14,7 @@
 		android:layout_height="wrap_content"
 		android:cacheColorHint="@android:color/transparent"
 		android:divider="@color/divider"
-        android:dividerHeight="1dp"
+        android:dividerHeight="2dp"
 		android:layout_width="fill_parent"
 		android:layout_weight="1"
 		android:id="@+id/keysList"></ListView>

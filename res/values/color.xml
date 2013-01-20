@@ -18,7 +18,7 @@
 	<color name="background">#FF000000</color>
 	<color name="topBg">#41A8E3</color>
 	<color name="lightgray">#EFEFEF</color>
-	<color name="divider">#A3A3A3</color>
+	<color name="divider">#BDBDBD</color>
 	<color name="LightGoldenrodYellow">#FAFAD2</color>
 	<color name="itemTitle">#313031</color>
 	<color name="itemSubTitle">#A59E9C</color>
