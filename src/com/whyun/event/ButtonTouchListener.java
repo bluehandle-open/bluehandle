@@ -87,8 +87,8 @@ public class ButtonTouchListener implements View.OnTouchListener {
 	}
 	
 	private void sendMessage(String buttonId,boolean isDown) {
-		int keyType = handleKeys.getTypeNow();
-		if (keyType == IBlueToothConst.SET_KEY_HANDLE) {
+//		int keyType = handleKeys.getTypeNow();
+//		if (keyType == IBlueToothConst.SET_KEY_HANDLE) {
 			if (isDown) {
 				serverThread.sendMsg(buttonId, IBlueToothConst.toPress);
 				if (useShake) {
@@ -100,15 +100,15 @@ public class ButtonTouchListener implements View.OnTouchListener {
 			} else {
 				serverThread.sendMsg(buttonId,IBlueToothConst.toRelease);
 			}
-		} else {
-			if (isDown) {
-				serverThread.sendMsg(buttonId, IBlueToothConst.toPreassRelease);
-				if (useShake) {
-					mVibrator = (Vibrator) activity.getSystemService(Service.VIBRATOR_SERVICE);
-					mVibrator.vibrate(100);
-				}
-			}
-		}
+//		} else {
+//			if (isDown) {
+//				serverThread.sendMsg(buttonId, IBlueToothConst.toPreassRelease);
+//				if (useShake) {
+//					mVibrator = (Vibrator) activity.getSystemService(Service.VIBRATOR_SERVICE);
+//					mVibrator.vibrate(100);
+//				}
+//			}
+//		}
 	}
 	
 	private void buttonProcess(float x, float y, boolean isDown) {
