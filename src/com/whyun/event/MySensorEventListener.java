@@ -86,7 +86,7 @@ public class MySensorEventListener implements SensorEventListener {
 	}
 	
 	private void sendMessage(int left) {
-
+		
 		if (left - mLastX > 0) {
 			serverThread.sendMsg(IBlueToothConst.leftBtn,
 					IBlueToothConst.toPreassRelease);
@@ -97,6 +97,16 @@ public class MySensorEventListener implements SensorEventListener {
 			//logger.debug("not moved!");
 		}
 
+	}
+	
+	private void sendMessage2(float y) {
+		if (y >= 1) {
+			serverThread.sendMsg(IBlueToothConst.rightBtn,
+					IBlueToothConst.toPreassRelease);
+		} else if (y <= -1) {
+			serverThread.sendMsg(IBlueToothConst.leftBtn,
+					IBlueToothConst.toPreassRelease);
+		}
 	}
 	
 	private void draw(int left, int top, int right, int bottom) {
@@ -116,7 +126,8 @@ public class MySensorEventListener implements SensorEventListener {
 	public void onSensorChanged(SensorEvent event) {
 		mGX = event.values[SensorManager.DATA_X];
 		mGY = event.values[SensorManager.DATA_Y];
-
+		float z = event.values[SensorManager.DATA_Z];
+		
 		// 这里乘以2是为了让小球移动的更快
 		mPosX += mGY * 2;
 		mPosY += mGX * 2;
@@ -148,7 +159,9 @@ public class MySensorEventListener implements SensorEventListener {
 			
 			draw(left,top,right,bottom);
 			if (timeNow - lastSendTime > timeInFrame) {
-				sendMessage(left);
+				logger.debug("x:"+mGX+",y:"+mGY+",z:"+z);
+//				sendMessage(left);
+				sendMessage2(mGY);
 				lastSendTime = timeNow;
 			} else {
 				//logger.debug("has not reached next send time!");
