@@ -4,6 +4,9 @@ import android.util.Log;
 
 import com.whyun.IBlueToothConst;
 import com.whyun.message.AbstractMessage;
+import com.whyun.message.FinishMessage;
+import com.whyun.message.HeartBeatRequestMessage;
+import com.whyun.message.HeartBeatResponseMessage;
 import com.whyun.message.KeyCommunication;
 import com.whyun.message.RecieveKeySetting;
 
@@ -50,8 +53,14 @@ public class MessageTool implements IBlueToothConst {
 		if (isDebug) {
 			printInfo(messageArray);
 		}
-		if ((type & 1) == 0) {//��������
+		if (type == handleKeySet || type == pptKeySet || type == playerKeySet) {//��������
 			return new RecieveKeySetting(totalLen,type,body);
+		} else if (type == FINISH_SOCKET) {
+			return new FinishMessage();
+		} else if (type == HEART_BEAT_REQ) {
+			return new HeartBeatRequestMessage();
+		} else if (type == HEART_BEAT_RESP) {
+			return new HeartBeatResponseMessage();
 		} else {//��Ϣͨ��
 			return new KeyCommunication(totalLen,type,body);
 		}

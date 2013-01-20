@@ -1,13 +1,17 @@
 package com.whyun.message;
-
+/**
+ * 抽象消息类<br />
+ * 一条消息由消息头+消息正文构成<br />
+ * 消息头包括：当前消息的总长度+当前消息类型
+ * */
 public abstract class AbstractMessage {
-	/** The total message length. */
+	/** 当前消息的总长度. */
 	protected byte totalLen;
 	
-	/** The message type. */
+	/** 当前消息类型. */
 	protected byte type;
 	
-	/** The message content body. */
+	/** 消息正文. */
 	protected byte[] body;	
 	
 	public AbstractMessage(byte totalLen, byte type, byte[] body) {		

@@ -67,8 +67,8 @@ public class KeyCommunication extends AbstractMessage implements IBlueToothConst
 
 		byte[] keyBody = keySet.getKeyBody(keyName);
 		if (keyBody != null) {
-			int len = keyBody.length + 1;
-			byte[] body = new byte[len];
+			int len = keyBody.length + 1;//快捷键数组长度+按键类型长度
+			byte[] body = new byte[len];//消息正文数组
 			
 			int handleType = keySet.getTypeNow();
 			if (handleType == SET_KEY_HANDLE) {
@@ -93,8 +93,8 @@ public class KeyCommunication extends AbstractMessage implements IBlueToothConst
 	}
 	
 	/**
-	 * 接收并解析PC端发送过来的报文，如果报文是设置按键，则更新手机端按键设置。
-	 * 现在这个逻辑已经不再使用了。
+	 * 接收并解析PC端发送过来的报文。
+	 * 如果报文是设置按键，则更新手机端按键设置。 现在这个逻辑已经不再使用了。
 	 *
 	 * @param is 输入流
 	 * @throws IOException Signals that an I/O exception has occurred.
