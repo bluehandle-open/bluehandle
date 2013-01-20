@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="8dip"
     android:layout_marginRight="8dip"
+    android:background="@drawable/list_item_bg"
     android:orientation="horizontal" >
 
     <LinearLayout
@@ -17,6 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
+            android:textColor="@color/itemTitle"
             android:textSize="24dip" />
 
         <LinearLayout
@@ -28,6 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="@color/itemSubTitle"
                 android:text="TextView" />
         </LinearLayout>
     </LinearLayout>
