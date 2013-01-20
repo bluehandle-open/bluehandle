@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.whyun.bluetooth.R;
+import com.whyun.util.UnitTransformTool;
 
 public abstract class AbstractHeadView {
 	private View view;
@@ -47,7 +48,8 @@ public abstract class AbstractHeadView {
 		WindowManager manage = activity.getWindowManager();
 		Display display = manage.getDefaultDisplay();
 		int screenWidth = display.getWidth();
-		LayoutParams para = new LayoutParams(screenWidth,LayoutParams.WRAP_CONTENT);
+		LayoutParams para = new LayoutParams(
+				screenWidth,UnitTransformTool.dip2px(activity, 50));
 		para.width = screenWidth;
 		view.setLayoutParams(para);
 		
