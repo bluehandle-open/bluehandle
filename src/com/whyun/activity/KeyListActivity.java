@@ -13,7 +13,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.BaseAdapter;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -69,8 +69,8 @@ public class KeyListActivity extends Activity {
 	private static class KeyViewHolder {
 		TextView keysName;
 		TextView keys;
-		Button modify;
-		Button delete;
+		ImageButton modify;
+		ImageButton delete;
 	}
 	
 	private  class KeyListAdapter extends BaseAdapter {
@@ -117,8 +117,8 @@ public class KeyListActivity extends Activity {
 				viewHolder = new KeyViewHolder();
 				viewHolder.keysName = (TextView)convertView.findViewById(R.id.keysName);
 				viewHolder.keys = (TextView)convertView.findViewById(R.id.keys);
-				viewHolder.modify = (Button)convertView.findViewById(R.id.modify);
-				viewHolder.delete = (Button)convertView.findViewById(R.id.delete);
+				viewHolder.modify = (ImageButton)convertView.findViewById(R.id.modify);
+				viewHolder.delete = (ImageButton)convertView.findViewById(R.id.delete);
 				
 				convertView.setTag(viewHolder);
 			} else {

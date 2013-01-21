@@ -6,6 +6,7 @@
 	<drawable name="lightgray">#c0c0c0ff</drawable>
 	<drawable name="yellow">#ffFF33ff</drawable>
 	<drawable name="blue">#ff0000ff</drawable>
+	
 	<drawable name="gray">#808080ff</drawable>
 	<drawable name="magenta">#ff6699ff</drawable>
 	<drawable name="foxnews">#09142B</drawable>
@@ -17,6 +18,7 @@
 	<drawable name="dongtai_name">#00003366</drawable>
 	<color name="background">#FF000000</color>
 	<color name="topBg">#41A8E3</color>
+	<color name="buttonTitle">#5292F0</color>
 	<color name="lightgray">#EFEFEF</color>
 	<color name="divider">#BDBDBD</color>
 	<color name="LightGoldenrodYellow">#FAFAD2</color>
