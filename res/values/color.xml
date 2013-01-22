@@ -21,6 +21,7 @@
 	<color name="buttonTitle">#5292F0</color>
 	<color name="lightgray">#EFEFEF</color>
 	<color name="divider">#BDBDBD</color>
+	<color name="buttonSelected">#FC9500</color>
 	<color name="LightGoldenrodYellow">#FAFAD2</color>
 	<color name="itemTitle">#313031</color>
 	<color name="itemSubTitle">#A59E9C</color>

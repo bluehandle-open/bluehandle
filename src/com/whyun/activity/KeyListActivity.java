@@ -71,6 +71,8 @@ public class KeyListActivity extends Activity {
 		TextView keys;
 		ImageButton modify;
 		ImageButton delete;
+		TextView modifyTitle;
+		TextView deleteTitle;
 	}
 	
 	private  class KeyListAdapter extends BaseAdapter {
@@ -119,6 +121,8 @@ public class KeyListActivity extends Activity {
 				viewHolder.keys = (TextView)convertView.findViewById(R.id.keys);
 				viewHolder.modify = (ImageButton)convertView.findViewById(R.id.modify);
 				viewHolder.delete = (ImageButton)convertView.findViewById(R.id.delete);
+				viewHolder.modifyTitle = (TextView)convertView.findViewById(R.id.modifyTitle);
+				viewHolder.deleteTitle = (TextView)convertView.findViewById(R.id.deleteTitle);
 				
 				convertView.setTag(viewHolder);
 			} else {
@@ -137,52 +141,71 @@ public class KeyListActivity extends Activity {
 			logger.debug("keys:" + keys);
 			viewHolder.keys.setText(keys);
 			viewHolder.keysName.setText(info.getKeyname());
-			viewHolder.modify.setOnClickListener(new OnClickListener(){
-
-				@Override
-				public void onClick(View arg0) {
-					Intent intent = new Intent();
-					intent.putExtra(KeyAddActivity.KEY_RECORD, info);
-					intent.setClass(KeyListActivity.this, KeyAddActivity.class);
-					
-					activity.startActivity(intent);
-				}
-			});
+			viewHolder.modify.setOnClickListener(new ModifyListener(info));
+			viewHolder.modifyTitle.setOnClickListener(new ModifyListener(info));
 			final KeyListAdapter adpater = this;
-			final String keyNameNow = info.getKeyname();
-			viewHolder.delete.setOnClickListener(new OnClickListener(){
-
-				@Override
-				public void onClick(View v) {
-					new AlertDialog.Builder(KeyListActivity.this)
-					.setMessage("确定要删除自定义按键" + keyNameNow + ",删除后无法恢复，不过你会找回"
-							+ IBlueToothConst.ADD_USER_KEY_COINS + "个积分.点击确定后删除。")
-					.setTitle("删除")
-					.setNegativeButton("取消",
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int which) {
-								}
-							})
-					.setPositiveButton("确定",
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int whichButton) {
-//									YoumiPointsManager.spendPoints(ConfigActivity.this,
-//											IBlueToothConst.REMOVE_AD_COINS);
-									YoumiPointsManager.awardPoints(KeyListActivity.this,
-											IBlueToothConst.ADD_USER_KEY_COINS);
-									tableOperator.deleteKey(info.getKeyId());
-									adpater.notifyDataSetChanged();
-								}
-							}).show();
-					
-				}
-				
-			});
-				
+			viewHolder.delete.setOnClickListener(new DeleteListener(adpater,info));
+			viewHolder.deleteTitle.setOnClickListener(new DeleteListener(adpater,info));	
 			return convertView;
-		}		
-	}
+		}//end of function getView		
+		class ModifyListener implements OnClickListener {
+			private KeyInfo info;
+			
+			public ModifyListener(KeyInfo info) {
+				this.info = info ;
+				
+			}
+			@Override
+			public void onClick(View v) {
+				
+				Intent intent = new Intent();
+				intent.putExtra(KeyAddActivity.KEY_RECORD, info);
+				intent.setClass(KeyListActivity.this, KeyAddActivity.class);
+				
+				activity.startActivity(intent);
+				
+			}
+			
+		}
+		class DeleteListener implements OnClickListener {
+			private KeyListAdapter adpater;
+			private KeyInfo info;
+			
+			
+			public DeleteListener(KeyListAdapter adpater, KeyInfo info) {
+				super();
+				this.adpater = adpater;
+				this.info = info;
+				
+			}
+
+			@Override
+			public void onClick(View v) {
+				new AlertDialog.Builder(KeyListActivity.this)
+				.setMessage("确定要删除自定义按键" + info.getKeyname() + ",删除后无法恢复，不过你会找回"
+						+ IBlueToothConst.ADD_USER_KEY_COINS + "个积分.点击确定后删除。")
+				.setTitle("删除")
+				.setNegativeButton("取消",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int which) {
+							}
+						})
+				.setPositiveButton("确定",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int whichButton) {
+//								YoumiPointsManager.spendPoints(ConfigActivity.this,
+//										IBlueToothConst.REMOVE_AD_COINS);
+								YoumiPointsManager.awardPoints(KeyListActivity.this,
+										IBlueToothConst.ADD_USER_KEY_COINS);
+								tableOperator.deleteKey(info.getKeyId());
+								adpater.notifyDataSetChanged();
+							}
+						}).show();
+			}
+			
+		}
+	}//end of keylistadpter
 
 }
