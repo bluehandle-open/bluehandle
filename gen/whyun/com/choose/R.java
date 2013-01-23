@@ -52,32 +52,33 @@ containing a value of this type.
         public static final int textColor=0x7f010001;
     }
     public static final class color {
-        public static final int LightGoldenrodYellow=0x7f060006;
+        public static final int LightGoldenrodYellow=0x7f060007;
         public static final int background=0x7f060000;
-        public static final int baise=0x7f06000f;
-        public static final int baiyan=0x7f060012;
-        public static final int baoshilv=0x7f060019;
-        public static final int blue_line=0x7f06000e;
+        public static final int baise=0x7f060010;
+        public static final int baiyan=0x7f060013;
+        public static final int baoshilv=0x7f06001a;
+        public static final int blue_line=0x7f06000f;
+        public static final int buttonNormal=0x7f060006;
         public static final int buttonSelected=0x7f060005;
         public static final int buttonTitle=0x7f060002;
-        public static final int cate_gray=0x7f06000b;
-        public static final int cate_white=0x7f06000c;
-        public static final int control_back=0x7f060009;
-        public static final int dialog_back=0x7f06000a;
+        public static final int cate_gray=0x7f06000c;
+        public static final int cate_white=0x7f06000d;
+        public static final int control_back=0x7f06000a;
+        public static final int dialog_back=0x7f06000b;
         public static final int divider=0x7f060004;
-        public static final int heise=0x7f060010;
-        public static final int huise=0x7f060017;
-        public static final int itemSubTitle=0x7f060008;
-        public static final int itemTitle=0x7f060007;
+        public static final int heise=0x7f060011;
+        public static final int huise=0x7f060018;
+        public static final int itemSubTitle=0x7f060009;
+        public static final int itemTitle=0x7f060008;
         public static final int lightgray=0x7f060003;
-        public static final int lvse=0x7f060016;
-        public static final int qianhui=0x7f060015;
-        public static final int shenbaiyan=0x7f060014;
-        public static final int shencheng=0x7f060013;
-        public static final int shenhuise=0x7f060018;
+        public static final int lvse=0x7f060017;
+        public static final int qianhui=0x7f060016;
+        public static final int shenbaiyan=0x7f060015;
+        public static final int shencheng=0x7f060014;
+        public static final int shenhuise=0x7f060019;
         public static final int topBg=0x7f060001;
-        public static final int transparent=0x7f06000d;
-        public static final int yinbai=0x7f060011;
+        public static final int transparent=0x7f06000e;
+        public static final int yinbai=0x7f060012;
     }
     public static final class drawable {
         public static final int baidu=0x7f020000;

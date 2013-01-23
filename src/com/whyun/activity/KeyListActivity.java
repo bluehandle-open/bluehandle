@@ -141,23 +141,25 @@ public class KeyListActivity extends Activity {
 			logger.debug("keys:" + keys);
 			viewHolder.keys.setText(keys);
 			viewHolder.keysName.setText(info.getKeyname());
-			viewHolder.modify.setOnClickListener(new ModifyListener(info));
-			viewHolder.modifyTitle.setOnClickListener(new ModifyListener(info));
+			viewHolder.modify.setOnClickListener(new ModifyListener(info,viewHolder));
+			viewHolder.modifyTitle.setOnClickListener(new ModifyListener(info,viewHolder));
 			final KeyListAdapter adpater = this;
-			viewHolder.delete.setOnClickListener(new DeleteListener(adpater,info));
-			viewHolder.deleteTitle.setOnClickListener(new DeleteListener(adpater,info));	
+			viewHolder.delete.setOnClickListener(new DeleteListener(adpater,info,viewHolder));
+			viewHolder.deleteTitle.setOnClickListener(new DeleteListener(adpater,info,viewHolder));	
 			return convertView;
 		}//end of function getView		
 		class ModifyListener implements OnClickListener {
 			private KeyInfo info;
-			
-			public ModifyListener(KeyInfo info) {
+			private KeyViewHolder viewHolder;
+			public ModifyListener(KeyInfo info,KeyViewHolder viewHolder) {
 				this.info = info ;
-				
+				this.viewHolder =viewHolder;
 			}
 			@Override
 			public void onClick(View v) {
-				
+				viewHolder.modify.setImageResource(R.drawable.btn_modify_selected);
+				viewHolder.modifyTitle.setTextColor(
+						KeyListActivity.this.getResources().getColor(R.color.buttonSelected));
 				Intent intent = new Intent();
 				intent.putExtra(KeyAddActivity.KEY_RECORD, info);
 				intent.setClass(KeyListActivity.this, KeyAddActivity.class);
@@ -170,17 +172,20 @@ public class KeyListActivity extends Activity {
 		class DeleteListener implements OnClickListener {
 			private KeyListAdapter adpater;
 			private KeyInfo info;
+			private KeyViewHolder viewHolder;
 			
-			
-			public DeleteListener(KeyListAdapter adpater, KeyInfo info) {
+			public DeleteListener(KeyListAdapter adpater, KeyInfo info,KeyViewHolder viewHolder) {
 				super();
 				this.adpater = adpater;
 				this.info = info;
-				
+				this.viewHolder = viewHolder;
 			}
 
 			@Override
 			public void onClick(View v) {
+				viewHolder.delete.setImageResource(R.drawable.btn_delete_selected);
+				viewHolder.deleteTitle.setTextColor(
+						KeyListActivity.this.getResources().getColor(R.color.buttonSelected));
 				new AlertDialog.Builder(KeyListActivity.this)
 				.setMessage("确定要删除自定义按键" + info.getKeyname() + ",删除后无法恢复，不过你会找回"
 						+ IBlueToothConst.ADD_USER_KEY_COINS + "个积分.点击确定后删除。")
@@ -189,6 +194,9 @@ public class KeyListActivity extends Activity {
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog,
 									int which) {
+								viewHolder.delete.setImageResource(R.drawable.btn_delete);
+								viewHolder.deleteTitle.setTextColor(
+										KeyListActivity.this.getResources().getColor(R.color.buttonNormal));
 							}
 						})
 				.setPositiveButton("确定",
