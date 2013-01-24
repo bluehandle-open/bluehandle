@@ -17,6 +17,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="10dip"
         android:orientation="horizontal" >
         <TextView android:text="按键名"
             android:textColor="@color/itemTitle"
@@ -24,6 +25,7 @@
             android:layout_height="wrap_content" />
         <EditText android:id="@+id/keynameInput"
             android:minWidth="200dip"
+            android:background="@drawable/updatecomment_edittext_bg_selector"
            	android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
