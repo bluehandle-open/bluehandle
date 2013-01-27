@@ -2,16 +2,17 @@ package com.whyun.activity.component.scroll;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Scroller;
 
+import com.whyun.util.MyLog;
+
 public class MyScrollLayout extends ViewGroup{
 
-    private static final String TAG = "ScrollLayout";   
+	private MyLog logger = MyLog.getLogger(MyScrollLayout.class);   
     
     private VelocityTracker mVelocityTracker;  			// 用于判断甩动手势
     
@@ -129,6 +130,8 @@ public class MyScrollLayout extends ViewGroup{
 	            if (mOnViewChangeListener != null)
 	            {
 	            	mOnViewChangeListener.OnViewChange(mCurScreen);
+	            } else {
+	            	 logger.debug( "snapToScreen  mOnViewChangeListener is null");
 	            }
 	        }    
 	    }    
@@ -155,7 +158,7 @@ public class MyScrollLayout extends ViewGroup{
 	        switch (action) {    
 	        case MotionEvent.ACTION_DOWN: 
 	        	
-	        	  Log.i("", "onTouchEvent  ACTION_DOWN");
+	        	logger.debug( "onTouchEvent  ACTION_DOWN");
 	        	  
 	        	if (mVelocityTracker == null) {    
 			            mVelocityTracker = VelocityTracker.obtain();    
@@ -199,15 +202,15 @@ public class MyScrollLayout extends ViewGroup{
 	                
 	            if (velocityX > SNAP_VELOCITY && mCurScreen > 0) {       
 	                // Fling enough to move left       
-	                Log.e(TAG, "snap left");    
+	            	logger.debug( "snap left");    
 	                snapToScreen(mCurScreen - 1);       
 	            } else if (velocityX < -SNAP_VELOCITY       
 	                    && mCurScreen < getChildCount() - 1) {       
 	                // Fling enough to move right       
-	                Log.e(TAG, "snap right");    
+	            	logger.debug( "snap right");
 	                snapToScreen(mCurScreen + 1);       
 	            } else {       
-	                snapToDestination();       
+	                snapToDestination();
 	            }      
 	            
 	           

@@ -6,6 +6,7 @@ import java.lang.ref.WeakReference;
 import net.youmi.android.AdManager;
 import net.youmi.android.AdView;
 import net.youmi.android.appoffers.YoumiOffersManager;
+import net.youmi.android.appoffers.YoumiPointsManager;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -170,6 +171,8 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 	
 	private void showGuide() {
 		if (settings.getBoolean(IMyPreference.FIRST_OPEN, true)) {
+			YoumiPointsManager.awardPoints(MainActivity.this,//初始化赠送10个积分
+					10);
 			Intent intent = new Intent();
 			intent.setClass(MainActivity.this, GuideActivity.class);
 			Editor editor = settings.edit();

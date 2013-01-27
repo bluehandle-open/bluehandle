@@ -161,7 +161,9 @@ public class ConfigActivity extends PreferenceActivity implements
 						}
 					});
 			ad.setMessage("版本：" + ConfigActivity.this.getVersionName() + "\n"
-					+ "作者：白一梓\n如果有任何问题，请发送邮件bluehandle@googlegroups.com");
+					+ "作者：白一梓\n如果有任何问题，请发送邮件bluehandle@googlegroups.com\n"
+					+ "您当前的积分："+Integer.toString(YoumiPointsManager
+							.queryPoints(this)));
 			ad.show();
 		} else {
 			logger.debug("onPreferenceTreeClick other key");

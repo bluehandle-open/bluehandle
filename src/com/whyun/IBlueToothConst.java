@@ -5,7 +5,7 @@ import com.whyun.util.MyLog;
 public interface IBlueToothConst {
 	public static String uuidString  = "00001101-0000-1000-8000-00805F9B34FB";
 	public static final boolean isDebug = false;
-	public static final boolean COIN_DEBUG = true;
+	public static final boolean COIN_DEBUG = false;
 	public static final int CONNECTED = 1;
 	public static final int FAILED = 0;
 	

@@ -3,6 +3,7 @@ package com.whyun.activity;
 import com.whyun.activity.component.scroll.MyScrollLayout;
 import com.whyun.activity.component.scroll.OnViewChangeListener;
 import com.whyun.bluetooth.R;
+import com.whyun.util.MyLog;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -13,7 +14,7 @@ import android.widget.LinearLayout;
 
 public class GuideActivity extends Activity implements OnViewChangeListener, OnClickListener{
     /** Called when the activity is first created. */
-	
+	private MyLog logger = MyLog.getLogger(GuideActivity.class);
 
 	private MyScrollLayout mScrollLayout;
 	
@@ -22,12 +23,13 @@ public class GuideActivity extends Activity implements OnViewChangeListener, OnC
 	private int mViewCount;
 	
 	private int mCurSel;
+	private ImageView btnBeginUse;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course);
-        
+        btnBeginUse = (ImageView)findViewById(R.id.btnBeginUse);
         init();
     }
     
@@ -36,6 +38,8 @@ public class GuideActivity extends Activity implements OnViewChangeListener, OnC
     private void init()
     {
     	mScrollLayout = (MyScrollLayout) findViewById(R.id.ScrollLayout);
+    	mScrollLayout.SetOnViewChangeListener(this);
+    	logger.debug("this:"+this);
     	
     	LinearLayout linearLayout = (LinearLayout) findViewById(R.id.llayout);
     	
@@ -53,12 +57,26 @@ public class GuideActivity extends Activity implements OnViewChangeListener, OnC
     	mCurSel = 0;
     	mImageViews[mCurSel].setEnabled(false);
     	
-    	mScrollLayout.SetOnViewChangeListener(this);
+    	
+    	btnBeginUse.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				GuideActivity.this.finish();
+			}
+			
+    	});
     }
 
 
     private void setCurPoint(int index)
     {
+    	logger.debug("index now:"+index);
+    	if (index == mViewCount - 1) {
+    		btnBeginUse.setVisibility(View.VISIBLE);
+    	} else {
+    		btnBeginUse.setVisibility(View.GONE);
+    	}
     	if (index < 0 || index > mViewCount - 1 || mCurSel == index)
     	{
     		return ;
@@ -71,15 +89,14 @@ public class GuideActivity extends Activity implements OnViewChangeListener, OnC
     }
 
     @Override
-	public void OnViewChange(int view) {
-		// TODO Auto-generated method stub
-		setCurPoint(view);
+	public void OnViewChange(int pos) {
+    	logger.debug("index pos now:"+pos);
+    	setCurPoint(pos);
 	}
 
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
 		int pos = (Integer)(v.getTag());
 		setCurPoint(pos);
 		mScrollLayout.snapToScreen(pos);

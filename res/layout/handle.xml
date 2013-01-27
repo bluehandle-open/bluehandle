@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_marginBottom="10dip"
+    
     android:background="@color/lightgray"
     android:id="@+id/handleContanier"
     android:orientation="vertical" >
@@ -120,6 +120,7 @@
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
 	    android:orientation="horizontal" 
+	    android:layout_marginBottom="10dip"
 	    android:layout_alignParentBottom="true"
 	    >
 		<RelativeLayout
