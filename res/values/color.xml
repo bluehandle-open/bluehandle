@@ -30,6 +30,7 @@
 	<color name="dialog_back">#330000FF</color>
 	<color name="cate_gray">#FFE3E3E3</color>
 	<color name="cate_white">#FFFFFFFF</color>
+	<color name="transparent_white">#00FFFFFF</color>
 	<drawable name="list_bg_hui">#d7d7d7</drawable>
 	<drawable name="list_bg_bai">#efefef</drawable>
 	<color name="transparent">#00000000</color>

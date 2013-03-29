@@ -6,14 +6,15 @@ import android.os.Vibrator;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.whyun.IBlueToothConst;
 import com.whyun.bluetooth.R;
 import com.whyun.communication.ConnectSetting;
 import com.whyun.communication.ISocketThread;
 import com.whyun.communication.ServerFactory;
-import com.whyun.message.key.HandleKeys;
 import com.whyun.util.MyLog;
+//import com.whyun.message.key.HandleKeys;
 //import android.widget.Toast;
 
 public class ButtonTouchListener implements View.OnTouchListener {
@@ -24,19 +25,19 @@ public class ButtonTouchListener implements View.OnTouchListener {
 	private boolean useShake;
 	private Activity activity;
 	private MyLog logger = MyLog.getLogger(LOG_TAG);
-	private HandleKeys handleKeys = HandleKeys.getInstance();
+//	private HandleKeys handleKeys = HandleKeys.getInstance();
 	Vibrator mVibrator = null;
 	
 	private ImageView btnUp;
 	private ImageView btnDown;
 	private ImageView btnLeft;
 	private ImageView btnRight;
-	private ImageView btnX;
-	private ImageView btnY;
-	private ImageView btnA;
-	private ImageView btnB;
-	private ImageView btnStart;
-	private ImageView btnSelect;
+	private TextView btnX;
+	private TextView btnY;
+	private TextView btnA;
+	private TextView btnB;
+	private TextView btnStart;
+	private TextView btnSelect;
 	
 	private boolean locationInit;
 	private int[] upLocation = new int[2];
@@ -59,12 +60,12 @@ public class ButtonTouchListener implements View.OnTouchListener {
 		btnDown = (ImageView)activity.findViewById(R.id.btnDwon);
 		btnLeft = (ImageView)activity.findViewById(R.id.btnLeft);
 		btnRight = (ImageView)activity.findViewById(R.id.btnRight);
-		btnX = (ImageView)activity.findViewById(R.id.btnX);
-		btnY = (ImageView)activity.findViewById(R.id.btnY);
-		btnA = (ImageView)activity.findViewById(R.id.btnA);
-		btnB = (ImageView)activity.findViewById(R.id.btnB);
-		btnStart = (ImageView)activity.findViewById(R.id.btnStart);
-		btnSelect = (ImageView)activity.findViewById(R.id.btnSelect);
+		btnX = (TextView)activity.findViewById(R.id.btnX);
+		btnY = (TextView)activity.findViewById(R.id.btnY);
+		btnA = (TextView)activity.findViewById(R.id.btnA);
+		btnB = (TextView)activity.findViewById(R.id.btnB);
+		btnStart = (TextView)activity.findViewById(R.id.btnStart);
+		btnSelect = (TextView)activity.findViewById(R.id.btnSelect);
 		locationInit = false;
 	}
 	

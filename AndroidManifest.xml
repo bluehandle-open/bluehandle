@@ -44,11 +44,10 @@
 			android:label="@string/app_name">
 		</activity>
 		<service android:name="com.whyun.service.DownloadService"/>  
-		
+	<!-- 
 		<activity android:name="net.youmi.android.AdYMActivity"
 		android:configChanges="keyboard|keyboardHidden|orientation"/>
-		<activity android:name="net.youmi.android.AdActivity"
-		android:configChanges="keyboard|keyboardHidden|orientation"/>	
+	 -->	
 		<activity android:configChanges="keyboard|keyboardHidden|orientation"
 		android:name="net.youmi.android.appoffers.YoumiOffersActivity" >
 		</activity>

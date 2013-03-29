@@ -3,8 +3,8 @@ package com.whyun.activity;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 
-import net.youmi.android.AdManager;
-import net.youmi.android.AdView;
+//import net.youmi.android.AdManager;
+//import net.youmi.android.AdView;
 import net.youmi.android.appoffers.YoumiOffersManager;
 import net.youmi.android.appoffers.YoumiPointsManager;
 import android.app.Activity;
@@ -30,7 +30,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
-import android.view.WindowManager.LayoutParams;
+//import android.view.WindowManager.LayoutParams;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -128,7 +128,7 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 		
 		YoumiOffersManager.init(MainActivity.this, "0874deea1c82005e", "8eef5acdfa4fdb3a");
 		// 应用Id 应用密码 广告请求间隔(s) 测试模式
-		AdManager.init(MainActivity.this,"0874deea1c82005e", "8eef5acdfa4fdb3a", 30, false);
+//		AdManager.init(MainActivity.this,"0874deea1c82005e", "8eef5acdfa4fdb3a", 30, false);
 		
 		LinearLayout top = (LinearLayout)findViewById(R.id.top);
 		top.addView(new TopCustom(this,"蓝色手柄", new OnClickListener() {
@@ -182,24 +182,24 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 		}
 	}
 	
-	private void showAd() {
-		
-		LinearLayout head = (LinearLayout)findViewById(R.id.head);
-		if (settings.getBoolean(IMyPreference.REMOVE_AD, false)) {
-			head.removeAllViews();
-			logger.debug("remove ad already");
-		} else {
-	        LinearLayout layout=new LinearLayout(this);   
-	        layout.setOrientation(LinearLayout.VERTICAL);   
-	        //layout.setBackgroundResource(R.drawable.bg);   
-	        //初始化广告视图，可以使用其他的构造函数设置广告视图的背景色、透明度及字体颜色  
-	        AdView adView = new AdView(this);   
-	        LayoutParams params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);       
-	        layout.addView(adView, params);
-			
-			head.addView(layout);
-		}
-	}
+//	private void showAd() {
+//		
+//		LinearLayout head = (LinearLayout)findViewById(R.id.head);
+//		if (settings.getBoolean(IMyPreference.REMOVE_AD, false)) {
+//			head.removeAllViews();
+//			logger.debug("remove ad already");
+//		} else {
+//	        LinearLayout layout=new LinearLayout(this);   
+//	        layout.setOrientation(LinearLayout.VERTICAL);   
+//	        //layout.setBackgroundResource(R.drawable.bg);   
+//	        //初始化广告视图，可以使用其他的构造函数设置广告视图的背景色、透明度及字体颜色  
+//	        AdView adView = new AdView(this);   
+//	        LayoutParams params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);       
+//	        layout.addView(adView, params);
+//			
+//			head.addView(layout);
+//		}
+//	}
 	
 	private void initConnectType() {
 		
@@ -315,7 +315,7 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 	protected void onResume() {
 		super.onResume();
 		initConnectType();
-		showAd();
+//		showAd();
 	}
 	
 	private void bindService() {

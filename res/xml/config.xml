@@ -33,9 +33,10 @@
 
 	<PreferenceCategory xmlns:android="http://schemas.android.com/apk/res/android"
 		android:key="advanced_settings" android:title="@string/advanced_settings">
+		<!-- 
 		<Preference android:key="remove_ad" android:title="去除广告"  
         	android:summary="去除广告您需要花费50个积分">
-    	</Preference> 
+    	</Preference>  -->
     	<Preference android:key="manage_user_key" android:title="自定义按键管理"  
         	android:summary="添加修改自定义按键，每添加一套按键花费10个积分">
     	</Preference> 

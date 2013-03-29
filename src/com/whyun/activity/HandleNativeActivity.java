@@ -82,7 +82,7 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, 
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-		setContentView(R.layout.handle);		
+		setContentView(R.layout.handle2);		
 				
 		init();
 		RelativeLayout contanier = (RelativeLayout)findViewById(R.id.handleContanier);
