@@ -1,6 +1,6 @@
 package com.whyun.activity;
 
-import net.youmi.android.appoffers.YoumiPointsManager;
+import net.youmi.android.offers.PointsManager;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -51,7 +51,7 @@ public class KeyListActivity extends Activity {
 
 			@Override
 			public void onClick(View arg0) {
-				int coinsNow = YoumiPointsManager.queryPoints(KeyListActivity.this);
+				int coinsNow = PointsManager.getInstance(KeyListActivity.this).queryPoints();
 				if (coinsNow < IBlueToothConst.ADD_USER_KEY_COINS && !IBlueToothConst.COIN_DEBUG) {
 					ActivityUtil.notEnoughCoins(KeyListActivity.this, coinsNow);
 				} else {
@@ -205,7 +205,7 @@ public class KeyListActivity extends Activity {
 									int whichButton) {
 //								YoumiPointsManager.spendPoints(ConfigActivity.this,
 //										IBlueToothConst.REMOVE_AD_COINS);
-								YoumiPointsManager.awardPoints(KeyListActivity.this,
+								PointsManager.getInstance(KeyListActivity.this).spendPoints(
 										IBlueToothConst.ADD_USER_KEY_COINS);
 								tableOperator.deleteKey(info.getKeyId());
 								adpater.notifyDataSetChanged();

@@ -119,7 +119,7 @@
                 android:paddingTop="5dip"
                 android:scaleType="centerInside"
                 android:text="A"
-                android:textColor="@color/cate_white"
+                android:textColor="@color/buttonNormal"
                 android:textSize="30dip"
                 android:textStyle="bold" />
 
@@ -141,7 +141,7 @@
                 android:paddingTop="5dip"
                 android:scaleType="centerInside"
                 android:text="B"
-                android:textColor="@color/cate_white"
+                android:textColor="@color/buttonNormal"
                 android:textSize="30dip"
                 android:textStyle="bold" />
 
@@ -163,7 +163,7 @@
                 android:paddingTop="5dip"
                 android:scaleType="centerInside"
                 android:text="X"
-                android:textColor="@color/cate_white"
+                android:textColor="@color/buttonNormal"
                 android:textSize="30dip"
                 android:textStyle="bold" />
 
@@ -185,7 +185,7 @@
                 android:paddingTop="5dip"
                 android:scaleType="centerInside"
                 android:text="Y"
-                android:textColor="@color/cate_white"
+                android:textColor="@color/buttonNormal"
                 android:textSize="30dip"
                 android:textStyle="bold" />
 

@@ -1,7 +1,7 @@
 package com.whyun.activity.component;
 
-import net.youmi.android.appoffers.YoumiOffersManager;
-import net.youmi.android.appoffers.YoumiPointsManager;
+import net.youmi.android.offers.OffersManager;
+import net.youmi.android.offers.PointsManager;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -71,8 +71,8 @@ public final class ActivityUtil {
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog,
 							int whichButton) {
-						YoumiOffersManager.showOffers(activity,
-								YoumiOffersManager.TYPE_REWARD_OFFERS);
+						
+						OffersManager.getInstance(activity).showOffersWall();
 					}
 				}).show();
 	}
@@ -81,7 +81,7 @@ public final class ActivityUtil {
 		new AlertDialog.Builder(activity)
 		.setMessage("当前操作要消费" + neededCoins + "个积分，"
 				+ "点击确定将会将其扣除.")
-		.setTitle("去除广告")
+		.setTitle("消费积分")
 		.setNegativeButton("取消",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog,
@@ -91,10 +91,8 @@ public final class ActivityUtil {
 		.setPositiveButton("确定",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog,
-							int whichButton) {
-						YoumiPointsManager.spendPoints(activity,
-								neededCoins);
-						
+							int whichButton) {						
+						PointsManager.getInstance(activity).spendPoints(neededCoins);						
 					}
 				}).show();
 	}

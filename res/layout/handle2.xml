@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     
-    android:background="@drawable/lightgray"
+    android:background="@color/lightgray"
     android:id="@+id/handleContanier"
     android:orientation="vertical" >
     <LinearLayout
@@ -41,14 +41,14 @@
 		       android:layout_marginLeft="20dip"
 		       android:background="@drawable/circle_shape" />
 
-		   <ImageView	
+		   <TextView	
 		       		android:layout_alignParentLeft="true"				
 					android:layout_marginTop="60dip"  
 			    	android:layout_marginLeft="100dip"
 			    	android:layout_width = "50dip"
 					android:layout_height = "60dip"
 					android:background="@drawable/up_btn" android:id="@+id/btnUp" />
-		   <ImageView 
+		   <TextView 
 		       		android:layout_width = "60dip"
 					android:layout_height = "50dip"
 					android:layout_below="@id/btnUp" 
@@ -57,7 +57,7 @@
 			    	
 			    	
 					android:background="@drawable/left_btn" android:id="@+id/btnLeft" />
-		   <ImageView 
+		   <TextView 
 		       		android:layout_width = "50dip"
 					android:layout_height = "60dip"
 					android:layout_below="@id/btnLeft"
@@ -66,7 +66,7 @@
 					android:layout_toRightOf="@id/btnLeft"   
 			    	android:layout_marginLeft="20dip"
 					android:background="@drawable/down_btn" android:id="@+id/btnDwon" />
-		    <ImageView
+		    <TextView
 					android:layout_width = "60dip"
 					android:layout_height = "50dip"
 					android:layout_below="@id/btnUp"			  

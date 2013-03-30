@@ -1,6 +1,6 @@
 package com.whyun.activity;
 
-import net.youmi.android.appoffers.YoumiPointsManager;
+import net.youmi.android.offers.PointsManager;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
@@ -75,7 +75,7 @@ public class KeyAddActivity extends Activity {
 		operator = new KeyTableOperator(this);
 		
 		if (IBlueToothConst.COIN_DEBUG) {
-			YoumiPointsManager.awardPoints(KeyAddActivity.this,
+			PointsManager.getInstance(this).awardPoints(
 					IBlueToothConst.ADD_USER_KEY_COINS);
 		}
 		
@@ -171,7 +171,7 @@ public class KeyAddActivity extends Activity {
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,
 										int whichButton) {
-									YoumiPointsManager.spendPoints(KeyAddActivity.this,
+									PointsManager.getInstance(KeyAddActivity.this).spendPoints(
 											IBlueToothConst.ADD_USER_KEY_COINS);
 									boolean operResult
 										= operator.addKey(keynameInput.getText().toString(), valuesFinal);

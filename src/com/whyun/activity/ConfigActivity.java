@@ -1,7 +1,7 @@
 package com.whyun.activity;
 
 //import net.youmi.android.appoffers.YoumiOffersManager;
-import net.youmi.android.appoffers.YoumiPointsManager;
+import net.youmi.android.offers.PointsManager;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,10 +20,10 @@ import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.view.LayoutInflater;
 
-//import com.whyun.IBlueToothConst;
 import com.whyun.bluetooth.R;
 import com.whyun.communication.ConnectSetting;
 import com.whyun.util.MyLog;
+//import com.whyun.IBlueToothConst;
 
 public class ConfigActivity extends PreferenceActivity implements  
 		OnPreferenceChangeListener,IMyPreference {
@@ -162,8 +162,8 @@ public class ConfigActivity extends PreferenceActivity implements
 					});
 			ad.setMessage("版本：" + ConfigActivity.this.getVersionName() + "\n"
 					+ "作者：白一梓\n如果有任何问题，请发送邮件bluehandle@googlegroups.com\n"
-					+ "您当前的积分："+Integer.toString(YoumiPointsManager
-							.queryPoints(this)));
+					+ "您当前的积分："+Integer.toString(PointsManager.getInstance(this)
+							.queryPoints()));
 			ad.show();
 		} else {
 			logger.debug("onPreferenceTreeClick other key");

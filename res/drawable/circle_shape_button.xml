@@ -4,14 +4,14 @@
 <!-- 这条必须写，如果不写圆将无法显示，一般为false -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:innerRadius="20dip"
-    android:shape="ring"
+    android:shape="oval"
     android:useLevel="false" >
-	<solid android:color="#ff0000"/>
+	
     <!-- 当type为radial的时候才用的属性：gradientRadius -->
     <gradient
         android:endColor="#A0CEE8"
         android:gradientRadius="25"
-        android:startColor="#FF42AAE7"
+        android:startColor="#0042AAE7"
         android:type="radial"
         android:useLevel="false" />
 

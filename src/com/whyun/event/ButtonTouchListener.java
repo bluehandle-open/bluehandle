@@ -5,7 +5,6 @@ import android.app.Service;
 import android.os.Vibrator;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.whyun.IBlueToothConst;
@@ -28,10 +27,10 @@ public class ButtonTouchListener implements View.OnTouchListener {
 //	private HandleKeys handleKeys = HandleKeys.getInstance();
 	Vibrator mVibrator = null;
 	
-	private ImageView btnUp;
-	private ImageView btnDown;
-	private ImageView btnLeft;
-	private ImageView btnRight;
+	private TextView btnUp;
+	private TextView btnDown;
+	private TextView btnLeft;
+	private TextView btnRight;
 	private TextView btnX;
 	private TextView btnY;
 	private TextView btnA;
@@ -56,10 +55,10 @@ public class ButtonTouchListener implements View.OnTouchListener {
 		this.useShake = useShake;
 		this.activity= activity;
 		
-		btnUp = (ImageView)activity.findViewById(R.id.btnUp);
-		btnDown = (ImageView)activity.findViewById(R.id.btnDwon);
-		btnLeft = (ImageView)activity.findViewById(R.id.btnLeft);
-		btnRight = (ImageView)activity.findViewById(R.id.btnRight);
+		btnUp = (TextView)activity.findViewById(R.id.btnUp);
+		btnDown = (TextView)activity.findViewById(R.id.btnDwon);
+		btnLeft = (TextView)activity.findViewById(R.id.btnLeft);
+		btnRight = (TextView)activity.findViewById(R.id.btnRight);
 		btnX = (TextView)activity.findViewById(R.id.btnX);
 		btnY = (TextView)activity.findViewById(R.id.btnY);
 		btnA = (TextView)activity.findViewById(R.id.btnA);
@@ -67,6 +66,10 @@ public class ButtonTouchListener implements View.OnTouchListener {
 		btnStart = (TextView)activity.findViewById(R.id.btnStart);
 		btnSelect = (TextView)activity.findViewById(R.id.btnSelect);
 		locationInit = false;
+	}
+	
+	private void buttonBgShow() {
+		
 	}
 	
 	private void initLocation() {

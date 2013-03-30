@@ -5,8 +5,9 @@ import java.lang.ref.WeakReference;
 
 //import net.youmi.android.AdManager;
 //import net.youmi.android.AdView;
-import net.youmi.android.appoffers.YoumiOffersManager;
-import net.youmi.android.appoffers.YoumiPointsManager;
+import net.youmi.android.AdManager;
+import net.youmi.android.offers.OffersManager;
+import net.youmi.android.offers.PointsManager;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -126,7 +127,8 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.my_main);		
 		
-		YoumiOffersManager.init(MainActivity.this, "0874deea1c82005e", "8eef5acdfa4fdb3a");
+		AdManager.getInstance(this).init("0874deea1c82005e", "8eef5acdfa4fdb3a",true);
+		OffersManager.getInstance(this).onAppLaunch(); 
 		// 应用Id 应用密码 广告请求间隔(s) 测试模式
 //		AdManager.init(MainActivity.this,"0874deea1c82005e", "8eef5acdfa4fdb3a", 30, false);
 		
@@ -171,7 +173,7 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 	
 	private void showGuide() {
 		if (settings.getBoolean(IMyPreference.FIRST_OPEN, true)) {
-			YoumiPointsManager.awardPoints(MainActivity.this,//初始化赠送10个积分
+			PointsManager.getInstance(this).awardPoints(//初始化赠送10个积分
 					10);
 			Intent intent = new Intent();
 			intent.setClass(MainActivity.this, GuideActivity.class);
