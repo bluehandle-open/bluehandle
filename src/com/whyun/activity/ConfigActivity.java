@@ -22,6 +22,7 @@ import android.view.LayoutInflater;
 
 import com.whyun.bluetooth.R;
 import com.whyun.communication.ConnectSetting;
+import com.whyun.communication.IServer;
 import com.whyun.util.MyLog;
 //import com.whyun.IBlueToothConst;
 
@@ -68,6 +69,10 @@ public class ConfigActivity extends PreferenceActivity implements
 			editor.putString(CONNECT_TYPE, typeNow+"");
 			editor.commit();
 			logger.debug("set connect type:" + typeNow);
+			if (typeNow != connectSetting.getConnectType()) {//更改了连接方式
+				IServer server = connectSetting.getServer();//关闭旧有链接
+				server.stopServer();
+			}
 		} 
 		return true;
 	}
