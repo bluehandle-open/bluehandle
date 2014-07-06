@@ -1,1 +1,7 @@
 /bin
+
+/gen
+/.settings
+/.idea
+/*.iml
+/out

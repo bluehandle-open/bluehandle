@@ -33,7 +33,7 @@
 		    android:layout_height="fill_parent"
 		    
 		    android:layout_weight="1" >
-
+
 		   <ImageView
 		       android:layout_width="210dip"
 		       android:layout_height="210dip"

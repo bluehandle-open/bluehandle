@@ -15,7 +15,20 @@ public class KeyCommunication extends AbstractMessage implements IBlueToothConst
 
 	private static HandleKeys keySet = HandleKeys.getInstance();
 	private static final MyLog logger = MyLog.getLogger(KeyCommunication.class);
-	
+	/**
+	 * |head|body|
+	 * 其中head部分包括
+	 * |totalLen|messageType|
+	 * 其中totalLen为整个数据包长度，包括head和body的总长，messageType为当前消息类型
+	 * 其中body中包括
+	 * |pressType|keybody|
+	 * 其中pressType为敲击类型，可选值为{@link IBlueToothConst.toPress}/
+	 * {@link IBlueToothConst.toRelease}/{@link IBlueToothConst.toPreassRelease}
+	 * keybody为按键的assic码组成的数组
+	 * @param totalLen
+	 * @param type
+	 * @param body
+	 */
 	public KeyCommunication(byte totalLen, byte type, byte[] body) {
 		super(totalLen, type, body);		
 	}
@@ -31,18 +44,18 @@ public class KeyCommunication extends AbstractMessage implements IBlueToothConst
 			}
 			logger.debug(body);
 		} else {
-			logger.debug("wrong message.");
+			logger.debug("not in debug mode or message wrong.");
 		}
 	}
 
 	public void sendSelf(OutputStream os) {
-		int len = body.length + 4;
+		int len = body.length + 2;
 		byte[] totalMessage = new byte[len];
-		totalMessage[0] = totalLen;//总长度
-		totalMessage[1] = type;//消息类型
-		totalMessage[len-1] = 10;//以\r\n结尾要发送的数据，因为电脑端读取数据的时候是按行读取的
-		totalMessage[len-2] = 13;
-		System.arraycopy(body, 0, totalMessage, 2, len-4);
+		totalMessage[1] = totalLen;//总长度
+		totalMessage[0] = type;//消息类型
+		//totalMessage[len-1] = 10;//以\r\n结尾要发送的数据，因为电脑端读取数据的时候是按行读取的
+		//totalMessage[len-2] = 13;
+		System.arraycopy(body, 0, totalMessage, 2, len-2);
 		try {
 			os.write(totalMessage);
 			printSelf(totalMessage);
@@ -61,21 +74,16 @@ public class KeyCommunication extends AbstractMessage implements IBlueToothConst
 	 * @param keyName 按键名称
 	 * @param pressType 按键方式。可选值为{@link IBlueToothConst.toPress}/
 	 * {@link IBlueToothConst.toRelease}/{@link IBlueToothConst.toPreassRelease}
-	 * @param useDefaultSet 是否使用默认设置，默认设置为手柄
+	 *
 	 */
 	public static void sendMsg(OutputStream os, String keyName,byte pressType) {
-
+        logger.debug("the send key : " + keyName+",pressType:"+pressType);
 		byte[] keyBody = keySet.getKeyBody(keyName);
 		if (keyBody != null) {
 			int len = keyBody.length + 1;//快捷键数组长度+按键类型长度
 			byte[] body = new byte[len];//消息正文数组
 			
-			int handleType = keySet.getTypeNow();
-			if (handleType == SET_KEY_HANDLE) {
-				body[0] = pressType;
-			} else {
-				body[0] = toPreassRelease;
-			}
+			body[0] = pressType;
 			
 			System.arraycopy(keyBody, 0, body, 1, len-1);
 			KeyCommunication message =
