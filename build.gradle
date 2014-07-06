@@ -1,0 +1,16 @@
+signingConfigs {
+
+	release {
+		storeFile file("wh.keystore")
+		storePassword "android"
+		keyAlias "androiddebugkey"
+		keyPassword "android"
+	}
+}
+
+buildTypes {
+	release {
+		debuggable false
+		signingConfig signingConfigs.release
+	}
+}
