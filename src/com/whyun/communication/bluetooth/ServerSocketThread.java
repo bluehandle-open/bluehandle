@@ -6,27 +6,32 @@ import java.io.InputStream;
 //import java.io.InputStreamReader;
 import java.io.OutputStream;
 
+import android.bluetooth.BluetoothSocket;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
+
 import com.whyun.IBlueToothConst;
 import com.whyun.communication.ISocketThread;
+import com.whyun.communication.util.HandleProcessUtil;
 import com.whyun.message.FinishMessage;
-//import com.whyun.message.AbstractMessage;
+import com.whyun.message.HeartBeatRequestMessage;
 import com.whyun.message.KeyCommunication;
 //import com.whyun.message.RecieveKeySetting;
 //import com.whyun.message.key.HandleKeys;
 //import com.whyun.message.util.MessageTool;
 
 //import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothSocket;
-import android.util.Log;
 
-public class ServerSocketThread implements IBlueToothConst,ISocketThread {
+
+public class ServerSocketThread extends Thread implements IBlueToothConst,ISocketThread {
 	private volatile boolean socketInitialized = false;
 	//private volatile boolean keySetted = false;
 	private volatile static ServerSocketThread instance = null;
 	private BluetoothSocket socket;
 	private OutputStream os;
 	private InputStream is;
-	//private HandleKeys keySet = HandleKeys.getInstance();
+	private Handler pHandler = null;
 	
 	private ServerSocketThread() {
 		
@@ -72,29 +77,33 @@ public class ServerSocketThread implements IBlueToothConst,ISocketThread {
 	//
 	
 	public void run() {
+		Looper.prepare();
 		Log.i(serverSign, "thread is " + Thread.currentThread().getId());
 		// synchronized(setKeyLock) {
 		while (socketInitialized) {
 			try {
 				Thread.currentThread();
-				Thread.sleep(10);
-				KeyCommunication.reciveMessage(is);
-				
+				Thread.sleep(1000);
+				//KeyCommunication.reciveMessage(is);
+				KeyCommunication.sendMsg(os, new HeartBeatRequestMessage());//发送心跳包
+				System.out.println("process...");
 			} catch (InterruptedException e) {
 				e.printStackTrace();
-				if (socket != null) {
-					close();
-				}
-				return;
+//				if (socket != null) {
+					close(true);
+//				}
+//				return;
 			} catch (IOException e) {
 				e.printStackTrace();
-				if (socket != null) {
-					close();
-				}
-			}
-			System.out.println("process...");
+//				if (socket != null) {
+					close(true);
+//				}
+			} catch (Exception e) {
+                e.printStackTrace();
+                close(true);
+            }
 		}
-		// }
+		Looper.loop();
 	}
 	
 	/**
@@ -104,11 +113,21 @@ public class ServerSocketThread implements IBlueToothConst,ISocketThread {
 	 * @param pressType 按键方式
 	 */
 	public void sendMsg(String keyName,byte pressType) {
-		KeyCommunication.sendMsg(os, keyName, pressType);
+		try {
+			KeyCommunication.sendMsg(os, keyName, pressType);
+		} catch (IOException e) {
+//			if (socket != null) {
+				close(true);
+//			}
+		}
 	}
 	
 			
 	public void close() {
+		close(false);
+	}
+			
+	public void close(boolean isShowMsg) {
 		if(socketInitialized) {
 			try {
 				Thread.currentThread().interrupt();
@@ -120,17 +139,32 @@ public class ServerSocketThread implements IBlueToothConst,ISocketThread {
 					Thread.sleep(2000);
 				} catch (InterruptedException e) {					
 				}
-				os.close();
-				is.close();
-				socket.close();
-				Log.i(serverSign,"close thread.");
-				System.out.println("this state is "+Thread.currentThread().getState());
-				//BluetoothAdapter.getDefaultAdapter().disable();
-				instance = null;
+				if (os != null) {
+					os.close();
+				}
+				if (is != null) {
+					is.close();
+				}
+				if (socket != null) {
+					socket.close();
+				}
+				
+				
 			} catch (IOException e) {			
 				e.printStackTrace();
-			}			
+			}
+			Log.i(serverSign,"close thread.");
+			System.out.println("this state is "+Thread.currentThread().getState());
+			socketInitialized = false;
+			if (isShowMsg && pHandler != null) {
+				HandleProcessUtil.send2Activity(pHandler,IBlueToothConst.CLIENT_CONN_ERR);
+			}
 		}
+	}
+
+	@Override
+	public void setpHandler(Handler pHandler) {
+		this.pHandler = pHandler;
 	}
 	
 }

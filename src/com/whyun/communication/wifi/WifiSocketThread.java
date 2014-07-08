@@ -5,18 +5,25 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
+import android.os.Handler;
+import android.os.Looper;
+
+import com.whyun.IBlueToothConst;
 import com.whyun.communication.ISocketThread;
+import com.whyun.communication.util.HandleProcessUtil;
 import com.whyun.message.FinishMessage;
+import com.whyun.message.HeartBeatRequestMessage;
 import com.whyun.message.KeyCommunication;
 import com.whyun.util.MyLog;
 
-public class WifiSocketThread implements ISocketThread {
+public class WifiSocketThread extends Thread implements ISocketThread {
 
 	private Socket client = null;
 	private OutputStream os;
 	private InputStream is;
 	private volatile static WifiSocketThread instance = null;
 	private volatile boolean isInit = false;
+	private Handler pHandler = null;
 	private static final MyLog logger = MyLog.getLogger(WifiSocketThread.class);
 	
 	public static WifiSocketThread getInstance() {
@@ -39,29 +46,47 @@ public class WifiSocketThread implements ISocketThread {
 		}
 	}
 	
+	public void setpHandler(Handler pHandler) {
+		this.pHandler = pHandler;
+	}
+
 	public void run() {
+		Looper.prepare();
 		if (is != null) {
 			while(isInit) {
 				try {
 					Thread.currentThread();
-					Thread.sleep(10);
-					KeyCommunication.reciveMessage(is);
+					Thread.sleep(1000);
+                    logger.debug("send heart beat");
+                    KeyCommunication.sendMsg(os, new HeartBeatRequestMessage());//发送心跳包
+					//KeyCommunication.reciveMessage(is);
+
 				} catch (InterruptedException e) {
 					e.printStackTrace();
-					if (client != null) {
-						close();
-					}
+//					if (client != null) {
+						close(true);
+//					}
 				} catch (IOException e) {
 					e.printStackTrace();
-					if (client != null) {
-						close();
-					}
-				}
+//					if (client != null) {
+						close(true);
+//					}
+				} catch (Exception e) {
+                    e.printStackTrace();
+
+                    close(true);
+
+                }
 			}
 		}
+		Looper.loop();
 	}
 	
 	public void close() {
+		close(false);
+	}
+	
+	public void close(boolean isShowMsg) {
 		if (isInit) {
 			Thread.currentThread().interrupt();
 			try {
@@ -71,15 +96,25 @@ public class WifiSocketThread implements ISocketThread {
 					Thread.sleep(2000);
 				} catch (InterruptedException e) {					
 				}
-				os.close();
-				is.close();
-				client.close();
-				logger.debug("close thread.");
-				logger.debug("this state is "+Thread.currentThread().getState());
-				instance = null;
-				isInit = false;				
+				if (os != null) {
+					os.close();
+				}
+				if (is != null) {
+					is.close();
+				}
+				if (client != null) {
+					client.close();
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
+			}
+			logger.debug("close thread.");
+			logger.debug("this state is "+Thread.currentThread().getState());
+//			instance = null;
+			isInit = false;
+			if (isShowMsg && pHandler != null) {
+				logger.debug("show disconnect");
+				HandleProcessUtil.send2Activity(pHandler,IBlueToothConst.CLIENT_CONN_ERR);
 			}
 			
 		}
@@ -87,7 +122,14 @@ public class WifiSocketThread implements ISocketThread {
 
 	@Override
 	public void sendMsg(String keyName, byte pressType) {
-		KeyCommunication.sendMsg(os, keyName, pressType);
+		try {
+			KeyCommunication.sendMsg(os, keyName, pressType);
+		} catch (IOException e) {			
+			e.printStackTrace();
+//			if (client != null) {
+				close(true);
+//			}
+		}
 	}
 
 }

@@ -127,7 +127,7 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.my_main);		
 		
-		AdManager.getInstance(this).init("0874deea1c82005e", "8eef5acdfa4fdb3a",true);
+		AdManager.getInstance(this).init("0874deea1c82005e", "8eef5acdfa4fdb3a",false);
 		OffersManager.getInstance(this).onAppLaunch(); 
 		// 应用Id 应用密码 广告请求间隔(s) 测试模式
 //		AdManager.init(MainActivity.this,"0874deea1c82005e", "8eef5acdfa4fdb3a", 30, false);

@@ -1,5 +1,7 @@
 package com.whyun.communication.util;
 
+import android.os.Handler;
+
 import com.whyun.communication.ConnectSetting;
 import com.whyun.communication.IServer;
 import com.whyun.communication.ISocketThread;
@@ -27,5 +29,11 @@ public class SocketThreadUtil {
 		IServer server = ConnectSetting.getInstance().getServer();
 		server.stopServer();
 		logger.debug("shut down the connection");
+	}
+	
+	public static void setHandler(Handler pHandler) {
+		ISocketThread socketThread = ServerFactory
+				.getSocketThread(ConnectSetting.getInstance().getConnectType());
+		socketThread.setpHandler(pHandler);
 	}
 }

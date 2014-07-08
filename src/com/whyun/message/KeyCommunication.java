@@ -48,7 +48,7 @@ public class KeyCommunication extends AbstractMessage implements IBlueToothConst
 		}
 	}
 
-	public void sendSelf(OutputStream os) {
+	public void sendSelf(OutputStream os) throws IOException {
 		int len = body.length + 2;
 		byte[] totalMessage = new byte[len];
 		totalMessage[1] = totalLen;//总长度
@@ -56,12 +56,10 @@ public class KeyCommunication extends AbstractMessage implements IBlueToothConst
 		//totalMessage[len-1] = 10;//以\r\n结尾要发送的数据，因为电脑端读取数据的时候是按行读取的
 		//totalMessage[len-2] = 13;
 		System.arraycopy(body, 0, totalMessage, 2, len-2);
-		try {
-			os.write(totalMessage);
-			printSelf(totalMessage);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
+		os.write(totalMessage);
+		printSelf(totalMessage);
+		
 	}
 	
 	/**
@@ -76,8 +74,8 @@ public class KeyCommunication extends AbstractMessage implements IBlueToothConst
 	 * {@link IBlueToothConst.toRelease}/{@link IBlueToothConst.toPreassRelease}
 	 *
 	 */
-	public static void sendMsg(OutputStream os, String keyName,byte pressType) {
-        logger.debug("the send key : " + keyName+",pressType:"+pressType);
+	public static void sendMsg(OutputStream os, String keyName,byte pressType) throws IOException {
+
 		byte[] keyBody = keySet.getKeyBody(keyName);
 		if (keyBody != null) {
 			int len = keyBody.length + 1;//快捷键数组长度+按键类型长度

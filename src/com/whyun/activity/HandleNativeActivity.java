@@ -1,5 +1,6 @@
 package com.whyun.activity;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -12,6 +13,8 @@ import android.content.SharedPreferences.Editor;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.preference.PreferenceManager;
@@ -74,6 +77,38 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 	
 	private static final MyLog logger = MyLog.getLogger(HandleNativeActivity.class);
 	
+	static class MyHandler extends Handler {
+		WeakReference<HandleNativeActivity> mActivity;  
+		  
+        MyHandler(HandleNativeActivity activity) {  
+                mActivity = new WeakReference<HandleNativeActivity>(activity);  
+        }
+        @Override
+		public void handleMessage(Message msg) {			
+			super.handleMessage(msg);
+			final HandleNativeActivity theActivity = mActivity.get();
+			if (theActivity != null) {
+				switch (msg.what) {
+				
+				case CLIENT_CONN_ERR:
+					new AlertDialog.Builder(theActivity)
+					.setMessage("和电脑端的通信出现异常，电脑端可能已经退出，点击确定结束本次通信")
+					.setTitle("结束通信")
+
+					.setPositiveButton("确定",
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int whichButton) {
+									theActivity.finish();
+								}
+							}).show();
+					break;
+				}
+			}
+			
+		}
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -87,6 +122,7 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 		init();
 		RelativeLayout contanier = (RelativeLayout)findViewById(R.id.handleContanier);
 		contanier.setOnTouchListener(new ButtonTouchListener(this,useShake));
+		SocketThreadUtil.setHandler(new MyHandler(this));
 	}
 	
 	private void init() {

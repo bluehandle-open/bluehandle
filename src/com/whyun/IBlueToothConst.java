@@ -8,6 +8,7 @@ public interface IBlueToothConst {
 	public static final boolean COIN_DEBUG = false;
 	public static final int CONNECTED = 1;
 	public static final int FAILED = 0;
+	public static final int CLIENT_CONN_ERR = 2;
 	
 	public static final String serverSign = "MyBluetoothApp";
 	public static final String clientConnectResponse = "hello server\r\n";

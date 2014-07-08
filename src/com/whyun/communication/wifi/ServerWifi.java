@@ -17,6 +17,7 @@ public class ServerWifi implements IServer {
 	private ServerSocket server = null;
 	private volatile boolean stop = false;
 	private Handler pHandler;
+    private WifiSocketThread clientThread;
 	private MyLog logger = MyLog.getLogger(ServerWifi.class);
 	
 	public ServerWifi(Handler pHandler) {
@@ -36,9 +37,11 @@ public class ServerWifi implements IServer {
 					Thread.sleep(10);
 					client = server.accept();
 					//client.getChannel().configureBlocking(false);
-					Log.i(IBlueToothConst.serverSign, "find a connection...");
-					WifiSocketThread wifi = WifiSocketThread.getInstance();
-					wifi.init(client);
+
+                    clientThread = WifiSocketThread.getInstance();
+					clientThread.init(client);
+                    clientThread.start();
+                    logger.debug("client wifi connected success");
 					
 					HandleProcessUtil.send2Activity(pHandler,IBlueToothConst.CONNECTED);
 					return;//完成一个连接就关闭服务线程
@@ -61,6 +64,9 @@ public class ServerWifi implements IServer {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+            if (clientThread != null) {
+                clientThread.close();
+            }
 			stop = true;
 		}
 		Thread.currentThread().interrupt();

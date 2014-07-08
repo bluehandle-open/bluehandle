@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.whyun.bluetooth" android:versionCode="12"
-	android:versionName="1.8">
+	package="com.whyun.bluetooth" android:versionCode="14"
+	android:versionName="1.8.2">
 	<uses-sdk android:minSdkVersion="7"></uses-sdk>
 	<uses-permission android:name="android.permission.VIBRATE"></uses-permission>
 	<uses-permission android:name="android.permission.BLUETOOTH" />
@@ -34,7 +34,7 @@
 					android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<activity android:name="com.whyun.activity.HandleWebActivity.HandleWebActivity"
+		<activity android:name="com.whyun.activity.HandleWebActivity"
 			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
 			android:screenOrientation="landscape"
 			android:label="@string/app_name">

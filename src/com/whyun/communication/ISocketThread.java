@@ -1,5 +1,7 @@
 package com.whyun.communication;
 
+import android.os.Handler;
+
 public interface ISocketThread extends Runnable {
 	/**
 	 * Send msg.
@@ -13,4 +15,8 @@ public interface ISocketThread extends Runnable {
 	 * 关闭socket连接
 	 * */
 	public void close();
+	
+	public void close(boolean isShowMsg);
+	
+	public void setpHandler(Handler pHandler);
 }

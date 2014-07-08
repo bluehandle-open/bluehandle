@@ -18,6 +18,7 @@ public class ServerBlueTooth implements IBlueToothConst,IServer {
 	private BluetoothServerSocket serverSocket = null;
 	private BluetoothSocket socket;
 	private Handler pHandler;
+    private ServerSocketThread clientThread;
 	
 	public ServerBlueTooth(Handler pHandler) {
 		this.pHandler = pHandler;
@@ -41,9 +42,10 @@ public class ServerBlueTooth implements IBlueToothConst,IServer {
 					socket = serverSocket.accept();					
 					
 					System.out.println("an connection is login .....................");
-					
-					ServerSocketThread serverSide = ServerSocketThread.getInstance();
-					serverSide.initSocket(socket);//����socket�߳�
+
+                    clientThread = ServerSocketThread.getInstance();
+					clientThread.initSocket(socket);//����socket�߳�
+                    clientThread.start();
 					
 					HandleProcessUtil.send2Activity(pHandler,CONNECTED);
 					done = true;//�����߳�
@@ -70,6 +72,9 @@ public class ServerBlueTooth implements IBlueToothConst,IServer {
 			} catch (IOException e) {			
 				e.printStackTrace();
 			}
+            if (clientThread != null) {
+                clientThread.close();
+            }
 		}
 		
 		Thread.currentThread().interrupt();
