@@ -26,6 +26,7 @@ public class BottomClickEvent implements View.OnClickListener,IBottom {
 		
 		case DONATE_ID:
 			ActivityUtil.toastShow(activity, "请多多使用积分购买自定义按键，您的支持是软件得以进步的最大支持");
+//            int i = 1/0;
 			break;
 		case SHARE_ID:
 			Intent intent=new Intent(Intent.ACTION_SEND);
