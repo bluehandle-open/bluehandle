@@ -3,11 +3,11 @@ package com.whyun;
 import com.whyun.util.MyLog;
 
 public interface IBlueToothConst {
-	public static String uuidString  = "00001101-0000-1000-8000-00805F9B34FB";
-	public static final boolean isDebug = false;
-	public static final int CONNECTED = 1;
-	public static final int FAILED = 0;
-	public static final int CLIENT_CONN_ERR = 2;
+	String uuidString  = "00001101-0000-1000-8000-00805F9B34FB";
+	boolean isDebug = false;
+	int CONNECTED = 1;
+	int FAILED = 0;
+	int CLIENT_CONN_ERR = 2;
 	
 	public static final String serverSign = "MyBluetoothApp";
 	public static final String clientConnectResponse = "hello server\r\n";
@@ -57,6 +57,6 @@ public interface IBlueToothConst {
 	public static final int TOP_LEVEL_LOG = MyLog.DEBUG;
 	
 	public static final String URL_DOWNLOAD = "http://whyun.com/sub/0/download.php";
-	public static final String SAVE_FILE_NAME = "bule_handle_pc.7z";
+	public static final String SAVE_FILE_NAME = "blue_handle_pc.7z";
 	public static final String SAVE_URL_FILE = "download.txt";
 }

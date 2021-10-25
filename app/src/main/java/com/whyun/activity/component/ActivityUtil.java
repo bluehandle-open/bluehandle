@@ -1,7 +1,5 @@
 package com.whyun.activity.component;
 
-//import net.youmi.android.offers.OffersManager;
-//import net.youmi.android.offers.PointsManager;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -42,7 +40,7 @@ public final class ActivityUtil {
 	}
 	
 	public static void toastShow(Activity activity,String txt) {
-		Toast.makeText(activity, txt, 1000).show();
+		Toast.makeText(activity, txt, Toast.LENGTH_LONG).show();
 	}
 	
 	public static void customToastShow(Activity activity,String txt) {
