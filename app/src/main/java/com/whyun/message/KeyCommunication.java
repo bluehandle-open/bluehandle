@@ -1,5 +1,7 @@
 package com.whyun.message;
 
+import android.os.AsyncTask;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -49,16 +51,26 @@ public class KeyCommunication extends AbstractMessage implements IBlueToothConst
 	}
 
 	public void sendSelf(OutputStream os) throws IOException {
-		int len = body.length + 2;
-		byte[] totalMessage = new byte[len];
-		totalMessage[1] = totalLen;//总长度
-		totalMessage[0] = type;//消息类型
-		//totalMessage[len-1] = 10;//以\r\n结尾要发送的数据，因为电脑端读取数据的时候是按行读取的
-		//totalMessage[len-2] = 13;
-		System.arraycopy(body, 0, totalMessage, 2, len-2);
-		
-		os.write(totalMessage);
-		printSelf(totalMessage);
+		AsyncTask.execute(new Runnable() {
+			@Override
+			public void run() {
+				int len = body.length + 2;
+				byte[] totalMessage = new byte[len];
+				totalMessage[1] = totalLen;//总长度
+				totalMessage[0] = type;//消息类型
+				//totalMessage[len-1] = 10;//以\r\n结尾要发送的数据，因为电脑端读取数据的时候是按行读取的
+				//totalMessage[len-2] = 13;
+				System.arraycopy(body, 0, totalMessage, 2, len-2);
+
+				try {
+					os.write(totalMessage);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				printSelf(totalMessage);
+			}
+		});
+
 		
 	}
 	

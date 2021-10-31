@@ -40,7 +40,7 @@ public final class ActivityUtil {
 	}
 	
 	public static void toastShow(Activity activity,String txt) {
-		Toast.makeText(activity, txt, Toast.LENGTH_LONG).show();
+		Toast.makeText(activity, txt, Toast.LENGTH_SHORT).show();
 	}
 	
 	public static void customToastShow(Activity activity,String txt) {

@@ -265,11 +265,11 @@ public class ButtonTouchListener implements View.OnTouchListener {
 
 		float x = event.getX();
 		float y = event.getY();
-		int pointerCount = event.getPointerCount();
-		int pointerId = 0;
-		if (pointerCount > 1) {
-			pointerId = (action & MotionEvent.ACTION_POINTER_ID_MASK) >>> MotionEvent.ACTION_POINTER_ID_SHIFT;
-		}
+//		int pointerCount = event.getPointerCount();
+		int pointerIndex = (event.getAction() & MotionEvent.ACTION_POINTER_INDEX_MASK) >>
+				MotionEvent.ACTION_POINTER_INDEX_SHIFT;
+		final int pointerId = event.getPointerId(pointerIndex);
+
 		switch (action) {
 		case MotionEvent.ACTION_DOWN: {
 			buttonProcess(x, y, true);
@@ -279,24 +279,12 @@ public class ButtonTouchListener implements View.OnTouchListener {
 			buttonProcess(x, y, false);
 			break;
 		}
-		case MotionEvent.ACTION_POINTER_1_DOWN: {
-			buttonProcess(event.getX(pointerId), event.getY(pointerId), true);
+		case MotionEvent.ACTION_POINTER_DOWN: {
+			buttonProcess(event.getX(pointerId), event.getY(pointerId),true);
 			break;
 		}
-		case MotionEvent.ACTION_POINTER_1_UP:
-			buttonProcess(event.getX(pointerId), event.getY(pointerId), false);
-			break;
-		case MotionEvent.ACTION_POINTER_2_DOWN:
-			buttonProcess(event.getX(pointerId), event.getY(pointerId), true);
-			break;
-		case MotionEvent.ACTION_POINTER_2_UP:
-			buttonProcess(event.getX(pointerId), event.getY(pointerId), false);
-			break;
-		case MotionEvent.ACTION_POINTER_3_DOWN:
-			buttonProcess(event.getX(pointerId), event.getY(pointerId), true);
-			break;
-		case MotionEvent.ACTION_POINTER_3_UP:
-			buttonProcess(event.getX(pointerId), event.getY(pointerId), false);
+		case MotionEvent.ACTION_POINTER_UP:
+				buttonProcess(event.getX(pointerId), event.getY(pointerId), false);
 			break;
 		}
 		return true;

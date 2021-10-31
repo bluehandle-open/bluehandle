@@ -131,5 +131,4 @@ public class WifiSocketThread extends Thread implements ISocketThread {
 //			}
 		}
 	}
-
 }

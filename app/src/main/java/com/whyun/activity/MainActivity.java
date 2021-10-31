@@ -203,10 +203,15 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 		ConnectSetting.getInstance().setConnectType(index);
 	}
 	
-	private void acceptConnection() {//启动服务器端线程
-		
+	private void acceptConnection(String ip) {//启动服务器端线程
+		String msg = "等待PC端接入";
+		if (ip != null) {
+			msg += "(本地ip：" + ip + ")";
+		} else {
+			msg += "......";
+		}
 		prgd =  ProgressDialog.show(MainActivity.this,
-				"提示", "等待PC端接入……", true);	
+				"提示", msg, true);
 		prgd.setCancelable(true);
 		prgd.setOnCancelListener(new OnCancelListener() {//点击取消，取消服务
 
@@ -254,9 +259,9 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 						ActivityUtil.toastShow(MainActivity.this, "当前wifi不能用，请启用wifi完毕后重试");
 					} else {
 						WifiInfo  wifiinfo= wifiManager.getConnectionInfo();
-						String ip=intToIp(wifiinfo.getIpAddress());  
+						String ip = intToIp(wifiinfo.getIpAddress());
 						ActivityUtil.toastShow(MainActivity.this, "当前wifi的ip地址：" + ip);  
-						acceptConnection();
+						acceptConnection(ip);
 					}					
 				}
 			} else if (v == pcdownload) {
@@ -300,7 +305,7 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 		switch (resultCode) {
 		case 300://打开蓝牙监听成功
 			logger.info("enable for search.");
-			acceptConnection();//启动andorid端服务器线程
+			acceptConnection(null);//启动andorid端服务器线程
 			break;
 		}
 	} 
