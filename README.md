@@ -2,7 +2,7 @@
 
 通过蓝牙或者wifi方式连接电脑，控制电脑程序的运行。用户可以选择三种方式来用手机遥控您的电脑：作为游戏手柄，遥控千千静听，遥控ppt，支持添加任意自定义快捷键，让你想遥控啥就遥控啥。
 
-注意，本软件需要结合电脑端的客户端程序使用，电脑客户端在如下地址下载：https://whyun.com/sub/0/bluetooth-pc-1.0.exe。
+注意，本软件需要结合电脑端的客户端程序使用，电脑客户端在如下地址下载：https://whyun.com/sub/0/bluetooth-pc-1.0.exe。使用说明参见 https://github.com/bluehandle-open/bluehandle-pc 项目文档。
 
 ## 声明
 
