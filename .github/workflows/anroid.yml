@@ -13,7 +13,8 @@ on:
     # 忽略的标签类型，不触发构建流程(和tags不能同时写)
     # tags-ignore:
     #   - "d*"
-
+env:
+  BUILD_TOOLS_VERSION: "35.0.1"
 # strategy:
   # 矩阵使用: ${{ matrix.os }}
   # 下面两个矩阵，会代码就会执行 2 * 3 = 6次
@@ -45,7 +46,11 @@ jobs:
         with:
           distribution: temurin
           java-version: 11
-
+      # 3. 安装 Android SDK 和 Build Tools
+      - name: Install Android SDK
+        uses: android-actions/setup-android@v2
+      - name: Install Android Build Tools
+        run: echo y | sdkmanager "build-tools;${{ env.BUILD_TOOLS_VERSION }}"
       # 设置gradle环境(比如: 6.5)、打包命令
       - uses: gradle/gradle-build-action@v2
         with:
