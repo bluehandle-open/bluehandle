@@ -45,7 +45,7 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: temurin
-          java-version: 11
+          java-version: 17
       # 3. 安装 Android SDK 和 Build Tools
       - name: Install Android SDK
         uses: android-actions/setup-android@v2
