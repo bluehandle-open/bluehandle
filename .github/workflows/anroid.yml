@@ -60,6 +60,7 @@ jobs:
       # 签名apk
       - uses: r0adkll/sign-android-release@v1
         name: Sign app APK
+        if: startsWith(github.ref, 'refs/tags/')  # 仅在推送 Tag 时执行
         id: sign_app
         with:
           releaseDirectory: app/build/outputs/apk/release
@@ -71,12 +72,11 @@ jobs:
           # override default build-tools version (29.0.3) -- optional
           #BUILD_TOOLS_VERSION: "34.0.0"
 
-      # build-tools可能不存在，用step查看下支持哪些
-      - run: ls /usr/local/lib/android/sdk/build-tools/
-
       # 重命名apk
       # GITHUB_REF_NAME是“触发workflow的分支或tag名称”
-      - run: mv ${{steps.sign_app.outputs.signedReleaseFile}} fundark_$GITHUB_REF_NAME.apk
+      - name: Rename APK
+        if: startsWith(github.ref, 'refs/tags/')  # 仅在推送 Tag 时执行
+        run: mv ${{steps.sign_app.outputs.signedReleaseFile}} bluehandle_$GITHUB_REF_NAME.apk
         # 可以指定shell命令的执行目录
         # working-directory: ./temp
         # 只当shell的类型
@@ -84,6 +84,7 @@ jobs:
 
       # 发布
       - uses: ncipollo/release-action@v1
+        if: startsWith(github.ref, 'refs/tags/')  # 仅在推送 Tag 时执行
         with:
           # 要包含到Release Assets中的文件
           artifacts: "*.apk"
