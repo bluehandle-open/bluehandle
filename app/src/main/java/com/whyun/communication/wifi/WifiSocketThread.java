@@ -1,12 +1,12 @@
 package com.whyun.communication.wifi;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
 import android.os.Handler;
-import android.os.Looper;
 
 import com.whyun.IBlueToothConst;
 import com.whyun.communication.ISocketThread;
@@ -16,7 +16,12 @@ import com.whyun.message.HeartBeatRequestMessage;
 import com.whyun.message.KeyCommunication;
 import com.whyun.util.MyLog;
 
-public class WifiSocketThread extends Thread implements ISocketThread {
+/**
+ * wifi 会话线程（单例）。
+ * 单例本身不再继承 Thread，而是在每次新连接时创建一个新的工作线程发送心跳，
+ * 这样同一个单例可以被反复 start/close。
+ */
+public class WifiSocketThread implements ISocketThread {
 
 	private Socket client = null;
 	private OutputStream os;
@@ -24,8 +29,14 @@ public class WifiSocketThread extends Thread implements ISocketThread {
 	private volatile static WifiSocketThread instance = null;
 	private volatile boolean isInit = false;
 	private Handler pHandler = null;
+	/** 真正发送心跳的线程，每次新连接都重新创建 */
+	private Thread worker;
 	private static final MyLog logger = MyLog.getLogger(WifiSocketThread.class);
-	
+
+	private WifiSocketThread() {
+
+	}
+
 	public static WifiSocketThread getInstance() {
 		if (instance == null) {
 			synchronized (WifiSocketThread.class) {
@@ -36,87 +47,96 @@ public class WifiSocketThread extends Thread implements ISocketThread {
 		}
 		return instance;
 	}
-	
+
 	public synchronized void init(Socket client) throws IOException {
-		this.client = client;
-		if (client != null) {
-			os = client.getOutputStream();
-			is = client.getInputStream();
-			isInit = true;
+		if (client == null) {
+			return;
 		}
+		if (isInit) {
+			close(false);// 上一条连接没有收尾，先关掉
+		}
+		this.client = client;
+		os = client.getOutputStream();
+		is = client.getInputStream();
+		isInit = true;
 	}
-	
+
+	@Override
 	public void setpHandler(Handler pHandler) {
 		this.pHandler = pHandler;
 	}
 
+	/**
+	 * 启动心跳工作线程。保持方法名不变，调用方无需修改。
+	 */
+	public synchronized void start() {
+		if (worker != null && worker.isAlive()) {
+			logger.debug("worker thread is still alive, skip start.");
+			return;
+		}
+		worker = new Thread(this, "wifi-heartbeat");
+		worker.start();
+	}
+
+	@Override
 	public void run() {
-		Looper.prepare();
-		if (is != null) {
-			while(isInit) {
-				try {
-					Thread.currentThread();
-					Thread.sleep(1000);
-                    logger.debug("send heart beat");
-                    KeyCommunication.sendMsg(os, new HeartBeatRequestMessage());//发送心跳包
-					//KeyCommunication.reciveMessage(is);
-
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-//					if (client != null) {
-						close(true);
-//					}
-				} catch (IOException e) {
-					e.printStackTrace();
-//					if (client != null) {
-						close(true);
-//					}
-				} catch (Exception e) {
-                    e.printStackTrace();
-
-                    close(true);
-
-                }
+		while (isInit && !Thread.currentThread().isInterrupted()) {
+			try {
+				Thread.sleep(1000);
+				logger.debug("send heart beat");
+				KeyCommunication.sendMsg(os, new HeartBeatRequestMessage());//发送心跳包
+			} catch (InterruptedException e) {
+				break;// close() 主动中断，正常退出
+			} catch (IOException e) {
+				e.printStackTrace();
+				close(true);// 对端断开，通知界面
+				break;
+			} catch (Exception e) {
+				e.printStackTrace();
+				close(true);
+				break;
 			}
 		}
-		Looper.loop();
+		logger.debug("heartbeat thread exit.");
 	}
-	
+
+	@Override
 	public void close() {
 		close(false);
 	}
-	
-	public void close(boolean isShowMsg) {
-		if (isInit) {
-			Thread.currentThread().interrupt();
-			try {
-				KeyCommunication.sendMsg(os, new FinishMessage());
-				Thread.currentThread();
-				try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {					
-				}
-				if (os != null) {
-					os.close();
-				}
-				if (is != null) {
-					is.close();
-				}
-				if (client != null) {
-					client.close();
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			logger.debug("close thread.");
-			logger.debug("this state is "+Thread.currentThread().getState());
-//			instance = null;
-			isInit = false;
-			if (isShowMsg && pHandler != null) {
-				logger.debug("show disconnect");
-				HandleProcessUtil.send2Activity(pHandler,IBlueToothConst.CLIENT_CONN_ERR);
-			}
-			
+
+	@Override
+	public synchronized void close(boolean isShowMsg) {
+		if (!isInit) {
+			return;
+		}
+		isInit = false;
+		Thread t = worker;
+		if (t != null && t != Thread.currentThread()) {
+			t.interrupt();// 中断的是工作线程，而不是调用者
+		}
+		try {
+			KeyCommunication.sendMsg(os, new FinishMessage());
+			os.flush();
+		} catch (IOException ignored) {
+		}
+		closeQuietly(os);
+		closeQuietly(is);
+		closeQuietly(client);
+		logger.debug("close thread.");
+		if (isShowMsg && pHandler != null) {
+			logger.debug("show disconnect");
+			HandleProcessUtil.send2Activity(pHandler, IBlueToothConst.CLIENT_CONN_ERR);
+		}
+	}
+
+	private static void closeQuietly(Closeable c) {
+		if (c == null) {
+			return;
+		}
+		try {
+			c.close();
+		} catch (IOException ignored) {
 		}
 	}
 
@@ -124,11 +144,9 @@ public class WifiSocketThread extends Thread implements ISocketThread {
 	public void sendMsg(String keyName, byte pressType) {
 		try {
 			KeyCommunication.sendMsg(os, keyName, pressType);
-		} catch (IOException e) {			
+		} catch (IOException e) {
 			e.printStackTrace();
-//			if (client != null) {
-				close(true);
-//			}
+			close(true);
 		}
 	}
 }
