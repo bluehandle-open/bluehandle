@@ -1,12 +1,16 @@
 package com.whyun.activity;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 
 //import net.youmi.android.AdView;
 //import net.youmi.android.;
 //import net.youmi.android.offers.OffersManager;
 //import net.youmi.android.offers.PointsManager;
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -19,8 +23,10 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -34,6 +40,9 @@ import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.whyun.IBlueToothConst;
 import com.whyun.activity.component.ActivityUtil;
@@ -49,6 +58,10 @@ import com.whyun.util.FileUtil;
 import com.whyun.util.MyLog;
 
 public class MainActivity extends Activity implements IBlueToothConst,IBottom {
+	/** 请求蓝牙可见性的 requestCode */
+	private static final int REQ_DISCOVERABLE = 1;
+	/** 请求 Android 12+ 蓝牙运行时权限的 requestCode */
+	private static final int REQ_BT_PERMISSION = 2;
 	private BluetoothAdapter btAdapt;
 	private ImageView img;
 	private ImageButton exit;
@@ -233,10 +246,68 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 		new Thread(server).start();
 	}
 	
-	private String intToIp(int i)	  
-    {   
+	private String intToIp(int i)
+    {
 		return ( i & 0xFF)+ "." + ((i >> 8 ) & 0xFF) + "." + ((i >> 16 ) & 0xFF) +"."+((i >> 24 ) & 0xFF);
-	}  
+	}
+
+	/**
+	 * 返回蓝牙方式下尚未授予的运行时权限。
+	 * Android 12（API 31）起监听 RFCOMM 需要 BLUETOOTH_CONNECT，
+	 * 请求可见性需要 BLUETOOTH_ADVERTISE；更低版本无需运行时权限。
+	 */
+	private String[] missingBluetoothPermissions() {
+		List<String> missing = new ArrayList<String>();
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+			String[] required = new String[] {
+					Manifest.permission.BLUETOOTH_CONNECT,
+					Manifest.permission.BLUETOOTH_ADVERTISE };
+			for (String p : required) {
+				if (ContextCompat.checkSelfPermission(this, p)
+						!= PackageManager.PERMISSION_GRANTED) {
+					missing.add(p);
+				}
+			}
+		}
+		return missing.toArray(new String[0]);
+	}
+
+	/**
+	 * 蓝牙方式入口：先确认设备支持蓝牙和权限已授予，再请求可见性。
+	 * 可见性请求弹窗会在蓝牙未开启时顺带引导用户开启，因此不再直接调用 enable()。
+	 */
+	private void startBluetoothMode() {
+		btAdapt = BluetoothAdapter.getDefaultAdapter();
+		if (btAdapt == null) {
+			ActivityUtil.toastShow(this, "当前设备不支持蓝牙");
+			return;
+		}
+		String[] missing = missingBluetoothPermissions();
+		if (missing.length > 0) {
+			logger.info("request bluetooth permissions");
+			ActivityCompat.requestPermissions(this, missing, REQ_BT_PERMISSION);
+			return;
+		}
+		Intent cwjIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+		cwjIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
+		startActivityForResult(cwjIntent, REQ_DISCOVERABLE);
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode,
+			String[] permissions, int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		if (requestCode != REQ_BT_PERMISSION) {
+			return;
+		}
+		for (int result : grantResults) {
+			if (result != PackageManager.PERMISSION_GRANTED) {
+				ActivityUtil.toastShow(this, "未授予蓝牙权限，无法使用蓝牙方式，可改用wifi方式");
+				return;
+			}
+		}
+		startBluetoothMode();
+	}
 	
 	/**
 	 * 允许pc端连接android蓝牙设置或者wifi的事件监听类.
@@ -248,11 +319,7 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 			if (v == img) {
 				if (index == BLUETOOTH_TYPE) {//蓝牙方式
 					logger.info("当前为蓝牙方式");
-					btAdapt = BluetoothAdapter.getDefaultAdapter();// ��ʼ������6�9���
-					btAdapt.enable();
-					Intent cwjIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE); 
-					cwjIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300); 
-					startActivityForResult(cwjIntent,1);
+					startBluetoothMode();
 				} else {
 					logger.info("当前为wifi方式");
 					if (wifiManager.getWifiState() != WifiManager.WIFI_STATE_ENABLED) {
@@ -267,7 +334,7 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 			} else if (v == pcdownload) {
 				
 				new AlertDialog.Builder(activityNow)
-				.setMessage("亲，下载的文件有10MB左右奥，您确定要现在下载吗？点击确定，将直接下载；点击取消，将在sd卡中生成一个名为"
+				.setMessage("亲，下载的文件有10MB左右奥，您确定要现在下载吗？点击确定，将直接下载；点击取消，将在本应用的外部存储目录中生成一个名为"
 						+ SAVE_URL_FILE + "的文件，里面包含下载地址，你可以复制到电脑上下载。")
 				.setTitle("下载电脑端")
 				.setNegativeButton("取消",
@@ -275,8 +342,8 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 							public void onClick(DialogInterface dialog,
 									int which) {
 								try {
-									FileUtil.saveFile(SAVE_URL_FILE, URL_DOWNLOAD);
-									ActivityUtil.toastShow(activityNow, "保存下载地址成功！");
+									File saved = FileUtil.saveFile(activityNow, SAVE_URL_FILE, URL_DOWNLOAD);
+									ActivityUtil.toastShow(activityNow, "保存下载地址成功：" + saved.getAbsolutePath());
 								} catch (IOException e) {
 									logger.warn("保存下载地址失败",e);
 									ActivityUtil.toastShow(activityNow, "保存下载地址失败");
@@ -302,12 +369,16 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 	/**请求蓝牙在5分钟内允许PC连接的activity结果的监听函数*/
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		logger.info("the result code is "+resultCode);
-		switch (resultCode) {
-		case 300://打开蓝牙监听成功
-			logger.info("enable for search.");
-			acceptConnection(null);//启动andorid端服务器线程
-			break;
+		if (requestCode != REQ_DISCOVERABLE) {
+			return;
 		}
+		if (resultCode == Activity.RESULT_CANCELED) {
+			ActivityUtil.toastShow(this, "您拒绝了蓝牙可见性请求，无法等待PC端接入");
+			return;
+		}
+		// 允许可见时，resultCode 为用户同意的可见时长（秒），即我们请求的 300
+		logger.info("enable for search.");
+		acceptConnection(null);//启动andorid端服务器线程
 	} 
 	
 	@Override

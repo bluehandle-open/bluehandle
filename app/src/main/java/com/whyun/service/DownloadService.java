@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.whyun.activity.MainActivity;
 import com.whyun.bluetooth.R;
+import com.whyun.util.FileUtil;
 import com.whyun.util.MyLog;
 
 public  class DownloadService extends Service {  
@@ -129,11 +130,12 @@ public  class DownloadService extends Service {
 									filenameStr.length());
 						}
 
-						String SDCard = Environment
-								.getExternalStorageDirectory() + "";
-						String path = SDCard + "/" + filename;
+						// 写入应用专属下载目录，Android 10+ 不再允许直接写 sdcard 根目录
+						java.io.File target = new java.io.File(FileUtil.getAppDir(
+								DownloadService.this, Environment.DIRECTORY_DOWNLOADS), filename);
+						String path = target.getAbsolutePath();
 						logger.debug("path:" + path);
-						OutputStream os = new FileOutputStream(path);
+						OutputStream os = new FileOutputStream(target);
 						byte buf[] = new byte[1024 * 256];
 						int hasRead = 0;
 						int showPercentage = 0;

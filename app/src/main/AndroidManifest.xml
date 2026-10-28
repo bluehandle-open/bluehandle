@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+	<!-- Android 12（API 31）起的蓝牙运行时权限：监听 RFCOMM 需 CONNECT，请求可见性需 ADVERTISE -->
 	<uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
 	<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-	<uses-permission android:name="android.permission.VIBRATE"></uses-permission>
-	<uses-permission android:name="android.permission.BLUETOOTH" />
-	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+	<!-- Android 11 及以下的旧蓝牙权限，31 起由上面两项取代 -->
+	<uses-permission android:name="android.permission.BLUETOOTH"
+		android:maxSdkVersion="30" />
+	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN"
+		android:maxSdkVersion="30" />
+	<uses-permission android:name="android.permission.VIBRATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
-
-	<uses-permission android:name="android.permission.READ_PHONE_STATE">
-	</uses-permission>
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE">
-	</uses-permission>
-	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION">
-	</uses-permission>
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE">
-	</uses-permission>
-	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE">
-	</uses-permission>
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+	<!-- 文件均写入应用专属目录，仅 API 18 及以下的外部专属目录仍需此权限 -->
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+		android:maxSdkVersion="18" />
 	
 	<uses-permission android:name="android.permission.WAKE_LOCK"/>
 	

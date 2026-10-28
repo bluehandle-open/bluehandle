@@ -1,5 +1,6 @@
 package com.whyun.util;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.RandomAccessFile;
@@ -8,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.whyun.IBlueToothConst;
@@ -32,7 +34,16 @@ public class MyLog {
 
     private String tag;
     private static final String androidTag = "handle";
-    private static final String ERROR_LOG = "/sdcard/error.log";
+    private static final String ERROR_LOG_NAME = "error.log";
+    /** 错误日志文件，由 {@link #init(Context)} 设置到应用专属目录；未初始化时只输出到 logcat */
+    private static volatile File errorLogFile = null;
+
+    /**
+     * 在 Application.onCreate 中调用一次，把错误日志指向无需存储权限的应用专属目录。
+     */
+    public static void init(Context context) {
+        errorLogFile = new File(FileUtil.getAppDir(context, null), ERROR_LOG_NAME);
+    }
 
     protected MyLog() {
 
@@ -55,10 +66,15 @@ public class MyLog {
     }
 
     private void writeErrorLog(String msg,Throwable e) {
+        File logFile = errorLogFile;
+        if (logFile == null) {
+            Log.println(ERROR, androidTag, "MyLog not initialized, skip writing error log file");
+            return;
+        }
         RandomAccessFile in = null;
         PrintWriter printWriter = null;
         try{
-            in = new RandomAccessFile(ERROR_LOG, "rw");
+            in = new RandomAccessFile(logFile, "rw");
             //append to file end
             long length = in.length();
             in.seek(length);

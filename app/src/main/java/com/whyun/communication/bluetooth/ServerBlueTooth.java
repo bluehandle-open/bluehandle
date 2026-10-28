@@ -56,9 +56,13 @@ public class ServerBlueTooth implements IBlueToothConst,IServer {
 					return;
 				}
 			}
-		} catch (IOException e1) {			
+		} catch (IOException e1) {
 			e1.printStackTrace();
 			HandleProcessUtil.send2Activity(pHandler,FAILED);//����ʧ��
+		} catch (SecurityException e2) {
+			// Android 12+ 缺少 BLUETOOTH_CONNECT 时 listenUsingRfcomm 会抛此异常
+			e2.printStackTrace();
+			HandleProcessUtil.send2Activity(pHandler,FAILED);
 		}
 		
 		Looper.loop();
