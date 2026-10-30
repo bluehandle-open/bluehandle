@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
-import com.whyun.activity.component.ActivityUtil;
 import com.whyun.bluetooth.R;
 import com.whyun.event.KeyButtonBinder;
 import com.whyun.message.key.Vk;
@@ -60,7 +59,7 @@ public class RemoteActivity extends BaseControlActivity {
 		findViewById(R.id.key_voice).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				ActivityUtil.toastShow(RemoteActivity.this, "语音输入即将上线");
+				startActivity(new Intent(RemoteActivity.this, VoiceInputActivity.class));
 			}
 		});
 		findViewById(R.id.key_numpad).setOnClickListener(new View.OnClickListener() {

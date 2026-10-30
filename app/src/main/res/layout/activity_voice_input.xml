@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 遥控器 · 语音输入。对应设计稿 TvVoice 画板。
+     内置识别时显示大麦克风；使用系统输入法时隐藏麦克风区，由输入法的语音按钮输入 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bh_bg"
+    android:orientation="vertical"
+    android:paddingStart="24dp"
+    android:paddingTop="16dp"
+    android:paddingEnd="24dp"
+    android:paddingBottom="20dp">
+
+    <!-- 顶栏 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/btn_close"
+            android:layout_width="@dimen/bh_touch_min"
+            android:layout_height="@dimen/bh_touch_min"
+            android:background="@drawable/bh_bg_card"
+            android:contentDescription="关闭语音输入"
+            android:scaleType="center"
+            app:srcCompat="@drawable/bh_ic_close"
+            app:tint="@color/bh_text" />
+
+        <TextView
+            style="@style/BhText.Title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="语音输入" />
+
+        <TextView
+            android:id="@+id/btn_language"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/bh_bg_card"
+            android:gravity="center"
+            android:minWidth="@dimen/bh_touch_min"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:textColor="@color/bh_text"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <!-- 识别结果 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bh_bg_card"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="14dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_result_label"
+                style="@style/BhText.Caption"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:labelFor="@+id/et_text"
+                android:text="识别结果 · 点击可修改" />
+
+            <ImageButton
+                android:id="@+id/btn_clear"
+                android:layout_width="@dimen/bh_touch_min"
+                android:layout_height="@dimen/bh_touch_min"
+                android:background="@drawable/bh_bg_row"
+                android:contentDescription="清空识别结果"
+                android:scaleType="center"
+                app:srcCompat="@drawable/bh_ic_trash"
+                app:tint="@color/bh_text_secondary" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/et_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:background="@android:color/transparent"
+            android:gravity="top|start"
+            android:hint="说话或打字，文字会输入到电脑当前光标处"
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine"
+            android:maxLines="6"
+            android:minLines="2"
+            android:textColor="@color/bh_text"
+            android:textColorHint="@color/bh_text_secondary"
+            android:textCursorDrawable="@null"
+            android:textSize="22sp" />
+    </LinearLayout>
+
+    <!-- 内置识别：麦克风区 -->
+    <LinearLayout
+        android:id="@+id/block_mic"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="220dp"
+            android:layout_height="220dp">
+
+            <View
+                android:id="@+id/mic_halo_outer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bh_bg_mic_halo_outer" />
+
+            <View
+                android:id="@+id/mic_halo_inner"
+                android:layout_width="164dp"
+                android:layout_height="164dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bh_bg_mic_halo_inner" />
+
+            <FrameLayout
+                android:id="@+id/btn_mic"
+                android:layout_width="112dp"
+                android:layout_height="112dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bh_bg_mic"
+                android:clickable="true"
+                android:contentDescription="开始说话"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center"
+                    android:importantForAccessibility="no"
+                    app:srcCompat="@drawable/bh_ic_mic"
+                    app:tint="@color/bh_on_primary" />
+            </FrameLayout>
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/wave"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:layout_marginTop="16dp"
+            android:gravity="bottom"
+            android:importantForAccessibility="noHideDescendants"
+            android:orientation="horizontal" />
+
+        <TextView
+            android:id="@+id/tv_mic_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:accessibilityLiveRegion="polite"
+            android:textColor="@color/bh_text"
+            android:textSize="15sp" />
+
+        <TextView
+            style="@style/BhText.Caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:text="说完后停顿片刻自动结束，点击麦克风可提前停止" />
+    </LinearLayout>
+
+    <!-- 系统输入法：提示 -->
+    <TextView
+        android:id="@+id/tv_ime_hint"
+        style="@style/BhText.Caption"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:lineSpacingMultiplier="1.4"
+        android:text="点输入法键盘上的麦克风说话\n也可以直接打字"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+    <TextView
+        style="@style/BhText.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="发送到电脑后" />
+
+    <LinearLayout
+        android:id="@+id/seg_send_mode"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bh_bg_segment"
+        android:orientation="horizontal"
+        android:padding="4dp">
+
+        <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="只输入文字" android:textSize="14sp" />
+        <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="输入并回车" android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/btn_retry"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bh_bg_card"
+            android:gravity="center"
+            android:text="重说"
+            android:textColor="@color/bh_text"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/btn_send"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_weight="2"
+            android:background="@drawable/bh_bg_action"
+            android:gravity="center"
+            android:text="发送到电脑"
+            android:textColor="@color/bh_on_action"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <TextView
+        style="@style/BhText.Caption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="文字输入需要支持该功能的新版电脑端"
+        android:textSize="11sp" />
+</LinearLayout>

@@ -38,8 +38,8 @@ import com.whyun.util.UnitTransformTool;
  */
 public class SettingsActivity extends AppCompatActivity implements IMyPreference {
 
-	private static final String[] LANG_NAMES = { "普通话", "粤语", "English" };
-	private static final String[] LANG_CODES = { "zh-CN", "yue-CN", "en-US" };
+	static final String[] LANG_NAMES = { "普通话", "粤语", "English" };
+	static final String[] LANG_CODES = { "zh-CN", "yue-CN", "en-US" };
 	private static final int MINUTES_STEP = 5;
 	private static final int MINUTES_MIN = 5;
 	private static final int MINUTES_MAX = 120;
@@ -277,7 +277,7 @@ public class SettingsActivity extends AppCompatActivity implements IMyPreference
 		return VOICE_ENGINE_BUILTIN.equals(code) ? "内置识别" : "系统输入法";
 	}
 
-	private static String langName(String code) {
+	static String langName(String code) {
 		int i = indexOf(LANG_CODES, code);
 		return LANG_NAMES[i];
 	}
