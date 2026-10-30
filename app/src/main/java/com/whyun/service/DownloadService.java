@@ -7,18 +7,21 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.Message;
-import android.widget.RemoteViews;
 import android.widget.Toast;
+
+import androidx.core.app.NotificationCompat;
 
 import com.whyun.activity.MainActivity;
 import com.whyun.bluetooth.R;
@@ -28,32 +31,60 @@ import com.whyun.util.MyLog;
 public  class DownloadService extends Service {  
 	private MyLog logger  = MyLog.getLogger(DownloadService.class);
 	  
-    private static final int NOTIFICATION_ID = 0x12;  
-    private Notification notification = null;  
-    private NotificationManager manager = null;  
-    private int _progress = 0;  
-    private boolean isRunning = false;  
-        
-    private Binder serviceBinder = new DownLoadServiceBinder(); 
+    private static final int NOTIFICATION_ID = 0x12;
+    private static final String CHANNEL_ID = "download";
+    private NotificationCompat.Builder notificationBuilder = null;
+    private NotificationManager manager = null;
+    private int _progress = 0;
+    private boolean isRunning = false;
+
+    private Binder serviceBinder = new DownLoadServiceBinder();
     private static final int NET_IO_ERROR = -1;
     private static final int DOWNLOAD_ERROR = -2;
     private static final int SDCARD_NOT_FOUND = -3;
-    
 
-    @Override  
-    public void onCreate() {  
-        super.onCreate();  
-          
-        notification = new Notification(R.drawable.icon, "下载蓝色手柄电脑端", System.currentTimeMillis());  
 
-        notification.contentView = new RemoteViews(getApplication().getPackageName(), R.layout.notify_content);  
-        notification.contentView.setProgressBar(R.id.progressBar1, 100, 0, false);  
-        notification.contentView.setTextViewText(R.id.textView1, "进度" + _progress + "%");  
-          
-        notification.contentIntent = PendingIntent.getActivity(this, 0,new Intent(this, MainActivity.class), 0);  
-        
-        manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);  
-    }  
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        // Android 8（API 26）起没有 channel 的通知不会显示
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
+                    "下载进度", NotificationManager.IMPORTANCE_LOW);
+            channel.setDescription("下载蓝色手柄电脑端时显示进度");
+            manager.createNotificationChannel(channel);
+        }
+
+        // targetSdk 31 起必须显式指定 FLAG_IMMUTABLE 或 FLAG_MUTABLE，否则创建时抛异常
+        int piFlags = PendingIntent.FLAG_UPDATE_CURRENT;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            piFlags |= PendingIntent.FLAG_IMMUTABLE;
+        }
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+                new Intent(this, MainActivity.class), piFlags);
+
+        notificationBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.icon)
+                .setContentTitle("下载蓝色手柄电脑端")
+                .setContentText("进度" + _progress + "%")
+                .setProgress(100, 0, false)
+                .setOngoing(true)
+                .setOnlyAlertOnce(true)
+                .setContentIntent(contentIntent);
+    }
+
+    /** 更新通知文案与进度后重新发布；progress 小于 0 表示隐藏进度条 */
+    private void showNotification(String text, int progress) {
+        notificationBuilder.setContentText(text);
+        if (progress < 0) {
+            notificationBuilder.setProgress(0, 0, false).setOngoing(false);
+        } else {
+            notificationBuilder.setProgress(100, progress, false);
+        }
+        manager.notify(NOTIFICATION_ID, notificationBuilder.build());
+    }
       
     @Override  
     public IBinder onBind(Intent intent) {  
@@ -70,8 +101,8 @@ public  class DownloadService extends Service {
       
     public void startDownLoad(String url) {  
     	logger.debug("[startDownLoad]");
-        isRunning = true;  
-        manager.notify(NOTIFICATION_ID, notification);  
+        isRunning = true;
+        showNotification("进度0%", 0);
         new ProgressThread(url,handler).start();
     }  
 
@@ -200,40 +231,32 @@ public  class DownloadService extends Service {
 		
     }  
       
-    public Handler handler = new Handler() {  
-        @Override  
-        public void handleMessage(Message msg) { 
+    public Handler handler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(Message msg) {
+        	String errorText = null;
         	if (msg.arg1 == NET_IO_ERROR) {
-        		notification.contentView.setTextViewText(R.id.textView1, "网络异常，请重试");
-        		manager.cancel(NOTIFICATION_ID);  
+        		errorText = "网络异常，请重试";
+        	} else if (msg.arg1 == DOWNLOAD_ERROR) {
+        		errorText = "下载失败，请重试";
+        	} else if (msg.arg1 == SDCARD_NOT_FOUND) {
+        		errorText = "存储不可用";
+        	}
+        	if (errorText != null) {
+        		isRunning = false;
+        		showNotification(errorText, -1);// 保留通知让用户看到失败原因
+        		Toast.makeText(DownloadService.this, errorText, Toast.LENGTH_LONG).show();
         		return;
         	}
-        	if (msg.arg1 == DOWNLOAD_ERROR) {
-        		notification.contentView.setTextViewText(R.id.textView1, "下载失败，请重试");
-        		manager.cancel(NOTIFICATION_ID);  
-        		return;
-        	}
-        	if (msg.arg1 == SDCARD_NOT_FOUND) {
-        		notification.contentView.setTextViewText(R.id.textView1, "sd卡未找到");
-        		manager.cancel(NOTIFICATION_ID);  
-        		return;
-        	}
-        	if (msg.arg1 == -9) {
-        		notification.contentView.setTextViewText(R.id.textView1, "测试");
-        		manager.cancel(NOTIFICATION_ID);  
-        		return;
-        	}
-            notification.contentView.setProgressBar(R.id.progressBar1, 100, msg.arg1, false);  
-            notification.contentView.setTextViewText(R.id.textView1, "进度" + msg.arg1 + "%");  
-            manager.notify(NOTIFICATION_ID, notification);  
+            showNotification("进度" + msg.arg1 + "%", msg.arg1);
 
-            if (msg.arg1 == 100) {  
-                _progress = 0;  
-                manager.cancel(NOTIFICATION_ID);  
-                isRunning = false;  
-                Toast.makeText(DownloadService.this, "下载完毕", 1000).show();  
+            if (msg.arg1 == 100) {
+                _progress = 0;
+                manager.cancel(NOTIFICATION_ID);
+                isRunning = false;
+                Toast.makeText(DownloadService.this, "下载完毕", Toast.LENGTH_LONG).show();
                 logger.debug("[handleMessage]现在完成");
-            }  
-        }  
-    };  
+            }
+        }
+    };
 }  
