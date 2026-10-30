@@ -37,9 +37,9 @@ public class KeyPicker {
 			Arrays.asList("向上", "向下", "向左", "向右",
 					"numpad0", "numpad1", "numpad2", "numpad3", "numpad4",
 					"numpad5", "numpad6", "numpad7", "numpad8", "numpad9",
-					"add", "-", "multiply", "divide", "decimal"),
+					"add", "subtract", "multiply", "divide", "decimal"),
 			Arrays.asList("静音", "音量-", "音量+", "上一曲", "播放/暂停", "下一曲", "停止播放", "菜单键",
-					";", "=", "<", ">", "~", "|", "？"));
+					"`", "-", "=", "[", "]", "\\", ";", "'", ",", ".", "/"));
 
 	private static final int COLUMNS = 6;
 

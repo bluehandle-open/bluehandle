@@ -5,6 +5,10 @@ import java.util.Map;
 
 import android.annotation.SuppressLint;
 
+/**
+ * 按键名与 Windows 虚拟键码（VK_*）的对照，键码原样发给电脑端，见 docs/protocol.md。
+ * 符号键按物理键位取码，例如“,”键同时承担“<”，需要“<”时与 shift 组合。
+ */
 public final class KeyMap {
 	public static final byte KeyLButton = 1;//鼠标左键
 	public static final byte KeyRButton = 2;//鼠标右键
@@ -33,16 +37,10 @@ public final class KeyMap {
 	public static final byte KeyPrint = 42;// PRINT SCREEN
 	public static final byte KeyExecute = 43;//EXECUTE
 	public static final byte KeySnapshot= 44 ;// SNAP SHOT
-	public static final byte KeyInser = (byte) 0x9b;//INS (155)
-	public static final byte KeyDelete = 127;//DEL
+	public static final byte KeyInsert = 0x2D;//INS
+	public static final byte KeyDelete = 0x2E;//DEL
 	public static final byte KeyHelp = 47;//HELP
 	public static final byte KeyNumlock = (byte)144; // NUMLOCK
-	public static final byte KeyMaoHao = 59;//冒号------
-	public static final byte KeySmaller = 60;//<----
-	public static final byte KeyEqual = 61;//=------
-	public static final byte KeyBigger = 62;//>
-	public static final byte KeyQuestion = 63;//?-----
-	public static final byte KeyAt = 64;//@
 	public static final byte KeyA = 65;//A
 	public static final byte KeyB = 66;//B
 	public static final byte KeyC = 67;//C
@@ -91,7 +89,7 @@ public final class KeyMap {
 	public static final byte KeyNumpad9 = 105;//9
 	public static final byte KeyMultiply = 106;//乘号(*)
 	public static final byte KeyAdd = 107;//加号(+)
-	public static final byte KeyVertical = 108;//|
+	public static final byte KeySeparator = 108;//小键盘分隔键
 	public static final byte KeySubtract = 109;//减号(-)
 	public static final byte KeyDecimal = 110;//小数点(.)
 	public static final byte KeyDivide = 111;//除号(/)
@@ -111,8 +109,17 @@ public final class KeyMap {
 	public static final byte KeyF14 = 125;//F14
 	public static final byte KeyF15 = 126;//F15
 	public static final byte KeyF16 = 127;//F16
-	public static final byte KeyWave = (byte)192;//~
-	public static final byte KeyReduce = 45;//-
+	public static final byte KeySemicolon = (byte) 0xBA;//; :
+	public static final byte KeyEqual = (byte) 0xBB;//= +
+	public static final byte KeyComma = (byte) 0xBC;//, <
+	public static final byte KeyMinus = (byte) 0xBD;//- _
+	public static final byte KeyPeriod = (byte) 0xBE;//. >
+	public static final byte KeySlash = (byte) 0xBF;/// ?
+	public static final byte KeyBackquote = (byte) 0xC0;//` ~
+	public static final byte KeyLeftBracket = (byte) 0xDB;//[ {
+	public static final byte KeyBackslash = (byte) 0xDC;//\ |
+	public static final byte KeyRightBracket = (byte) 0xDD;//] }
+	public static final byte KeyQuote = (byte) 0xDE;//' "
 	public static final byte KeyLWin = 0x5B;//左 Win
 	public static final byte KeyApps = 0x5D;//右键菜单键
 	public static final byte KeyVolumeMute = (byte) 0xAD;//静音
@@ -156,14 +163,10 @@ public final class KeyMap {
 				put ("select",KeySelect);
 				put ("print",KeyPrint);
 				put ("execute",KeyExecute);
-				put ("Insert",KeyInser);
+				put ("Insert",KeyInsert);
 				put ("Delete",KeyDelete);
 				put ("help",KeyHelp);
 				put ("numlock",KeyNumlock);
-				put(";",KeyMaoHao);
-				put("<",KeySmaller);
-				put("=",KeyEqual);
-				put(">",KeyBigger);
 				put ("A",KeyA);
 				put ("B",KeyB);
 				put ("C",KeyC);
@@ -212,8 +215,8 @@ public final class KeyMap {
 				put ("numpad9",KeyNumpad9);
 				put ("multiply",KeyMultiply);
 				put ("add",KeyAdd);
-				put ("|",KeyVertical);
-				put ("-",KeySubtract);
+				put ("separator",KeySeparator);
+				put ("subtract",KeySubtract);
 				put ("decimal",KeyDecimal);
 				put ("divide",KeyDivide);
 				put ("F1",KeyF1);
@@ -232,9 +235,17 @@ public final class KeyMap {
 				put ("F14",KeyF14);
 				put ("F15",KeyF15);
 				put ("F16",KeyF16);
-				put("~",KeyWave);
-				put("-",KeyReduce);
-				put("？",KeyQuestion);
+				put(";",KeySemicolon);
+				put("=",KeyEqual);
+				put(",",KeyComma);
+				put("-",KeyMinus);
+				put(".",KeyPeriod);
+				put("/",KeySlash);
+				put("`",KeyBackquote);
+				put("[",KeyLeftBracket);
+				put("\\",KeyBackslash);
+				put("]",KeyRightBracket);
+				put("'",KeyQuote);
 				put("Win",KeyLWin);
 				put("菜单键",KeyApps);
 				put("静音",KeyVolumeMute);

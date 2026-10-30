@@ -2,7 +2,7 @@ package com.whyun.message.key;
 
 /**
  * 遥控器、PPT、数字键直接发送的 Windows 虚拟键码。
- * 组合键按数组顺序按下，电脑端逆序松开。
+ * 组合键按数组顺序按下、按数组顺序松开，见 docs/protocol.md。
  */
 public final class Vk {
 	public static final byte BACKSPACE = 0x08;
@@ -29,7 +29,7 @@ public final class Vk {
 	public static final byte MEDIA_PREV = KeyMap.KeyMediaPrev;
 	public static final byte MEDIA_PLAY_PAUSE = KeyMap.KeyMediaPlayPause;
 	/** 主键盘区的句点 VK_OEM_PERIOD */
-	public static final byte PERIOD = (byte) 0xBE;
+	public static final byte PERIOD = KeyMap.KeyPeriod;
 
 	private Vk() {
 	}
