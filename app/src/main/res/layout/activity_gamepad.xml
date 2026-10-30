@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 游戏手柄横屏。对应设计稿 Gamepad 画板。手柄区域内的按钮不可点击，触摸由 GamepadTouchHandler 统一处理 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bh_bg"
+    android:orientation="vertical"
+    android:paddingStart="32dp"
+    android:paddingTop="12dp"
+    android:paddingEnd="32dp"
+    android:paddingBottom="16dp">
+
+    <!-- 顶栏 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="@drawable/bh_bg_card"
+            android:contentDescription="返回首页，连接保持"
+            android:scaleType="center"
+            app:srcCompat="@drawable/bh_ic_chevron_left"
+            app:tint="@color/bh_text" />
+
+        <LinearLayout
+            android:id="@+id/btn_scheme"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/bh_bg_card"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="12dp"
+            android:paddingEnd="10dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="游戏手柄"
+                    android:textColor="@color/bh_text"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_scheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="160dp"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textColor="@color/bh_primary_text"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_marginStart="10dp"
+                android:importantForAccessibility="no"
+                app:srcCompat="@drawable/bh_ic_chevron_right"
+                app:tint="@color/bh_primary_text" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/status_dot"
+                android:layout_width="7dp"
+                android:layout_height="7dp"
+                android:background="@drawable/bh_dot" />
+
+            <TextView
+                android:id="@+id/status_text"
+                style="@style/BhText.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btn_gravity"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="@drawable/bh_bg_card_selectable"
+            android:contentDescription="重力感应"
+            android:scaleType="center"
+            app:srcCompat="@drawable/bh_ic_gravity" />
+
+        <ImageButton
+            android:id="@+id/btn_vibrate"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/bh_bg_card_selectable"
+            android:contentDescription="按键震动"
+            android:scaleType="center"
+            app:srcCompat="@drawable/bh_ic_vibrate" />
+
+        <ImageButton
+            android:id="@+id/btn_disconnect"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/bh_bg_card"
+            android:contentDescription="断开连接"
+            android:scaleType="center"
+            app:srcCompat="@drawable/bh_ic_power"
+            app:tint="@color/bh_action" />
+    </LinearLayout>
+
+    <!-- 手柄区域 -->
+    <LinearLayout
+        android:id="@+id/gamepad_area"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:splitMotionEvents="false">
+
+        <!-- 十字键 -->
+        <FrameLayout
+            android:layout_width="216dp"
+            android:layout_height="216dp">
+
+            <FrameLayout
+                android:id="@+id/pad_up"
+                android:layout_width="72dp"
+                android:layout_height="74dp"
+                android:layout_gravity="top|center_horizontal"
+                android:background="@drawable/bh_pad_key"
+                android:contentDescription="上">
+
+                <ImageView android:layout_width="26dp" android:layout_height="26dp" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_dpad_up" app:tint="@color/bh_text" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/pad_down"
+                android:layout_width="72dp"
+                android:layout_height="74dp"
+                android:layout_gravity="bottom|center_horizontal"
+                android:background="@drawable/bh_pad_key"
+                android:contentDescription="下">
+
+                <ImageView android:layout_width="26dp" android:layout_height="26dp" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_dpad_down" app:tint="@color/bh_text" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/pad_left"
+                android:layout_width="74dp"
+                android:layout_height="72dp"
+                android:layout_gravity="start|center_vertical"
+                android:background="@drawable/bh_pad_key"
+                android:contentDescription="左">
+
+                <ImageView android:layout_width="26dp" android:layout_height="26dp" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_dpad_left" app:tint="@color/bh_text" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/pad_right"
+                android:layout_width="74dp"
+                android:layout_height="72dp"
+                android:layout_gravity="end|center_vertical"
+                android:background="@drawable/bh_pad_key"
+                android:contentDescription="右">
+
+                <ImageView android:layout_width="26dp" android:layout_height="26dp" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_dpad_right" app:tint="@color/bh_text" />
+            </FrameLayout>
+
+            <View
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bh_bg_card" />
+        </FrameLayout>
+
+        <!-- SELECT / START -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/pad_select"
+                    android:layout_width="96dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bh_pad_pill"
+                    android:gravity="center"
+                    android:letterSpacing="0.08"
+                    android:text="SELECT"
+                    android:textColor="@color/bh_text"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/pad_start"
+                    android:layout_width="96dp"
+                    android:layout_height="44dp"
+                    android:layout_marginStart="14dp"
+                    android:background="@drawable/bh_pad_pill"
+                    android:gravity="center"
+                    android:letterSpacing="0.08"
+                    android:text="START"
+                    android:textColor="@color/bh_text"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/BhText.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="支持多指同时按下" />
+        </LinearLayout>
+
+        <!-- XYAB -->
+        <FrameLayout
+            android:layout_width="224dp"
+            android:layout_height="224dp">
+
+            <TextView
+                android:id="@+id/pad_y"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_gravity="top|center_horizontal"
+                android:background="@drawable/bh_pad_round"
+                android:gravity="center"
+                android:text="Y"
+                android:textColor="@color/bh_primary_text"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/pad_x"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_gravity="start|center_vertical"
+                android:background="@drawable/bh_pad_round"
+                android:gravity="center"
+                android:text="X"
+                android:textColor="@color/bh_primary_text"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/pad_b"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_gravity="end|center_vertical"
+                android:background="@drawable/bh_pad_round_action"
+                android:gravity="center"
+                android:text="B"
+                android:textColor="@color/bh_on_action"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/pad_a"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_gravity="bottom|center_horizontal"
+                android:background="@drawable/bh_pad_round_primary"
+                android:gravity="center"
+                android:text="A"
+                android:textColor="@color/bh_on_primary"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -33,10 +33,17 @@
 			</intent-filter>
 		</activity>
 
-		<activity android:name="com.whyun.activity.HandleNativeActivity"			
-			android:screenOrientation="landscape"
-			android:label="@string/app_name">
-		</activity>
+		<activity android:name="com.whyun.activity.GamepadSchemeActivity"
+			android:screenOrientation="portrait"
+			android:theme="@style/Theme.BlueHandle" />
+		<activity android:name="com.whyun.activity.KeyEditActivity"
+			android:screenOrientation="portrait"
+			android:windowSoftInputMode="adjustResize"
+			android:theme="@style/Theme.BlueHandle" />
+		<activity android:name="com.whyun.activity.GamepadActivity"
+			android:screenOrientation="sensorLandscape"
+			android:launchMode="singleTop"
+			android:theme="@style/Theme.BlueHandle.Fullscreen" />
 		<service android:name="com.whyun.service.DownloadService"/>  
 
 		<activity android:name="com.whyun.activity.SettingsActivity"
@@ -44,14 +51,6 @@
 			android:theme="@style/Theme.BlueHandle" />
 		
 
-        <activity
-            android:name="com.whyun.activity.KeyListActivity"
-            android:screenOrientation="portrait">           
-        </activity>
-        <activity
-            android:name="com.whyun.activity.KeyAddActivity"
-            android:screenOrientation="portrait">            
-        </activity>
         <activity android:name="com.whyun.activity.GuideActivity"
                	  android:theme="@android:style/Theme.NoTitleBar"
                	  android:configChanges="orientation|keyboardHidden">

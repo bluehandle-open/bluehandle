@@ -299,7 +299,7 @@ public class SettingsActivity extends AppCompatActivity implements IMyPreference
 		rowSchemes.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				startActivity(new Intent(SettingsActivity.this, KeyListActivity.class));
+				startActivity(new Intent(SettingsActivity.this, GamepadSchemeActivity.class));
 			}
 		});
 

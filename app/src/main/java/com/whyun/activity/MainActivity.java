@@ -168,11 +168,8 @@ public class MainActivity extends AppCompatActivity implements IBlueToothConst, 
 	}
 
 	private void openGamepad() {
-		if (!connection.isConnected()) {
-			ActivityUtil.toastShow(this, "请先连接电脑");
-			return;
-		}
-		startActivity(new Intent(this, HandleNativeActivity.class));
+		// 选择和编辑键位方案不需要连接，打开手柄时再检查
+		startActivity(new Intent(this, GamepadSchemeActivity.class));
 	}
 
 	// ---------------------------------------------------------------- 连接

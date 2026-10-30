@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 可选中的卡片：选中时主色描边 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true" android:drawable="@drawable/bh_bg_card_selected" />
+    <item android:drawable="@drawable/bh_bg_card" />
+</selector>

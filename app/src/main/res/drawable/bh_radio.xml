@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 单选圆点：选中为主色粗描边 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true">
+        <shape android:shape="oval">
+            <stroke android:width="6dp" android:color="@color/bh_primary" />
+            <size android:width="22dp" android:height="22dp" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="oval">
+            <stroke android:width="2dp" android:color="#4A5878" />
+            <size android:width="22dp" android:height="22dp" />
+        </shape>
+    </item>
+</selector>
