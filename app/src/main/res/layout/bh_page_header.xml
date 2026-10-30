@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 竖屏页面通用顶栏：返回 + 居中标题 + 右侧占位（可替换为按钮） -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <ImageButton
+        android:id="@+id/header_back"
+        android:layout_width="@dimen/bh_touch_min"
+        android:layout_height="@dimen/bh_touch_min"
+        android:background="@drawable/bh_bg_card"
+        android:contentDescription="返回"
+        android:scaleType="center"
+        app:srcCompat="@drawable/bh_ic_chevron_left"
+        app:tint="@color/bh_text" />
+
+    <TextView
+        android:id="@+id/header_title"
+        style="@style/BhText.Title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center" />
+
+    <FrameLayout
+        android:id="@+id/header_right"
+        android:layout_width="@dimen/bh_touch_min"
+        android:layout_height="@dimen/bh_touch_min" />
+</LinearLayout>

@@ -65,7 +65,7 @@ public interface IBlueToothConst {
 	
 	public static final int TOP_LEVEL_LOG = MyLog.DEBUG;
 	
-	public static final String URL_DOWNLOAD = "http://whyun.com/sub/0/download.php";
+	public static final String URL_DOWNLOAD = "https://whyun.com/sub/0/download.php";
 	public static final String SAVE_FILE_NAME = "blue_handle_pc.7z";
 	public static final String SAVE_URL_FILE = "download.txt";
 }

@@ -196,8 +196,7 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 					keySet.setKeys(DEFAULT_HANDLE_SET, SET_KEY_HANDLE,editor);			
 					break;
 				case EXIT_ID:
-					ActivityUtil.exit(HandleNativeActivity.this,
-							"点击确定后，您本次和电脑间的连接将会结束!");
+					confirmDisconnect();
 					break;
 				default:
 					logger.debug("the selected id now is " + id);
@@ -222,10 +221,19 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		if (isFinishing()) {
-			// 阶段 1 保持旧行为：离开手柄界面即结束连接。新界面上线后改为返回首页时保持连接
-			ConnectionManager.get().stop();
-		}
+	}
+
+	/** 断开与电脑的连接并回到首页 */
+	private void confirmDisconnect() {
+		new AlertDialog.Builder(this)
+		.setMessage("断开与电脑的连接？")
+		.setNegativeButton("取消", null)
+		.setPositiveButton("断开", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				finish();// 先结束界面，避免断开回调再弹“通信异常”
+				ConnectionManager.get().stop();
+			}
+		}).show();
 	}
 	
 	private SimpleAdapter getMenuAdapter() {
@@ -311,8 +319,8 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 	
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {   
-			//按下的如果是BACK，同时没有重复
-			ActivityUtil.exit(this,"点击确定后，您本次和电脑间的连接将会结束!");
+			// 返回首页，连接保持；断开请用菜单里的“退出”或首页的断开按钮
+			finish();
             return true;
 		}  
 		return super.onKeyDown(keyCode, event);

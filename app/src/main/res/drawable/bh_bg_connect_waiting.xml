@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 首页大连接按钮：waiting -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape android:shape="oval">
+            <solid android:color="#24304D" />
+            <stroke android:width="10dp" android:color="@color/bh_primary" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@color/bh_surface_raised" />
+            <stroke android:width="10dp" android:color="@color/bh_primary" />
+        </shape>
+    </item>
+</selector>

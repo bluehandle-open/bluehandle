@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 设置分组卡片：带内部分隔线 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/bh_surface" />
+    <stroke android:width="@dimen/bh_border" android:color="@color/bh_border" />
+    <corners android:radius="18dp" />
+</shape>

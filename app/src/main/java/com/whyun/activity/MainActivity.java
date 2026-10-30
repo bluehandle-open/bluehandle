@@ -1,223 +1,227 @@
 package com.whyun.activity;
 
-import java.io.File;
-import java.io.IOException;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-//import net.youmi.android.AdView;
-//import net.youmi.android.;
-//import net.youmi.android.offers.OffersManager;
-//import net.youmi.android.offers.PointsManager;
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.IBinder;
-import android.os.Message;
-import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.Window;
-//import android.view.WindowManager.LayoutParams;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.whyun.IBlueToothConst;
 import com.whyun.activity.component.ActivityUtil;
-import com.whyun.activity.component.top.impl.TopCustom;
+import com.whyun.activity.component.PcDownloadHelper;
+import com.whyun.activity.component.SegmentedControl;
 import com.whyun.bluetooth.R;
 import com.whyun.communication.ConnectionManager;
-import com.whyun.event.BottomClickEvent;
-import com.whyun.service.DownloadService;
-import com.whyun.util.FileUtil;
+import com.whyun.util.AppPrefs;
 import com.whyun.util.MyLog;
 
-public class MainActivity extends Activity implements IBlueToothConst,IBottom {
+/**
+ * 首页：选择连接方式、等待电脑端接入、选择遥控模式。
+ * 连接成功后停留在首页，由用户选择模式；连接由 {@link ConnectionManager} 保持，
+ * 只有点“断开”或退出应用才会结束。
+ */
+public class MainActivity extends AppCompatActivity implements IBlueToothConst, ConnectionManager.Listener {
 	/** 请求蓝牙可见性的 requestCode */
 	private static final int REQ_DISCOVERABLE = 1;
 	/** 请求 Android 12+ 蓝牙运行时权限的 requestCode */
 	private static final int REQ_BT_PERMISSION = 2;
-	private BluetoothAdapter btAdapt;
-	private ImageView img;
-	private ImageButton exit;
-	private ProgressDialog prgd;
+
+	private static final MyLog logger = MyLog.getLogger(MainActivity.class);
 
 	private final ConnectionManager connection = ConnectionManager.get();
-	private int index = WIFI_TYPE;
+	private SegmentedControl connectTypeSeg;
+	private LinearLayout btnConnect;
+	private ImageView btnConnectIcon;
+	private TextView btnConnectText;
+	private View statusDot;
+	private TextView statusText;
+	private TextView statusDetail;
 
-	private MyLog logger = MyLog.getLogger(MainActivity.class);
-
-	private Activity activityNow = this;
-	private SharedPreferences settings;
-
-	private final ConnectionManager.Listener connectionListener = new ConnectionManager.Listener() {
-		@Override
-		public void onConnectionChanged(ConnectionManager.State state, int connectType, int reason) {
-			if (state == ConnectionManager.State.CONNECTED) {
-				dismissDlg();
-				Intent intent = new Intent();
-				intent.setClass(MainActivity.this, HandleNativeActivity.class);
-				startActivity(intent);
-			} else if (state == ConnectionManager.State.IDLE && reason == ConnectionManager.REASON_FAILED) {
-				ActivityUtil.toastShow(MainActivity.this, "开启服务失败，请检查网络或蓝牙权限");
-				dismissDlg();
-			}
-		}
-	};
-	
-	
-	private DownloadService downLoadService;  
-	private boolean flag = false;
-	private ImageButton pcdownload;
-	
-	private ServiceConnection serviceConnection = new ServiceConnection() {
-
-		@Override
-		public void onServiceConnected(ComponentName name, IBinder service) {
-			downLoadService = ((DownloadService.DownLoadServiceBinder) service)
-					.getService();
-			
-			flag = true;
-			downLoadService.startDownLoad(URL_DOWNLOAD);
-			logger.info("[onServiceConnected]服务开启");
-		}
-
-		@Override
-		public void onServiceDisconnected(ComponentName name) {
-			logger.info("服务结束");
-		}
-	};
-	private WifiManager wifiManager;
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.my_main);		
-		
-		LinearLayout top = (LinearLayout)findViewById(R.id.top);
-		top.addView(new TopCustom(this,"蓝色手柄", new OnClickListener() {
+		setContentView(R.layout.activity_main);
 
+		findViewById(R.id.btn_settings).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent();
-				intent.setClass(MainActivity.this, KeyListActivity.class);
-				startActivity(intent);
-			}}).getView());
+				startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+			}
+		});
 
-		img = (ImageView)findViewById(R.id.imgBtn);		
-		img.setOnClickListener(new ClickEvent());//注册开始按钮监听事件��ʼl��		
-		
-		ImageButton connectType = (ImageButton)findViewById(DONATE_ID);
-		connectType.setOnClickListener(new BottomClickEvent(this));
-		
-		ImageButton share = (ImageButton)findViewById(SHARE_ID);
-		share.setOnClickListener(new BottomClickEvent(this));
-		
-		pcdownload = (ImageButton)findViewById(PC_DOWNLOAD_ID);
-		pcdownload.setOnClickListener(new ClickEvent());
-		
-		ImageButton config = (ImageButton)findViewById(CONFIG_ID);
-		config.setOnClickListener(new BottomClickEvent(this));
-		
-		exit = (ImageButton)findViewById(EXIT_ID);
-		exit.setOnClickListener(new ClickEvent());
-		settings = PreferenceManager.getDefaultSharedPreferences(this);
-		
-		wifiManager = (WifiManager)MainActivity.this.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-		showGuide();
-	}
-	
-	public void dismissDlg() {
-		if (prgd != null) {
-			prgd.dismiss();
-		}
-	}
-	
-	private void showGuide() {
-		if (settings.getBoolean(IMyPreference.FIRST_OPEN, true)) {
-			Intent intent = new Intent();
-			intent.setClass(MainActivity.this, GuideActivity.class);
-			Editor editor = settings.edit();
-			editor.putBoolean(IMyPreference.FIRST_OPEN, false);
-			editor.commit();
-			startActivity(intent);
-		}
-	}
-	
-//	private void showAd() {
-//		
-//		LinearLayout head = (LinearLayout)findViewById(R.id.head);
-//		if (settings.getBoolean(IMyPreference.REMOVE_AD, false)) {
-//			head.removeAllViews();
-//			logger.debug("remove ad already");
-//		} else {
-//	        LinearLayout layout=new LinearLayout(this);   
-//	        layout.setOrientation(LinearLayout.VERTICAL);   
-//	        //layout.setBackgroundResource(R.drawable.bg);   
-//	        //初始化广告视图，可以使用其他的构造函数设置广告视图的背景色、透明度及字体颜色  
-//	        AdView adView = new AdView(this);   
-//	        LayoutParams params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);       
-//	        layout.addView(adView, params);
-//			
-//			head.addView(layout);
-//		}
-//	}
-	
-	private void initConnectType() {
-		
-		String typeNow = settings.getString(IMyPreference.CONNECT_TYPE,"0");
-		logger.info("typeNow:" + typeNow);
-		index = Integer.parseInt(typeNow);
-	}
-	
-	private void acceptConnection(String ip) {//启动服务器端线程
-		String msg = "等待PC端接入";
-		if (ip != null) {
-			msg += "(本地ip：" + ip + ")";
-		} else {
-			msg += "......";
-		}
-		prgd =  ProgressDialog.show(MainActivity.this,
-				"提示", msg, true);
-		prgd.setCancelable(true);
-		prgd.setOnCancelListener(new OnCancelListener() {//点击取消，取消服务
+		connectTypeSeg = new SegmentedControl((LinearLayout) findViewById(R.id.seg_connect_type));
+		connectTypeSeg.setOnSelectedListener(new SegmentedControl.OnSelectedListener() {
+			@Override
+			public void onSelected(int index) {
+				AppPrefs.setConnectType(MainActivity.this, index == 0 ? WIFI_TYPE : BLUETOOTH_TYPE);
+				render();
+			}
+		});
 
-            public void onCancel(DialogInterface arg0) {                
-            	logger.info("...cancel button is pressed");
-                connection.stop();
-                prgd.dismiss();
-            }
-        });
-		connection.start(index, PORT);
+		btnConnect = (LinearLayout) findViewById(R.id.btn_connect);
+		btnConnectIcon = (ImageView) findViewById(R.id.btn_connect_icon);
+		btnConnectText = (TextView) findViewById(R.id.btn_connect_text);
+		statusDot = findViewById(R.id.status_dot);
+		statusText = (TextView) findViewById(R.id.status_text);
+		statusDetail = (TextView) findViewById(R.id.status_detail);
+		btnConnect.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				onConnectClicked();
+			}
+		});
+
+		setupMode(R.id.mode_gamepad, R.drawable.bh_ic_gamepad, "游戏手柄",
+				"横屏双手 · 可选默认或自定义键位", false, new Runnable() {
+					@Override
+					public void run() {
+						openGamepad();
+					}
+				});
+		setupMode(R.id.mode_remote, R.drawable.bh_ic_remote, "遥控器",
+				"竖屏单手 · 影音控制与语音输入", true, new Runnable() {
+					@Override
+					public void run() {
+						ActivityUtil.toastShow(MainActivity.this, "遥控器模式即将上线");
+					}
+				});
+		setupMode(R.id.mode_ppt, R.drawable.bh_ic_ppt, "PPT 演示",
+				"竖屏单手 · 大按钮盲操作翻页", true, new Runnable() {
+					@Override
+					public void run() {
+						ActivityUtil.toastShow(MainActivity.this, "PPT 演示模式即将上线");
+					}
+				});
+
+		findViewById(R.id.btn_download).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				PcDownloadHelper.show(MainActivity.this);
+			}
+		});
+		findViewById(R.id.btn_help).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(MainActivity.this, GuideActivity.class));
+			}
+		});
+
+		showGuideOnFirstOpen();
 	}
-	
-	private String intToIp(int i)
-    {
-		return ( i & 0xFF)+ "." + ((i >> 8 ) & 0xFF) + "." + ((i >> 16 ) & 0xFF) +"."+((i >> 24 ) & 0xFF);
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		connection.addListener(this);
+		render();
+	}
+
+	@Override
+	protected void onPause() {
+		connection.removeListener(this);
+		super.onPause();
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		if (isFinishing()) {
+			connection.stop();// 退出应用时断开；配置变化导致的重建不断开
+		}
+	}
+
+	// ---------------------------------------------------------------- 模式
+
+	private void setupMode(int includeId, int iconRes, String title, String desc,
+			boolean isNew, final Runnable action) {
+		View card = findViewById(includeId);
+		((ImageView) card.findViewById(R.id.mode_icon)).setImageResource(iconRes);
+		((TextView) card.findViewById(R.id.mode_title)).setText(title);
+		((TextView) card.findViewById(R.id.mode_desc)).setText(desc);
+		card.findViewById(R.id.mode_badge).setVisibility(isNew ? View.VISIBLE : View.GONE);
+		card.setContentDescription(title + "，" + desc);
+		card.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				action.run();
+			}
+		});
+	}
+
+	private void openGamepad() {
+		if (!connection.isConnected()) {
+			ActivityUtil.toastShow(this, "请先连接电脑");
+			return;
+		}
+		startActivity(new Intent(this, HandleNativeActivity.class));
+	}
+
+	// ---------------------------------------------------------------- 连接
+
+	private void onConnectClicked() {
+		switch (connection.getState()) {
+		case IDLE:
+			if (AppPrefs.connectType(this) == BLUETOOTH_TYPE) {
+				startBluetoothMode();
+			} else {
+				startWifiMode();
+			}
+			break;
+		case WAITING:
+			connection.stop();
+			break;
+		case CONNECTED:
+			new AlertDialog.Builder(this)
+			.setMessage("断开与电脑的连接？")
+			.setNegativeButton("取消", null)
+			.setPositiveButton("断开", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					connection.stop();
+				}
+			}).show();
+			break;
+		}
+	}
+
+	private void startWifiMode() {
+		if (localWifiIp() == null) {
+			ActivityUtil.toastShow(this, "当前 Wi‑Fi 不可用，请连接 Wi‑Fi 后重试");
+			return;
+		}
+		connection.start(WIFI_TYPE, AppPrefs.wifiPort(this));
+	}
+
+	/** 返回本机 Wi-Fi 地址，Wi-Fi 未连接时返回 null */
+	private String localWifiIp() {
+		WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+		if (wifi == null || wifi.getWifiState() != WifiManager.WIFI_STATE_ENABLED) {
+			return null;
+		}
+		WifiInfo info = wifi.getConnectionInfo();
+		int i = info == null ? 0 : info.getIpAddress();
+		if (i == 0) {
+			return null;
+		}
+		return (i & 0xFF) + "." + ((i >> 8) & 0xFF) + "." + ((i >> 16) & 0xFF) + "." + ((i >> 24) & 0xFF);
 	}
 
 	/**
@@ -243,11 +247,10 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 
 	/**
 	 * 蓝牙方式入口：先确认设备支持蓝牙和权限已授予，再请求可见性。
-	 * 可见性请求弹窗会在蓝牙未开启时顺带引导用户开启，因此不再直接调用 enable()。
+	 * 可见性请求弹窗会在蓝牙未开启时顺带引导用户开启。
 	 */
 	private void startBluetoothMode() {
-		btAdapt = BluetoothAdapter.getDefaultAdapter();
-		if (btAdapt == null) {
+		if (BluetoothAdapter.getDefaultAdapter() == null) {
 			ActivityUtil.toastShow(this, "当前设备不支持蓝牙");
 			return;
 		}
@@ -257,155 +260,116 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 			ActivityCompat.requestPermissions(this, missing, REQ_BT_PERMISSION);
 			return;
 		}
-		Intent cwjIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-		cwjIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
-		startActivityForResult(cwjIntent, REQ_DISCOVERABLE);
+		Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+		intent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
+		startActivityForResult(intent, REQ_DISCOVERABLE);
 	}
 
 	@Override
-	public void onRequestPermissionsResult(int requestCode,
-			String[] permissions, int[] grantResults) {
+	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 		if (requestCode != REQ_BT_PERMISSION) {
 			return;
 		}
 		for (int result : grantResults) {
 			if (result != PackageManager.PERMISSION_GRANTED) {
-				ActivityUtil.toastShow(this, "未授予蓝牙权限，无法使用蓝牙方式，可改用wifi方式");
+				ActivityUtil.toastShow(this, "未授予蓝牙权限，无法使用蓝牙方式，可改用 Wi‑Fi 方式");
 				return;
 			}
 		}
 		startBluetoothMode();
 	}
-	
-	/**
-	 * 允许pc端连接android蓝牙设置或者wifi的事件监听类.
-	 */
-	class ClickEvent implements View.OnClickListener {
 
-		@Override
-		public void onClick(View v) {
-			if (v == img) {
-				if (index == BLUETOOTH_TYPE) {//蓝牙方式
-					logger.info("当前为蓝牙方式");
-					startBluetoothMode();
-				} else {
-					logger.info("当前为wifi方式");
-					if (wifiManager.getWifiState() != WifiManager.WIFI_STATE_ENABLED) {
-						ActivityUtil.toastShow(MainActivity.this, "当前wifi不能用，请启用wifi完毕后重试");
-					} else {
-						WifiInfo  wifiinfo= wifiManager.getConnectionInfo();
-						String ip = intToIp(wifiinfo.getIpAddress());
-						ActivityUtil.toastShow(MainActivity.this, "当前wifi的ip地址：" + ip);  
-						acceptConnection(ip);
-					}					
-				}
-			} else if (v == pcdownload) {
-				
-				new AlertDialog.Builder(activityNow)
-				.setMessage("亲，下载的文件有10MB左右奥，您确定要现在下载吗？点击确定，将直接下载；点击取消，将在本应用的外部存储目录中生成一个名为"
-						+ SAVE_URL_FILE + "的文件，里面包含下载地址，你可以复制到电脑上下载。")
-				.setTitle("下载电脑端")
-				.setNegativeButton("取消",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int which) {
-								try {
-									File saved = FileUtil.saveFile(activityNow, SAVE_URL_FILE, URL_DOWNLOAD);
-									ActivityUtil.toastShow(activityNow, "保存下载地址成功：" + saved.getAbsolutePath());
-								} catch (IOException e) {
-									logger.warn("保存下载地址失败",e);
-									ActivityUtil.toastShow(activityNow, "保存下载地址失败");
-								}
-							}
-						})
-				.setPositiveButton("确定",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int whichButton) {
-								bindService();
-								logger.info("[ClickEvent]开启服务");
-							}
-						}).show();   
-				
-			} else if (v == exit) {
-				ActivityUtil.exit(activityNow);
-			}
-		}
-		
-	}
-	
-	/**请求蓝牙在5分钟内允许PC连接的activity结果的监听函数*/
+	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		logger.info("the result code is "+resultCode);
+		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode != REQ_DISCOVERABLE) {
 			return;
 		}
-		if (resultCode == Activity.RESULT_CANCELED) {
-			ActivityUtil.toastShow(this, "您拒绝了蓝牙可见性请求，无法等待PC端接入");
+		if (resultCode == RESULT_CANCELED) {
+			ActivityUtil.toastShow(this, "您拒绝了蓝牙可见性请求，无法等待电脑端接入");
 			return;
 		}
-		// 允许可见时，resultCode 为用户同意的可见时长（秒），即我们请求的 300
-		logger.info("enable for search.");
-		acceptConnection(null);//启动andorid端服务器线程
-	} 
-	
-	@Override
-	protected void onResume() {
-		super.onResume();
-		connection.addListener(connectionListener);
-		initConnectType();
-//		showAd();
-	}
-	
-	private void bindService() {
-		logger.debug("[bindService]");
-		Intent intent = new Intent(MainActivity.this, DownloadService.class);
-		this.getApplicationContext().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
-		//startService(intent);
+		// 允许可见时，resultCode 为用户同意的可见时长（秒）
+		connection.start(BLUETOOTH_TYPE, AppPrefs.wifiPort(this));
 	}
 
-	private void unBind() {
-		if (flag == true) {
-			unbindService(serviceConnection);
-			flag = false;
+	@Override
+	public void onConnectionChanged(ConnectionManager.State state, int connectType, int reason) {
+		if (reason == ConnectionManager.REASON_FAILED) {
+			ActivityUtil.toastShow(this, "开启服务失败，请检查网络或蓝牙权限");
+		} else if (reason == ConnectionManager.REASON_LOST) {
+			ActivityUtil.toastShow(this, "与电脑的连接已断开");
+		}
+		render();
+	}
+
+	/** 按当前连接状态刷新连接卡片 */
+	private void render() {
+		ConnectionManager.State state = connection.getState();
+		int type = state == ConnectionManager.State.IDLE
+				? AppPrefs.connectType(this) : connection.getConnectType();
+		connectTypeSeg.select(type == BLUETOOTH_TYPE ? 1 : 0);
+		connectTypeSeg.setEnabled(state == ConnectionManager.State.IDLE);
+		String typeName = type == BLUETOOTH_TYPE ? "蓝牙" : "Wi‑Fi";
+
+		int dotColor;
+		int fg;
+		switch (state) {
+		case WAITING:
+			btnConnect.setBackgroundResource(R.drawable.bh_bg_connect_waiting);
+			btnConnectIcon.setImageResource(R.drawable.bh_ic_close);
+			btnConnectText.setText("取消等待");
+			fg = R.color.bh_text;
+			dotColor = R.color.bh_action;
+			statusText.setText("等待电脑端接入…");
+			break;
+		case CONNECTED:
+			btnConnect.setBackgroundResource(R.drawable.bh_bg_connect_connected);
+			btnConnectIcon.setImageResource(R.drawable.bh_ic_power);
+			btnConnectText.setText("断开连接");
+			fg = R.color.bh_action;
+			dotColor = R.color.bh_status_connected;
+			statusText.setText("已连接 · " + typeName);
+			break;
+		default:
+			btnConnect.setBackgroundResource(R.drawable.bh_bg_connect_idle);
+			btnConnectIcon.setImageResource(R.drawable.bh_ic_power);
+			btnConnectText.setText("开始连接");
+			fg = R.color.bh_on_primary;
+			dotColor = R.color.bh_text_secondary;
+			statusText.setText("未连接");
+			break;
+		}
+		btnConnectText.setTextColor(ContextCompat.getColor(this, fg));
+		btnConnectIcon.setColorFilter(ContextCompat.getColor(this, fg));
+		btnConnect.setContentDescription(btnConnectText.getText());
+		DrawableCompat.setTint(DrawableCompat.wrap(statusDot.getBackground().mutate()),
+				ContextCompat.getColor(this, dotColor));
+
+		if (type == BLUETOOTH_TYPE) {
+			statusDetail.setText("在电脑端通过蓝牙搜索本机");
+		} else {
+			String ip = localWifiIp();
+			statusDetail.setText(ip == null ? "请先连接 Wi‑Fi"
+					: "本机地址 " + ip + ":" + AppPrefs.wifiPort(this));
+		}
+	}
+
+	private void showGuideOnFirstOpen() {
+		if (AppPrefs.get(this, IMyPreference.FIRST_OPEN, true)) {
+			AppPrefs.put(this, IMyPreference.FIRST_OPEN, false);
+			startActivity(new Intent(this, GuideActivity.class));
 		}
 	}
 
 	@Override
-	protected void onPause() {
-		connection.removeListener(connectionListener);
-		super.onPause();
-	}
-
-	@Override
-	protected void onRestart() {
-		super.onRestart();
-		activityNow = this;
-	}
-
-	@Override
-	protected void onDestroy() {		
-		super.onDestroy();
-		dismissDlg();
-		logger.info("destroy occured.");
-		if (isFinishing()) {
-			connection.stop();// 退出应用时断开；配置变化导致的重建不断开
-		}
-		unBind();
-		//btAdapt.
-	}	
-
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {   
-			//按下的如果是BACK，同时没有重复
-			ActivityUtil.exit(this);
-            return true;
-		}  
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			ActivityUtil.exit(this, connection.getState() == ConnectionManager.State.IDLE
+					? null : "退出后与电脑的连接将断开");
+			return true;
+		}
 		return super.onKeyDown(keyCode, event);
-	}   
-	    
-}  
-	  
-	
-
+	}
+}
