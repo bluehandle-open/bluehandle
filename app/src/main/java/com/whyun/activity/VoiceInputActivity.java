@@ -347,6 +347,10 @@ public class VoiceInputActivity extends BaseControlActivity {
 	private void send() {
 		String text = etText.getText().toString();
 		boolean enter = sendMode.getSelected() == 1;
+		if (enter) {
+			// 末尾的换行会被电脑端当成回车，再加上“输入并回车”就成了两次回车
+			text = text.replaceAll("[\r\n]+$", "");
+		}
 		if (text.trim().isEmpty() && !enter) {
 			ActivityUtil.toastShow(this, "还没有要发送的文字");
 			return;

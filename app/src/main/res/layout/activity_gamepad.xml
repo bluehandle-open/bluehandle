@@ -138,56 +138,56 @@
 
         <!-- 十字键 -->
         <FrameLayout
-            android:layout_width="216dp"
-            android:layout_height="216dp">
+            android:layout_width="@dimen/bh_gp_dpad_size"
+            android:layout_height="@dimen/bh_gp_dpad_size">
 
             <FrameLayout
                 android:id="@+id/pad_up"
-                android:layout_width="72dp"
-                android:layout_height="74dp"
+                android:layout_width="@dimen/bh_gp_dpad_key_cross"
+                android:layout_height="@dimen/bh_gp_dpad_key_along"
                 android:layout_gravity="top|center_horizontal"
                 android:background="@drawable/bh_pad_key"
                 android:contentDescription="上">
 
-                <ImageView android:layout_width="26dp" android:layout_height="26dp" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_dpad_up" app:tint="@color/bh_text" />
+                <ImageView android:layout_width="@dimen/bh_gp_dpad_icon" android:layout_height="@dimen/bh_gp_dpad_icon" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_dpad_up" app:tint="@color/bh_text" />
             </FrameLayout>
 
             <FrameLayout
                 android:id="@+id/pad_down"
-                android:layout_width="72dp"
-                android:layout_height="74dp"
+                android:layout_width="@dimen/bh_gp_dpad_key_cross"
+                android:layout_height="@dimen/bh_gp_dpad_key_along"
                 android:layout_gravity="bottom|center_horizontal"
                 android:background="@drawable/bh_pad_key"
                 android:contentDescription="下">
 
-                <ImageView android:layout_width="26dp" android:layout_height="26dp" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_dpad_down" app:tint="@color/bh_text" />
+                <ImageView android:layout_width="@dimen/bh_gp_dpad_icon" android:layout_height="@dimen/bh_gp_dpad_icon" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_dpad_down" app:tint="@color/bh_text" />
             </FrameLayout>
 
             <FrameLayout
                 android:id="@+id/pad_left"
-                android:layout_width="74dp"
-                android:layout_height="72dp"
+                android:layout_width="@dimen/bh_gp_dpad_key_along"
+                android:layout_height="@dimen/bh_gp_dpad_key_cross"
                 android:layout_gravity="start|center_vertical"
                 android:background="@drawable/bh_pad_key"
                 android:contentDescription="左">
 
-                <ImageView android:layout_width="26dp" android:layout_height="26dp" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_dpad_left" app:tint="@color/bh_text" />
+                <ImageView android:layout_width="@dimen/bh_gp_dpad_icon" android:layout_height="@dimen/bh_gp_dpad_icon" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_dpad_left" app:tint="@color/bh_text" />
             </FrameLayout>
 
             <FrameLayout
                 android:id="@+id/pad_right"
-                android:layout_width="74dp"
-                android:layout_height="72dp"
+                android:layout_width="@dimen/bh_gp_dpad_key_along"
+                android:layout_height="@dimen/bh_gp_dpad_key_cross"
                 android:layout_gravity="end|center_vertical"
                 android:background="@drawable/bh_pad_key"
                 android:contentDescription="右">
 
-                <ImageView android:layout_width="26dp" android:layout_height="26dp" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_dpad_right" app:tint="@color/bh_text" />
+                <ImageView android:layout_width="@dimen/bh_gp_dpad_icon" android:layout_height="@dimen/bh_gp_dpad_icon" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_dpad_right" app:tint="@color/bh_text" />
             </FrameLayout>
 
             <View
-                android:layout_width="64dp"
-                android:layout_height="64dp"
+                android:layout_width="@dimen/bh_gp_dpad_center"
+                android:layout_height="@dimen/bh_gp_dpad_center"
                 android:layout_gravity="center"
                 android:background="@drawable/bh_bg_card" />
         </FrameLayout>
@@ -207,8 +207,8 @@
 
                 <TextView
                     android:id="@+id/pad_select"
-                    android:layout_width="96dp"
-                    android:layout_height="44dp"
+                    android:layout_width="@dimen/bh_gp_pill_width"
+                    android:layout_height="@dimen/bh_gp_pill_height"
                     android:background="@drawable/bh_pad_pill"
                     android:gravity="center"
                     android:letterSpacing="0.08"
@@ -218,9 +218,9 @@
 
                 <TextView
                     android:id="@+id/pad_start"
-                    android:layout_width="96dp"
-                    android:layout_height="44dp"
-                    android:layout_marginStart="14dp"
+                    android:layout_width="@dimen/bh_gp_pill_width"
+                    android:layout_height="@dimen/bh_gp_pill_height"
+                    android:layout_marginStart="@dimen/bh_gp_pill_gap"
                     android:background="@drawable/bh_pad_pill"
                     android:gravity="center"
                     android:letterSpacing="0.08"
@@ -239,55 +239,55 @@
 
         <!-- XYAB -->
         <FrameLayout
-            android:layout_width="224dp"
-            android:layout_height="224dp">
+            android:layout_width="@dimen/bh_gp_face_size"
+            android:layout_height="@dimen/bh_gp_face_size">
 
             <TextView
                 android:id="@+id/pad_y"
-                android:layout_width="72dp"
-                android:layout_height="72dp"
+                android:layout_width="@dimen/bh_gp_face_key"
+                android:layout_height="@dimen/bh_gp_face_key"
                 android:layout_gravity="top|center_horizontal"
                 android:background="@drawable/bh_pad_round"
                 android:gravity="center"
                 android:text="Y"
                 android:textColor="@color/bh_primary_text"
-                android:textSize="22sp"
+                android:textSize="@dimen/bh_gp_face_text"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/pad_x"
-                android:layout_width="72dp"
-                android:layout_height="72dp"
+                android:layout_width="@dimen/bh_gp_face_key"
+                android:layout_height="@dimen/bh_gp_face_key"
                 android:layout_gravity="start|center_vertical"
                 android:background="@drawable/bh_pad_round"
                 android:gravity="center"
                 android:text="X"
                 android:textColor="@color/bh_primary_text"
-                android:textSize="22sp"
+                android:textSize="@dimen/bh_gp_face_text"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/pad_b"
-                android:layout_width="72dp"
-                android:layout_height="72dp"
+                android:layout_width="@dimen/bh_gp_face_key"
+                android:layout_height="@dimen/bh_gp_face_key"
                 android:layout_gravity="end|center_vertical"
                 android:background="@drawable/bh_pad_round_action"
                 android:gravity="center"
                 android:text="B"
                 android:textColor="@color/bh_on_action"
-                android:textSize="22sp"
+                android:textSize="@dimen/bh_gp_face_text"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/pad_a"
-                android:layout_width="72dp"
-                android:layout_height="72dp"
+                android:layout_width="@dimen/bh_gp_face_key"
+                android:layout_height="@dimen/bh_gp_face_key"
                 android:layout_gravity="bottom|center_horizontal"
                 android:background="@drawable/bh_pad_round_primary"
                 android:gravity="center"
                 android:text="A"
                 android:textColor="@color/bh_on_primary"
-                android:textSize="22sp"
+                android:textSize="@dimen/bh_gp_face_text"
                 android:textStyle="bold" />
         </FrameLayout>
     </LinearLayout>

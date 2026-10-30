@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 横屏宽度足够时使用设计稿原始尺寸 -->
+<resources>
+    <dimen name="bh_gp_dpad_size">216dp</dimen>
+    <dimen name="bh_gp_dpad_key_cross">72dp</dimen>
+    <dimen name="bh_gp_dpad_key_along">74dp</dimen>
+    <dimen name="bh_gp_dpad_center">64dp</dimen>
+    <dimen name="bh_gp_dpad_icon">26dp</dimen>
+    <dimen name="bh_gp_face_size">224dp</dimen>
+    <dimen name="bh_gp_face_key">72dp</dimen>
+    <dimen name="bh_gp_face_text">22sp</dimen>
+    <dimen name="bh_gp_pill_width">96dp</dimen>
+    <dimen name="bh_gp_pill_height">44dp</dimen>
+    <dimen name="bh_gp_pill_gap">14dp</dimen>
+</resources>

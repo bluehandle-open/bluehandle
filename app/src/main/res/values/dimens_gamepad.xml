@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 手柄横屏按键尺寸。默认是紧凑尺寸，适配 640×360dp 这类常见手机；
+     横屏宽度 ≥720dp 时使用 values-w720dp 中设计稿的原始尺寸 -->
+<resources>
+    <dimen name="bh_gp_dpad_size">172dp</dimen>
+    <dimen name="bh_gp_dpad_key_cross">58dp</dimen>
+    <dimen name="bh_gp_dpad_key_along">59dp</dimen>
+    <dimen name="bh_gp_dpad_center">51dp</dimen>
+    <dimen name="bh_gp_dpad_icon">22dp</dimen>
+    <dimen name="bh_gp_face_size">180dp</dimen>
+    <dimen name="bh_gp_face_key">58dp</dimen>
+    <dimen name="bh_gp_face_text">18sp</dimen>
+    <dimen name="bh_gp_pill_width">80dp</dimen>
+    <dimen name="bh_gp_pill_height">40dp</dimen>
+    <dimen name="bh_gp_pill_gap">10dp</dimen>
+</resources>
