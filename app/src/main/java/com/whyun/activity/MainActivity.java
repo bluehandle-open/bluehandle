@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements IBlueToothConst, 
 				"竖屏单手 · 大按钮盲操作翻页", true, new Runnable() {
 					@Override
 					public void run() {
-						ActivityUtil.toastShow(MainActivity.this, "PPT 演示模式即将上线");
+						openMode(PptActivity.class);
 					}
 				});
 

@@ -93,6 +93,16 @@ public abstract class BaseControlActivity extends AppCompatActivity implements C
 		}
 	}
 
+	/** 填充一个 bh_remote_key：图标、名称、对应快捷键 */
+	protected View setupKey(int id, int icon, String label, String hint) {
+		View key = findViewById(id);
+		((android.widget.ImageView) key.findViewById(R.id.key_icon)).setImageResource(icon);
+		((TextView) key.findViewById(R.id.key_label)).setText(label);
+		((TextView) key.findViewById(R.id.key_hint)).setText(hint);
+		key.setContentDescription(label + "，" + hint);
+		return key;
+	}
+
 	/** 主动断开：先结束界面，避免断开回调再弹“连接已断开” */
 	protected void confirmDisconnect() {
 		new AlertDialog.Builder(this)

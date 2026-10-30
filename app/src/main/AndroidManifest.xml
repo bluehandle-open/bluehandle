@@ -50,6 +50,9 @@
 		<activity android:name="com.whyun.activity.NumpadActivity"
 			android:screenOrientation="portrait"
 			android:theme="@style/Theme.BlueHandle" />
+		<activity android:name="com.whyun.activity.PptActivity"
+			android:screenOrientation="portrait"
+			android:theme="@style/Theme.BlueHandle" />
 		<service android:name="com.whyun.service.DownloadService"/>  
 
 		<activity android:name="com.whyun.activity.SettingsActivity"

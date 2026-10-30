@@ -71,16 +71,6 @@ public class RemoteActivity extends BaseControlActivity {
 		});
 	}
 
-	/** 填充一个 bh_remote_key：图标、名称、对应快捷键 */
-	private View setupKey(int id, int icon, String label, String hint) {
-		View key = findViewById(id);
-		((ImageView) key.findViewById(R.id.key_icon)).setImageResource(icon);
-		((TextView) key.findViewById(R.id.key_label)).setText(label);
-		((TextView) key.findViewById(R.id.key_hint)).setText(hint);
-		key.setContentDescription(label + "，" + hint);
-		return key;
-	}
-
 	private void tintKey(View key, int colorRes) {
 		int c = ContextCompat.getColor(this, colorRes);
 		((ImageView) key.findViewById(R.id.key_icon)).setColorFilter(c);
