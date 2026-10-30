@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 改版后的深色控制台配色，对应 design/ui-preview.html -->
+<resources>
+    <color name="bh_bg">#0B1220</color>
+    <color name="bh_surface">#141D2E</color>
+    <color name="bh_surface_raised">#1C2740</color>
+    <color name="bh_surface_selected">#16223A</color>
+    <color name="bh_border">#27334D</color>
+    <color name="bh_divider">#1F2A40</color>
+    <color name="bh_border_dashed">#3A4866</color>
+    <color name="bh_text">#E8EDF7</color>
+    <color name="bh_text_secondary">#9AA6BD</color>
+    <color name="bh_primary">#2F6FEB</color>
+    <color name="bh_primary_text">#8AB8FF</color>
+    <color name="bh_on_primary">#FFFFFF</color>
+    <color name="bh_on_primary_secondary">#D6E4FF</color>
+    <color name="bh_action">#F5A524</color>
+    <color name="bh_on_action">#1A1206</color>
+    <color name="bh_action_surface">#2A2112</color>
+    <color name="bh_action_border">#5A4318</color>
+    <color name="bh_status_connected">#4C9AFF</color>
+    <color name="bh_switch_off">#33405C</color>
+</resources>

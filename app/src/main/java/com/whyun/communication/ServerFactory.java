@@ -12,15 +12,15 @@ import android.os.Handler;
 public final class ServerFactory {
 	private static MyLog logger = MyLog.getLogger(ServerFactory.class);
 	private ServerFactory() {
-		
+
 	}
-	
-	public static IServer getServer(Handler pHandler,int connectType) {
+
+	public static IServer getServer(Handler pHandler, int connectType, int wifiPort) {
 		logger.debug("begin->connectType:" + connectType);
 		IServer server = null;
 		switch(connectType) {
 		case IBlueToothConst.WIFI_TYPE:
-			server = new ServerWifi(pHandler);
+			server = new ServerWifi(pHandler, wifiPort);
 			break;
 		case IBlueToothConst.BLUETOOTH_TYPE:
 			server = new ServerBlueTooth(pHandler);
@@ -28,7 +28,7 @@ public final class ServerFactory {
 		}
 		return server;
 	}
-	
+
 	public static ISocketThread getSocketThread(int connectType) {
 		ISocketThread thread = null;
 		switch(connectType) {

@@ -12,6 +12,7 @@ import android.util.Log;
 import com.whyun.IBlueToothConst;
 import com.whyun.communication.ISocketThread;
 import com.whyun.communication.util.HandleProcessUtil;
+import com.whyun.message.AbstractMessage;
 import com.whyun.message.FinishMessage;
 import com.whyun.message.HeartBeatRequestMessage;
 import com.whyun.message.KeyCommunication;
@@ -92,16 +93,13 @@ public class ServerSocketThread implements IBlueToothConst, ISocketThread {
 		Log.i(serverSign, "heartbeat thread exit.");
 	}
 
-	/**
-	 * Send msg.
-	 *
-	 * @param keyName 按键名称
-	 * @param pressType 按键方式
-	 */
 	@Override
-	public void sendMsg(String keyName, byte pressType) {
+	public void send(AbstractMessage message) {
+		if (!socketInitialized) {
+			return;
+		}
 		try {
-			KeyCommunication.sendMsg(os, keyName, pressType);
+			KeyCommunication.sendMsg(os, message);
 		} catch (IOException e) {
 			close(true);
 		}

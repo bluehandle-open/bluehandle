@@ -48,10 +48,7 @@ import com.whyun.IBlueToothConst;
 import com.whyun.activity.component.ActivityUtil;
 import com.whyun.activity.component.top.impl.TopCustom;
 import com.whyun.bluetooth.R;
-import com.whyun.communication.ConnectSetting;
-import com.whyun.communication.IServer;
-import com.whyun.communication.ISocketThread;
-import com.whyun.communication.ServerFactory;
+import com.whyun.communication.ConnectionManager;
 import com.whyun.event.BottomClickEvent;
 import com.whyun.service.DownloadService;
 import com.whyun.util.FileUtil;
@@ -65,48 +62,30 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 	private BluetoothAdapter btAdapt;
 	private ImageView img;
 	private ImageButton exit;
-	private ISocketThread threadSocket = null;
-	private IServer server;
 	private ProgressDialog prgd;
 
-	private ConnectSetting connectSetting = ConnectSetting.getInstance();
-	private int index = connectSetting.getConnectType();
-	
+	private final ConnectionManager connection = ConnectionManager.get();
+	private int index = WIFI_TYPE;
+
 	private MyLog logger = MyLog.getLogger(MainActivity.class);
-	
+
 	private Activity activityNow = this;
 	private SharedPreferences settings;
-	
-	static class MyHandler extends Handler {
-		WeakReference<MainActivity> mActivity;  
-		  
-        MyHandler(MainActivity activity) {  
-                mActivity = new WeakReference<MainActivity>(activity);  
-        }
-        @Override
-		public void handleMessage(Message msg) {			
-			super.handleMessage(msg);
-			MainActivity theActivity = mActivity.get();
-			if (theActivity != null) {
-				switch (msg.what) {
-				case CONNECTED://连接成功
-					theActivity.dismissDlg();
-					//显示手柄界面的acitivty////////////
-					Intent intent = new Intent();
-					//intent.setClass(MainActivity.this, HandleWebActivity.class);
-					intent.setClass(theActivity, HandleNativeActivity.class);
-					theActivity.startActivity(intent);
-					
-					break;
-				case FAILED:
-					ActivityUtil.toastShow(theActivity,"开启服务失败或者您主动关闭了服务");
-					theActivity.dismissDlg();
-					break;
-				}
+
+	private final ConnectionManager.Listener connectionListener = new ConnectionManager.Listener() {
+		@Override
+		public void onConnectionChanged(ConnectionManager.State state, int connectType, int reason) {
+			if (state == ConnectionManager.State.CONNECTED) {
+				dismissDlg();
+				Intent intent = new Intent();
+				intent.setClass(MainActivity.this, HandleNativeActivity.class);
+				startActivity(intent);
+			} else if (state == ConnectionManager.State.IDLE && reason == ConnectionManager.REASON_FAILED) {
+				ActivityUtil.toastShow(MainActivity.this, "开启服务失败，请检查网络或蓝牙权限");
+				dismissDlg();
 			}
-			
 		}
-	}
+	};
 	
 	
 	private DownloadService downLoadService;  
@@ -213,7 +192,6 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 		String typeNow = settings.getString(IMyPreference.CONNECT_TYPE,"0");
 		logger.info("typeNow:" + typeNow);
 		index = Integer.parseInt(typeNow);
-		ConnectSetting.getInstance().setConnectType(index);
 	}
 	
 	private void acceptConnection(String ip) {//启动服务器端线程
@@ -230,20 +208,11 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 
             public void onCancel(DialogInterface arg0) {                
             	logger.info("...cancel button is pressed");
-                if (threadSocket != null) {
-                	threadSocket.close();
-                }
-                if (server != null) {
-                	server.stopServer();
-                	server.setCanStart(true);
-                }
+                connection.stop();
                 prgd.dismiss();
             }
         });
-		server = ServerFactory.getServer(new MyHandler(this), index);
-		connectSetting.setServer(server);
-		threadSocket = ServerFactory.getSocketThread(index);
-		new Thread(server).start();
+		connection.start(index, PORT);
 	}
 	
 	private String intToIp(int i)
@@ -384,6 +353,7 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		connection.addListener(connectionListener);
 		initConnectType();
 //		showAd();
 	}
@@ -404,8 +374,9 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 
 	@Override
 	protected void onPause() {
-		super.onPause();		
-	}	
+		connection.removeListener(connectionListener);
+		super.onPause();
+	}
 
 	@Override
 	protected void onRestart() {
@@ -418,11 +389,8 @@ public class MainActivity extends Activity implements IBlueToothConst,IBottom {
 		super.onDestroy();
 		dismissDlg();
 		logger.info("destroy occured.");
-		if (threadSocket != null) {
-			threadSocket.close();
-		}
-		if (server != null) {
-			server.stopServer();
+		if (isFinishing()) {
+			connection.stop();// 退出应用时断开；配置变化导致的重建不断开
 		}
 		unBind();
 		//btAdapt.

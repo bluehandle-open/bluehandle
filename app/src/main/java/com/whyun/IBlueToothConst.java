@@ -21,7 +21,16 @@ public interface IBlueToothConst {
 	public static final byte FINISH_SOCKET = 0x40;
 	public static final byte HEART_BEAT_REQ = 0x41;
 	public static final byte HEART_BEAT_RESP = 0x42;
+	/** 文本输入：正文为 [flags][UTF-8 字节]，flags bit0 = 输入完后按回车。详见 docs/protocol.md */
+	public static final byte SEND_TEXT = 0x50;
+	/** 锁定电脑屏幕，无正文。电脑端应调用 LockWorkStation，Win+L 模拟按键会被系统拦截 */
+	public static final byte LOCK_SCREEN = 0x51;
 	//////////消息类型结束
+
+	/** 文本消息 flags：输入完后按回车 */
+	public static final byte TEXT_FLAG_ENTER = 0x01;
+	/** 单个文本报文正文最多携带的 UTF-8 字节数。长度字段是有符号 byte，留出余量 */
+	public static final int TEXT_CHUNK_MAX_BYTES = 120;
 	
 	public static final int SET_KEY_HANDLE = -1;
 	//public static final byte handleKeyGet = 0x11;

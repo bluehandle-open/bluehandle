@@ -113,6 +113,15 @@ public final class KeyMap {
 	public static final byte KeyF16 = 127;//F16
 	public static final byte KeyWave = (byte)192;//~
 	public static final byte KeyReduce = 45;//-
+	public static final byte KeyLWin = 0x5B;//左 Win
+	public static final byte KeyApps = 0x5D;//右键菜单键
+	public static final byte KeyVolumeMute = (byte) 0xAD;//静音
+	public static final byte KeyVolumeDown = (byte) 0xAE;//音量减
+	public static final byte KeyVolumeUp = (byte) 0xAF;//音量加
+	public static final byte KeyMediaNext = (byte) 0xB0;//下一曲
+	public static final byte KeyMediaPrev = (byte) 0xB1;//上一曲
+	public static final byte KeyMediaStop = (byte) 0xB2;//停止
+	public static final byte KeyMediaPlayPause = (byte) 0xB3;//播放/暂停
 	
 	public static final HashMap<String,Byte> KEY_MAP 
 		= new HashMap<String,Byte>(){
@@ -226,6 +235,15 @@ public final class KeyMap {
 				put("~",KeyWave);
 				put("-",KeyReduce);
 				put("？",KeyQuestion);
+				put("Win",KeyLWin);
+				put("菜单键",KeyApps);
+				put("静音",KeyVolumeMute);
+				put("音量-",KeyVolumeDown);
+				put("音量+",KeyVolumeUp);
+				put("下一曲",KeyMediaNext);
+				put("上一曲",KeyMediaPrev);
+				put("停止播放",KeyMediaStop);
+				put("播放/暂停",KeyMediaPlayPause);
 			}
 		
 	};	

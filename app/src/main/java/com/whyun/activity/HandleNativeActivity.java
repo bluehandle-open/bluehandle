@@ -37,7 +37,7 @@ import com.whyun.activity.component.MenuAdapter;
 import com.whyun.activity.component.top.AbstractHeadView;
 import com.whyun.activity.component.top.impl.TopQieHuan;
 import com.whyun.bluetooth.R;
-import com.whyun.communication.util.SocketThreadUtil;
+import com.whyun.communication.ConnectionManager;
 import com.whyun.event.ButtonTouchListener;
 import com.whyun.event.MySensorEventListener;
 import com.whyun.message.bean.KeyInfo;
@@ -49,8 +49,6 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 
 	private boolean useShake;
 	private static final int HANDLE_ID = -4;
-	private static final int PPT_ID = -3;
-	private static final int PLAYER_ID = -2;
 	private static final int EXIT_ID = -1;
 	private HandleKeys keySet = HandleKeys.getInstance();
 	private SharedPreferences settings = null;
@@ -77,36 +75,30 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 	
 	private static final MyLog logger = MyLog.getLogger(HandleNativeActivity.class);
 	
-	static class MyHandler extends Handler {
-		WeakReference<HandleNativeActivity> mActivity;  
-		  
-        MyHandler(HandleNativeActivity activity) {  
-                mActivity = new WeakReference<HandleNativeActivity>(activity);  
-        }
-        @Override
-		public void handleMessage(Message msg) {			
-			super.handleMessage(msg);
-			final HandleNativeActivity theActivity = mActivity.get();
-			if (theActivity != null) {
-				switch (msg.what) {
-				
-				case CLIENT_CONN_ERR:
-					new AlertDialog.Builder(theActivity)
-					.setMessage("和电脑端的通信出现异常，电脑端可能已经退出，点击确定结束本次通信")
-					.setTitle("结束通信")
-
-					.setPositiveButton("确定",
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int whichButton) {
-									theActivity.finish();
-								}
-							}).show();
-					break;
-				}
+	private final ConnectionManager.Listener connectionListener = new ConnectionManager.Listener() {
+		@Override
+		public void onConnectionChanged(ConnectionManager.State state, int connectType, int reason) {
+			if (state == ConnectionManager.State.IDLE) {
+				showConnectionLost();
 			}
-			
 		}
+	};
+
+	private void showConnectionLost() {
+		if (isFinishing()) {
+			return;
+		}
+		new AlertDialog.Builder(this)
+		.setMessage("和电脑端的通信出现异常，电脑端可能已经退出，点击确定结束本次通信")
+		.setTitle("结束通信")
+		.setCancelable(false)
+		.setPositiveButton("确定",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,
+							int whichButton) {
+						finish();
+					}
+				}).show();
 	}
 	
 	@Override
@@ -122,7 +114,6 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 		init();
 		RelativeLayout contanier = (RelativeLayout)findViewById(R.id.handleContanier);
 		contanier.setOnTouchListener(new ButtonTouchListener(this,useShake));
-		SocketThreadUtil.setHandler(new MyHandler(this));
 	}
 	
 	private void init() {
@@ -131,6 +122,9 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 		
 		keyTableOperator = new KeyTableOperator(this);
 		int keyType = settings.getInt(KEY_TYPE,SET_KEY_HANDLE);
+		if (keyType < 0) {
+			keyType = SET_KEY_HANDLE;// 旧版本的 PPT/千千静听 键位已移除
+		}
 		String title = null;
 		if (keyType >= 0) {
 			keyTableOperator.reGetReadDb();
@@ -201,14 +195,6 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 					setTitle("设置为手柄按键");
 					keySet.setKeys(DEFAULT_HANDLE_SET, SET_KEY_HANDLE,editor);			
 					break;
-				case PPT_ID:
-					setTitle("设置为PPT按键");
-					keySet.setKeys(null,SET_KEY_PPT,editor);
-					break;
-				case PLAYER_ID:
-					setTitle("设置为千千静听按键");
-					keySet.setKeys(null,SET_KEY_PLAYER,editor);
-					break;
 				case EXIT_ID:
 					ActivityUtil.exit(HandleNativeActivity.this,
 							"点击确定后，您本次和电脑间的连接将会结束!");
@@ -236,7 +222,10 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		SocketThreadUtil.close();
+		if (isFinishing()) {
+			// 阶段 1 保持旧行为：离开手柄界面即结束连接。新界面上线后改为返回首页时保持连接
+			ConnectionManager.get().stop();
+		}
 	}
 	
 	private SimpleAdapter getMenuAdapter() {
@@ -247,18 +236,6 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 		elementHandle.put(MenuAdapter.MAP_ITEM_TEXT, "手柄");
 		elementHandle.put(MenuAdapter.MAP_ITEM_ID, HANDLE_ID);
 		datas.add(elementHandle);
-		
-		HashMap<String, Object> elementPlayer = new HashMap<String, Object>();
-		elementPlayer.put(MenuAdapter.MAP_ITEM_IMAGE, R.drawable.menu_player);
-		elementPlayer.put(MenuAdapter.MAP_ITEM_TEXT, "千千静听");
-		elementPlayer.put(MenuAdapter.MAP_ITEM_ID, PLAYER_ID);
-		datas.add(elementPlayer);
-		
-		HashMap<String, Object> elementPpt = new HashMap<String, Object>();
-		elementPpt.put(MenuAdapter.MAP_ITEM_IMAGE, R.drawable.menu_ppt);
-		elementPpt.put(MenuAdapter.MAP_ITEM_TEXT, "PPT");
-		elementPpt.put(MenuAdapter.MAP_ITEM_ID, PPT_ID);
-		datas.add(elementPpt);
 		
 		keyTableOperator.reGetReadDb();
 		ArrayList<KeyInfo> list = keyTableOperator.getAllList();
@@ -348,6 +325,10 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 		}
 
 		super.onResume();
+		ConnectionManager.get().addListener(connectionListener);
+		if (!ConnectionManager.get().isConnected()) {
+			showConnectionLost();// 在后台期间断线
+		}
 		pManager = ((PowerManager) getSystemService(POWER_SERVICE));//禁止休眠
         mWakeLock = pManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK |
 						PowerManager.ACQUIRE_CAUSES_WAKEUP,
@@ -360,6 +341,7 @@ public class HandleNativeActivity extends Activity implements IBlueToothConst,IM
 		if (useGravity) {
 			mSensorMgr.unregisterListener(sensorEventListener);
 		}
+		ConnectionManager.get().removeListener(connectionListener);
 
 		super.onPause();
 		if(null != mWakeLock){

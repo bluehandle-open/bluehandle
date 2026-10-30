@@ -21,8 +21,7 @@ import android.preference.PreferenceScreen;
 import android.view.LayoutInflater;
 
 import com.whyun.bluetooth.R;
-import com.whyun.communication.ConnectSetting;
-import com.whyun.communication.IServer;
+import com.whyun.communication.ConnectionManager;
 import com.whyun.util.MyLog;
 //import com.whyun.IBlueToothConst;
 
@@ -31,7 +30,7 @@ public class ConfigActivity extends PreferenceActivity implements
 	
 	 private CheckBoxPreference mCheckBoxPre;  
 	 private ListPreference connectType;
-	 private ConnectSetting connectSetting = ConnectSetting.getInstance();
+	 private final ConnectionManager connection = ConnectionManager.get();
 	 private SharedPreferences settings;
 	 private MyLog logger = MyLog.getLogger(ConfigActivity.class);
 	
@@ -64,14 +63,13 @@ public class ConfigActivity extends PreferenceActivity implements
 				typeNow = 0;
 			}
 			logger.info("typeNow:" + typeNow);
-			connectSetting.setConnectType(typeNow);
 			Editor editor = settings.edit();
 			editor.putString(CONNECT_TYPE, typeNow+"");
 			editor.commit();
 			logger.debug("set connect type:" + typeNow);
-			if (typeNow != connectSetting.getConnectType()) {//更改了连接方式
-				IServer server = connectSetting.getServer();//关闭旧有链接
-				server.stopServer();
+			if (connection.getState() != ConnectionManager.State.IDLE
+					&& typeNow != connection.getConnectType()) {//更改了连接方式，关闭旧有连接
+				connection.stop();
 			}
 		} 
 		return true;

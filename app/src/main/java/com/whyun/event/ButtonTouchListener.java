@@ -13,9 +13,7 @@ import android.widget.TextView;
 
 import com.whyun.IBlueToothConst;
 import com.whyun.bluetooth.R;
-import com.whyun.communication.ConnectSetting;
-import com.whyun.communication.ISocketThread;
-import com.whyun.communication.ServerFactory;
+import com.whyun.communication.ConnectionManager;
 import com.whyun.util.MyLog;
 //import com.whyun.message.key.HandleKeys;
 //import android.widget.Toast;
@@ -23,8 +21,7 @@ import com.whyun.util.MyLog;
 public class ButtonTouchListener implements View.OnTouchListener {
 	// private String buttonId;
 	private static final String LOG_TAG = ButtonTouchListener.class.getName();
-	private ISocketThread serverThread = ServerFactory
-			.getSocketThread(ConnectSetting.getInstance().getConnectType());
+	private final ConnectionManager serverThread = ConnectionManager.get();
 	private boolean useShake;
 	private Activity activity;
 	private MyLog logger = MyLog.getLogger(LOG_TAG);
@@ -162,7 +159,7 @@ public class ButtonTouchListener implements View.OnTouchListener {
 		// int keyType = handleKeys.getTypeNow();
 		// if (keyType == IBlueToothConst.SET_KEY_HANDLE) {
 		if (isDown) {
-			serverThread.sendMsg(buttonId, IBlueToothConst.toPress);
+			serverThread.sendButton(buttonId, IBlueToothConst.toPress);
 			if (useShake) {
 				mVibrator = (Vibrator) activity
 						.getSystemService(Service.VIBRATOR_SERVICE);
@@ -171,11 +168,11 @@ public class ButtonTouchListener implements View.OnTouchListener {
 				mVibrator.vibrate(100);
 			}
 		} else {
-			serverThread.sendMsg(buttonId, IBlueToothConst.toRelease);
+			serverThread.sendButton(buttonId, IBlueToothConst.toRelease);
 		}
 		// } else {
 		// if (isDown) {
-		// serverThread.sendMsg(buttonId, IBlueToothConst.toPreassRelease);
+		// serverThread.sendButton(buttonId, IBlueToothConst.toPreassRelease);
 		// if (useShake) {
 		// mVibrator = (Vibrator)
 		// activity.getSystemService(Service.VIBRATOR_SERVICE);

@@ -2,21 +2,21 @@ package com.whyun.communication;
 
 import android.os.Handler;
 
+import com.whyun.message.AbstractMessage;
+
 public interface ISocketThread extends Runnable {
 	/**
-	 * Send msg.
-	 * 
-	 * @param keyName 按键名称
-	 * @param pressType 按键方式
+	 * 同步发送一条报文，写失败时关闭连接并通知 pHandler。
+	 * 只应在 {@link ConnectionManager} 的发送线程中调用。
 	 */
-	public void sendMsg(String keyName,byte pressType);
-	
+	public void send(AbstractMessage message);
+
 	/**
 	 * 关闭socket连接
 	 * */
 	public void close();
-	
+
 	public void close(boolean isShowMsg);
-	
+
 	public void setpHandler(Handler pHandler);
 }

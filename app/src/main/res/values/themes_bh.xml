@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- 改版后所有界面使用的深色主题。改造完成的 Activity 在清单里逐个指定 -->
+    <style name="Theme.BlueHandle" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="colorPrimary">@color/bh_primary</item>
+        <item name="colorPrimaryVariant">@color/bh_bg</item>
+        <item name="colorOnPrimary">@color/bh_on_primary</item>
+        <item name="colorSecondary">@color/bh_action</item>
+        <item name="colorSecondaryVariant">@color/bh_action</item>
+        <item name="colorOnSecondary">@color/bh_on_action</item>
+        <item name="colorSurface">@color/bh_surface</item>
+        <item name="colorOnSurface">@color/bh_text</item>
+        <item name="colorControlNormal">@color/bh_text_secondary</item>
+        <item name="colorControlActivated">@color/bh_primary</item>
+        <item name="android:colorBackground">@color/bh_bg</item>
+        <item name="android:windowBackground">@color/bh_bg</item>
+        <item name="android:textColorPrimary">@color/bh_text</item>
+        <item name="android:textColorSecondary">@color/bh_text_secondary</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/bh_bg</item>
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/bh_bg</item>
+    </style>
+
+    <!-- 横屏手柄：全屏 -->
+    <style name="Theme.BlueHandle.Fullscreen">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <!-- 页面标题 -->
+    <style name="BhText.Title" parent="">
+        <item name="android:textColor">@color/bh_text</item>
+        <item name="android:textSize">@dimen/bh_text_title</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- 分组标题 -->
+    <style name="BhText.Section" parent="">
+        <item name="android:textColor">@color/bh_text_secondary</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:paddingStart">4dp</item>
+        <item name="android:paddingTop">10dp</item>
+    </style>
+
+    <style name="BhText.Caption" parent="">
+        <item name="android:textColor">@color/bh_text_secondary</item>
+        <item name="android:textSize">@dimen/bh_text_caption</item>
+    </style>
+</resources>

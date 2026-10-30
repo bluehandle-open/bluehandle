@@ -13,16 +13,13 @@ import android.widget.RelativeLayout;
 
 import com.whyun.IBlueToothConst;
 import com.whyun.bluetooth.R;
-import com.whyun.communication.ConnectSetting;
-import com.whyun.communication.ISocketThread;
-import com.whyun.communication.ServerFactory;
+import com.whyun.communication.ConnectionManager;
 import com.whyun.util.MyLog;
 
 public class MySensorEventListener implements SensorEventListener {
 	private static final MyLog logger = MyLog.getLogger(MySensorEventListener.class);
 	
-	private ISocketThread serverThread = ServerFactory
-			.getSocketThread(ConnectSetting.getInstance().getConnectType());
+	private final ConnectionManager serverThread = ConnectionManager.get();
 	
 	/** 每50帧刷新一次屏幕 **/
 	private static final int RE_DRAW_INTERVAL = 50;
@@ -88,10 +85,10 @@ public class MySensorEventListener implements SensorEventListener {
 	private void sendMessage(int left) {
 		
 		if (left - mLastX > 0) {
-			serverThread.sendMsg(IBlueToothConst.leftBtn,
+			serverThread.sendButton(IBlueToothConst.leftBtn,
 					IBlueToothConst.toPreassRelease);
 		} else if (left - mLastX < 0) {
-			serverThread.sendMsg(IBlueToothConst.rightBtn,
+			serverThread.sendButton(IBlueToothConst.rightBtn,
 					IBlueToothConst.toPreassRelease);
 		} else {
 			//logger.debug("not moved!");
@@ -101,10 +98,10 @@ public class MySensorEventListener implements SensorEventListener {
 	
 	private void sendMessage2(float y) {
 		if (y >= 1) {
-			serverThread.sendMsg(IBlueToothConst.rightBtn,
+			serverThread.sendButton(IBlueToothConst.rightBtn,
 					IBlueToothConst.toPreassRelease);
 		} else if (y <= -1) {
-			serverThread.sendMsg(IBlueToothConst.leftBtn,
+			serverThread.sendButton(IBlueToothConst.leftBtn,
 					IBlueToothConst.toPreassRelease);
 		}
 	}

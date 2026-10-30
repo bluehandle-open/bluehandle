@@ -11,6 +11,7 @@ import android.os.Handler;
 import com.whyun.IBlueToothConst;
 import com.whyun.communication.ISocketThread;
 import com.whyun.communication.util.HandleProcessUtil;
+import com.whyun.message.AbstractMessage;
 import com.whyun.message.FinishMessage;
 import com.whyun.message.HeartBeatRequestMessage;
 import com.whyun.message.KeyCommunication;
@@ -141,9 +142,12 @@ public class WifiSocketThread implements ISocketThread {
 	}
 
 	@Override
-	public void sendMsg(String keyName, byte pressType) {
+	public void send(AbstractMessage message) {
+		if (!isInit) {
+			return;
+		}
 		try {
-			KeyCommunication.sendMsg(os, keyName, pressType);
+			KeyCommunication.sendMsg(os, message);
 		} catch (IOException e) {
 			e.printStackTrace();
 			close(true);
