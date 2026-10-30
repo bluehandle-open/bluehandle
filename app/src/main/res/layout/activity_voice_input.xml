@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 遥控器 · 语音输入。对应设计稿 TvVoice 画板。
      内置识别时显示大麦克风；使用系统输入法时隐藏麦克风区，由输入法的语音按钮输入 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- 外层可滚动：小屏手机弹出软键盘后剩余高度不够，内容可以上下滚动而不是被裁掉 -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bh_bg"
+    android:fillViewport="true">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingStart="24dp"
     android:paddingTop="16dp"
@@ -106,11 +112,11 @@
             android:textSize="22sp" />
     </LinearLayout>
 
-    <!-- 内置识别：麦克风区 -->
+    <!-- 内置识别：麦克风区。wrap_content + weight：屏幕够高时占满剩余空间，不够时保持自身高度并让页面滚动 -->
     <LinearLayout
         android:id="@+id/block_mic"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical">
@@ -184,7 +190,7 @@
         android:id="@+id/tv_ime_hint"
         style="@style/BhText.Caption"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
         android:lineSpacingMultiplier="1.4"
@@ -251,3 +257,4 @@
         android:text="文字输入需要支持该功能的新版电脑端"
         android:textSize="11sp" />
 </LinearLayout>
+</ScrollView>

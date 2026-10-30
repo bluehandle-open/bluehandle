@@ -1,12 +1,14 @@
 package com.whyun.activity;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.ImageViewCompat;
 
 import com.whyun.bluetooth.R;
 import com.whyun.event.KeyButtonBinder;
@@ -72,7 +74,7 @@ public class RemoteActivity extends BaseControlActivity {
 
 	private void tintKey(View key, int colorRes) {
 		int c = ContextCompat.getColor(this, colorRes);
-		((ImageView) key.findViewById(R.id.key_icon)).setColorFilter(c);
+		ImageViewCompat.setImageTintList((ImageView) key.findViewById(R.id.key_icon), ColorStateList.valueOf(c));
 		((TextView) key.findViewById(R.id.key_label)).setTextColor(c);
 		((TextView) key.findViewById(R.id.key_hint)).setTextColor(ContextCompat.getColor(this, R.color.bh_action_muted));
 	}

@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
@@ -24,6 +25,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.core.widget.ImageViewCompat;
 
 import com.whyun.IBlueToothConst;
 import com.whyun.activity.component.ActivityUtil;
@@ -348,7 +350,7 @@ public class MainActivity extends AppCompatActivity implements IBlueToothConst, 
 			break;
 		}
 		btnConnectText.setTextColor(ContextCompat.getColor(this, fg));
-		btnConnectIcon.setColorFilter(ContextCompat.getColor(this, fg));
+		ImageViewCompat.setImageTintList(btnConnectIcon, ColorStateList.valueOf(ContextCompat.getColor(this, fg)));
 		btnConnect.setContentDescription(btnConnectText.getText());
 		DrawableCompat.setTint(DrawableCompat.wrap(statusDot.getBackground().mutate()),
 				ContextCompat.getColor(this, dotColor));

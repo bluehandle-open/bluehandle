@@ -1,6 +1,7 @@
 package com.whyun.activity;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.ImageViewCompat;
 
 import com.whyun.IBlueToothConst;
 import com.whyun.activity.component.ActivityUtil;
@@ -144,7 +146,7 @@ public class GamepadActivity extends BaseControlActivity implements IBlueToothCo
 
 	private void setToggle(ImageButton button, boolean on) {
 		button.setSelected(on);
-		button.setColorFilter(ContextCompat.getColor(this, on ? R.color.bh_primary_text : R.color.bh_text_secondary));
+		ImageViewCompat.setImageTintList(button, ColorStateList.valueOf(ContextCompat.getColor(this, on ? R.color.bh_primary_text : R.color.bh_text_secondary)));
 	}
 
 	private void stopSteering() {

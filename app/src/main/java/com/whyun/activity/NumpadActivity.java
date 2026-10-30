@@ -1,5 +1,6 @@
 package com.whyun.activity;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.ImageViewCompat;
 
 import com.whyun.bluetooth.R;
 import com.whyun.event.KeyButtonBinder;
@@ -115,7 +117,7 @@ public class NumpadActivity extends BaseControlActivity {
 		key.setContentDescription("退格");
 		ImageView icon = new ImageView(this);
 		icon.setImageResource(R.drawable.bh_ic_backspace);
-		icon.setColorFilter(ContextCompat.getColor(this, R.color.bh_text_secondary));
+		ImageViewCompat.setImageTintList(icon, ColorStateList.valueOf(ContextCompat.getColor(this, R.color.bh_text_secondary)));
 		int size = UnitTransformTool.dip2px(this, 24);
 		key.addView(icon, new FrameLayout.LayoutParams(size, size, Gravity.CENTER));
 		return key;
