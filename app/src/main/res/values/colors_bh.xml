@@ -18,6 +18,7 @@
     <color name="bh_on_action">#1A1206</color>
     <color name="bh_action_surface">#2A2112</color>
     <color name="bh_action_border">#5A4318</color>
+    <color name="bh_action_muted">#D9A54A</color>
     <color name="bh_status_connected">#4C9AFF</color>
     <color name="bh_switch_off">#33405C</color>
 </resources>

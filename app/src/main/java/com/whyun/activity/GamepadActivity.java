@@ -1,25 +1,19 @@
 package com.whyun.activity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.whyun.IBlueToothConst;
 import com.whyun.activity.component.ActivityUtil;
 import com.whyun.bluetooth.R;
-import com.whyun.communication.ConnectionManager;
 import com.whyun.event.GamepadTouchHandler;
 import com.whyun.event.GravitySteering;
 import com.whyun.util.AppPrefs;
@@ -27,9 +21,8 @@ import com.whyun.util.AppPrefs;
 /**
  * 游戏手柄横屏界面。返回首页时连接保持，断开只通过右上角的断开按钮。
  */
-public class GamepadActivity extends AppCompatActivity implements IBlueToothConst, ConnectionManager.Listener {
+public class GamepadActivity extends BaseControlActivity implements IBlueToothConst {
 
-	private final ConnectionManager connection = ConnectionManager.get();
 	private GamepadTouchHandler touchHandler;
 	private SensorManager sensorManager;
 	private Sensor accelerometer;
@@ -37,7 +30,6 @@ public class GamepadActivity extends AppCompatActivity implements IBlueToothCons
 	private ImageButton btnGravity;
 	private ImageButton btnVibrate;
 	private TextView tvScheme;
-	private AlertDialog lostDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +50,7 @@ public class GamepadActivity extends AppCompatActivity implements IBlueToothCons
 		touchHandler.addButton(findViewById(R.id.pad_start), startBtn);
 		area.setOnTouchListener(touchHandler);
 
-		findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				finish();
-			}
-		});
+		bindBack(R.id.btn_back);
 		tvScheme = (TextView) findViewById(R.id.tv_scheme);
 		View btnScheme = findViewById(R.id.btn_scheme);
 		btnScheme.setOnClickListener(new View.OnClickListener() {
@@ -104,9 +91,6 @@ public class GamepadActivity extends AppCompatActivity implements IBlueToothCons
 		if (accelerometer == null) {
 			btnGravity.setVisibility(View.GONE);
 		}
-		if (AppPrefs.get(this, IMyPreference.KEEP_SCREEN_ON, true)) {
-			getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-		}
 		applyScheme();
 	}
 
@@ -119,25 +103,22 @@ public class GamepadActivity extends AppCompatActivity implements IBlueToothCons
 	@Override
 	protected void onResume() {
 		super.onResume();
-		connection.addListener(this);
-		if (!connection.isConnected()) {
-			showConnectionLost();// 在后台期间断线
-			return;
+		if (connection.isConnected()) {
+			applyToggles();
 		}
-		((TextView) findViewById(R.id.status_text)).setText("已连接 · "
-				+ (connection.getConnectType() == BLUETOOTH_TYPE ? "蓝牙" : "Wi‑Fi"));
-		View dot = findViewById(R.id.status_dot);
-		DrawableCompat.setTint(DrawableCompat.wrap(dot.getBackground().mutate()),
-				ContextCompat.getColor(this, R.color.bh_status_connected));
-		applyToggles();
 	}
 
 	@Override
 	protected void onPause() {
-		connection.removeListener(this);
 		touchHandler.releaseAll();// 防止离开界面时电脑端按键卡住
 		stopSteering();
 		super.onPause();
+	}
+
+	@Override
+	protected void onDisconnected() {
+		touchHandler.releaseAll();
+		stopSteering();
 	}
 
 	private void applyScheme() {
@@ -171,40 +152,5 @@ public class GamepadActivity extends AppCompatActivity implements IBlueToothCons
 			sensorManager.unregisterListener(steering);
 			steering = null;
 		}
-	}
-
-	private void confirmDisconnect() {
-		new AlertDialog.Builder(this)
-		.setMessage("断开与电脑的连接？")
-		.setNegativeButton("取消", null)
-		.setPositiveButton("断开", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
-				finish();// 先结束界面，避免断开回调再弹“连接中断”
-				connection.stop();
-			}
-		}).show();
-	}
-
-	@Override
-	public void onConnectionChanged(ConnectionManager.State state, int connectType, int reason) {
-		if (state == ConnectionManager.State.IDLE) {
-			touchHandler.releaseAll();
-			showConnectionLost();
-		}
-	}
-
-	private void showConnectionLost() {
-		if (isFinishing() || (lostDialog != null && lostDialog.isShowing())) {
-			return;
-		}
-		lostDialog = new AlertDialog.Builder(this)
-		.setTitle("连接已断开")
-		.setMessage("与电脑的连接已中断，电脑端可能已经退出。请回到首页重新连接。")
-		.setCancelable(false)
-		.setPositiveButton("回到首页", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
-				finish();
-			}
-		}).show();
 	}
 }

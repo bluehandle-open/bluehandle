@@ -44,6 +44,12 @@
 			android:screenOrientation="sensorLandscape"
 			android:launchMode="singleTop"
 			android:theme="@style/Theme.BlueHandle.Fullscreen" />
+		<activity android:name="com.whyun.activity.RemoteActivity"
+			android:screenOrientation="portrait"
+			android:theme="@style/Theme.BlueHandle" />
+		<activity android:name="com.whyun.activity.NumpadActivity"
+			android:screenOrientation="portrait"
+			android:theme="@style/Theme.BlueHandle" />
 		<service android:name="com.whyun.service.DownloadService"/>  
 
 		<activity android:name="com.whyun.activity.SettingsActivity"

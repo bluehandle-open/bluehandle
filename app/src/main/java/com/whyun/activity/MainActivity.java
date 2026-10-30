@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements IBlueToothConst, 
 				"竖屏单手 · 影音控制与语音输入", true, new Runnable() {
 					@Override
 					public void run() {
-						ActivityUtil.toastShow(MainActivity.this, "遥控器模式即将上线");
+						openMode(RemoteActivity.class);
 					}
 				});
 		setupMode(R.id.mode_ppt, R.drawable.bh_ic_ppt, "PPT 演示",
@@ -165,6 +165,15 @@ public class MainActivity extends AppCompatActivity implements IBlueToothConst, 
 				action.run();
 			}
 		});
+	}
+
+	/** 遥控器和 PPT 需要先连接 */
+	private void openMode(Class<?> activity) {
+		if (!connection.isConnected()) {
+			ActivityUtil.toastShow(this, "请先连接电脑");
+			return;
+		}
+		startActivity(new Intent(this, activity));
 	}
 
 	private void openGamepad() {
