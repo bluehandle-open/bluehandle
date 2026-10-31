@@ -114,7 +114,7 @@ public class GamepadTouchHandler implements View.OnTouchListener {
 			connection.sendButton(b.name, IBlueToothConst.toPress);
 			b.view.setPressed(true);
 			if (vibrate && vibrator != null) {
-				vibrator.vibrate(30);
+				vibrator.vibrate(50);
 			}
 		}
 	}

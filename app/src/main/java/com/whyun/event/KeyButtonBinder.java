@@ -93,7 +93,7 @@ public class KeyButtonBinder {
 
 	private void feedback() {
 		if (vibrate && vibrator != null) {
-			vibrator.vibrate(20);
+			vibrator.vibrate(40);
 		}
 	}
 }

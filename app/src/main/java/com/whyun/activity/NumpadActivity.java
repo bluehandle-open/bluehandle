@@ -50,9 +50,23 @@ public class NumpadActivity extends BaseControlActivity {
 		});
 	}
 
-	private void buildGrid(LinearLayout grid) {
-		int gap = UnitTransformTool.dip2px(this, 14);
-		int height = UnitTransformTool.dip2px(this, 72);
+	private void buildGrid(final LinearLayout grid) {
+		final int gap = UnitTransformTool.dip2px(this, 14);
+		final int height = UnitTransformTool.dip2px(this, 72);
+		// 行高默认 72dp；可用高度放不下四行时按比例压缩
+		grid.post(new Runnable() {
+			@Override
+			public void run() {
+				int rows = grid.getChildCount();
+				int fit = (grid.getHeight() - gap * (rows - 1)) / rows;
+				if (fit > 0 && fit < height) {
+					for (int i = 0; i < rows; i++) {
+						grid.getChildAt(i).getLayoutParams().height = fit;
+					}
+					grid.requestLayout();
+				}
+			}
+		});
 		LinearLayout row = null;
 		for (int i = 0; i < KEYS.length; i++) {
 			if (i % 3 == 0) {

@@ -150,7 +150,7 @@ public class PptActivity extends BaseControlActivity {
 	private void flip(boolean next) {
 		connection.sendKeys(new byte[] { next ? Vk.PAGE_DOWN : Vk.PAGE_UP }, IBlueToothConst.toPreassRelease);
 		if (vibrateOnFlip && vibrator != null) {
-			vibrator.vibrate(next ? 30 : 60);// 上下页震感不同，不看屏幕也能分辨
+			vibrator.vibrate(next ? 50 : 100);// 上下页震感不同，不看屏幕也能分辨
 		}
 	}
 

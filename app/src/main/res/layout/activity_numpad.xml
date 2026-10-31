@@ -49,17 +49,15 @@
             android:text="每按一次立即发送到电脑，这里只做回显" />
     </LinearLayout>
 
+    <!-- 占满剩余高度，行高由代码按可用高度计算，矮屏上按键自动变矮，回车键不会被挤出屏幕 -->
     <LinearLayout
         android:id="@+id/numpad_grid"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:orientation="vertical" />
-
-    <Space
-        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp"
+        android:orientation="vertical" />
 
     <TextView
         android:id="@+id/key_enter"
