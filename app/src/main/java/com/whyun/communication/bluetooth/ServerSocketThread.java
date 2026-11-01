@@ -23,6 +23,8 @@ import com.whyun.message.KeyCommunication;
  * 这样同一个单例可以被反复 start/close。
  */
 public class ServerSocketThread implements IBlueToothConst, ISocketThread {
+	/** 接受连接后到发送握手行之间的等待，见 {@link #initSocket} */
+	private static final long FIRST_FRAME_DELAY_MS = 500;
 	private volatile boolean socketInitialized = false;
 	private volatile static ServerSocketThread instance = null;
 	private BluetoothSocket socket;
@@ -55,6 +57,15 @@ public class ServerSocketThread implements IBlueToothConst, ISocketThread {
 		os = socket.getOutputStream();
 		is = socket.getInputStream();
 
+		// accept() 返回时电脑端的 connect 还没走完。这时立刻写第一帧，
+		// 联发科蓝牙栈 + Windows 的组合下大概率整条通道卡死：手机写入一直成功，
+		// 电脑却一个字节也收不到（握手超时后断开）。红米 Note 2 实测：
+		// 立即发送 10 次连接成功 2 次，等 500ms 再发 20 次全部成功。
+		try {
+			Thread.sleep(FIRST_FRAME_DELAY_MS);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
 		os.write((serverSign + "\r\n").getBytes());
 		socketInitialized = true;
 	}
