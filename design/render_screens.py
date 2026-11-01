@@ -1,8 +1,9 @@
 """Render design boards to standalone images for the website.
 
-Run: python -I design/render_screens.py
-Phone boards come from design/theme-preview.html (dark and light), the PC
-window from bluehandle-go's design/pc-preview.html. Each board is put alone
+Run: python -I design/render_screens.py [--phone]
+The PC window comes from bluehandle-go's design/pc-preview.html. Phone pages on
+the website are real device screenshots (see export_device_shots.py); pass
+--phone to overwrite them with renders of design/theme-preview.html instead. Each board is put alone
 on a transparent page and captured by headless Edge at 2x, then saved as WebP
 in website/assets/screens/.
 """
@@ -43,7 +44,7 @@ def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     src = (HERE / "theme-preview.html").read_text(encoding="utf-8")
     head = src[: src.index("<body>")]
-    for bid in PHONE:
+    for bid in PHONE if "--phone" in sys.argv else []:
         for suffix in ("", "-light"):
             m = re.search(rf'<section class="board[^"]*" id="{bid}{suffix}">(.*?)</section>', src, re.S)
             body = re.sub(r'<div class="label">.*?</div>', "", m.group(1), count=1, flags=re.S)
