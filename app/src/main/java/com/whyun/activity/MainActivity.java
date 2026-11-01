@@ -24,7 +24,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
+import android.graphics.drawable.GradientDrawable;
 import androidx.core.widget.ImageViewCompat;
 
 import com.whyun.IBlueToothConst;
@@ -352,11 +352,15 @@ public class MainActivity extends AppCompatActivity implements IBlueToothConst, 
 		btnConnectText.setTextColor(ContextCompat.getColor(this, fg));
 		ImageViewCompat.setImageTintList(btnConnectIcon, ColorStateList.valueOf(ContextCompat.getColor(this, fg)));
 		btnConnect.setContentDescription(btnConnectText.getText());
-		DrawableCompat.setTint(DrawableCompat.wrap(statusDot.getBackground().mutate()),
-				ContextCompat.getColor(this, dotColor));
+		// 直接改形状颜色：5.x 上 DrawableCompat.wrap 返回新对象，着色不会作用到控件上
+		((GradientDrawable) statusDot.getBackground().mutate()).setColor(ContextCompat.getColor(this, dotColor));
 
-		if (type == BLUETOOTH_TYPE) {
-			statusDetail.setText("在电脑端通过蓝牙搜索本机");
+		if (state == ConnectionManager.State.CONNECTED) {
+			statusDetail.setText("选择下面的一种用法开始");
+		} else if (type == BLUETOOTH_TYPE) {
+			statusDetail.setText(state == ConnectionManager.State.WAITING
+					? "在电脑端的「蓝牙」列表里选择本机"
+					: "首次使用需先在系统设置里与电脑配对");
 		} else {
 			String ip = localWifiIp(this);
 			statusDetail.setText(ip == null ? "请先连接 Wi‑Fi"

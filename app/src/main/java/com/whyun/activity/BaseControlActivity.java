@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
+import android.graphics.drawable.GradientDrawable;
 
 import com.whyun.IBlueToothConst;
 import com.whyun.bluetooth.R;
@@ -88,7 +88,8 @@ public abstract class BaseControlActivity extends AppCompatActivity implements C
 		}
 		View dot = findViewById(R.id.status_dot);
 		if (dot != null) {
-			DrawableCompat.setTint(DrawableCompat.wrap(dot.getBackground().mutate()),
+			// 直接改形状颜色：5.x 上 DrawableCompat.wrap 返回新对象，着色不会作用到控件上
+			((GradientDrawable) dot.getBackground().mutate()).setColor(
 					ContextCompat.getColor(this, R.color.bh_status_connected));
 		}
 	}
