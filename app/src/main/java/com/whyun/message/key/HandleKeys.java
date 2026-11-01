@@ -22,7 +22,7 @@ public class HandleKeys  implements IBlueToothConst {
 	private volatile static HandleKeys instance = null;
 	
 	/** 每个按钮对应一个byte数组. */
-	private  Map<String,byte[]> keys = new HashMap<String,byte[]>();
+	private volatile Map<String,byte[]> keys = new HashMap<String,byte[]>();
 	
 	/** 当前的按键设置，默认为手柄. */
 	private int typeNow = SET_KEY_HANDLE;
@@ -40,19 +40,27 @@ public class HandleKeys  implements IBlueToothConst {
 	 * 构造函数，默认采用手柄按键.
 	 */
 	private HandleKeys() {
+		applyDefault();
+	}
+
+	/** 写入默认手柄键位，会先清空现有映射 */
+	private void applyDefault() {
 		byte[] message = DEFAULT_HANDLE_SET;
-		keys.put(upBtn,new byte[]{ message[0]});//w
-		keys.put(downBtn,new byte[]{ message[1]});//s
-		keys.put(leftBtn,new byte[]{ message[2]});//a
-		keys.put(rightBtn,new byte[]{ message[3]});//d
-		keys.put(selectGunBtn,new byte[]{ message[6]});//u (X)
-		keys.put(dropGunBtn,new byte[]{ message[7]});//i (Y)
-		keys.put(other1Btn,new byte[]{ message[8]});//o
-		keys.put(fireBtn,new byte[]{ message[9]});//j (A)
-		keys.put(jumpBtn,new byte[]{ message[10]});//k (B)
-		keys.put(other2Btn,new byte[]{ message[11]});//l
-		keys.put(selectBtn,new byte[]{ message[4]});//1
-		keys.put(startBtn,new byte[]{ message[5]});//5
+		Map<String, byte[]> m = new HashMap<String, byte[]>();
+		m.put(upBtn,new byte[]{ message[0]});//w
+		m.put(downBtn,new byte[]{ message[1]});//s
+		m.put(leftBtn,new byte[]{ message[2]});//a
+		m.put(rightBtn,new byte[]{ message[3]});//d
+		m.put(selectGunBtn,new byte[]{ message[6]});//u (X)
+		m.put(dropGunBtn,new byte[]{ message[7]});//i (Y)
+		m.put(other1Btn,new byte[]{ message[8]});//o
+		m.put(fireBtn,new byte[]{ message[9]});//j (A)
+		m.put(jumpBtn,new byte[]{ message[10]});//k (B)
+		m.put(other2Btn,new byte[]{ message[11]});//l
+		m.put(selectBtn,new byte[]{ message[4]});//1
+		m.put(startBtn,new byte[]{ message[5]});//5
+		keys = m;
+		typeNow = SET_KEY_HANDLE;
 	}
 	
 	/**
@@ -108,60 +116,20 @@ public class HandleKeys  implements IBlueToothConst {
 	}
 	
 	/**
-	 * 设置内置按键
-	 * 
-	 * @param message the message
-	 * @param type 当前的按键类型，可选类型handleKeySet、SET_KEY_PPT、SET_KEY_PLAYER
+	 * 设置内置按键。内置方案只剩默认手柄键位；
+	 * 旧版本存下的 PPT(-2)/千千静听(-3) 已改为独立界面，这里一律回落到默认键位。
+	 *
+	 * @param message 忽略，保留参数以兼容旧调用
+	 * @param type    忽略，保留参数以兼容旧调用
 	 */
 	public void setKeys(byte[] message, int type,Editor editor) {
-		if (type == SET_KEY_HANDLE) {
-			typeNow = SET_KEY_HANDLE;
-			message = DEFAULT_HANDLE_SET;
-			keys.put(upBtn,new byte[]{ message[0]});
-			keys.put(downBtn,new byte[]{ message[1]});
-			keys.put(leftBtn,new byte[]{ message[2]});
-			keys.put(rightBtn,new byte[]{ message[3]});
-			
-			keys.put(selectGunBtn,new byte[]{ message[6]});
-			keys.put(dropGunBtn,new byte[]{ message[7]});
-			keys.put(other1Btn,new byte[]{ message[8]});
-			keys.put(fireBtn,new byte[]{ message[9]});
-			keys.put(jumpBtn,new byte[]{ message[10]});
-			keys.put(other2Btn,new byte[]{ message[11]});
-			keys.put(selectBtn,new byte[]{ message[4]});
-			keys.put(startBtn,new byte[]{ message[5]});
-			if (editor != null) {
-				editor.putInt(IMyPreference.KEY_TYPE, typeNow);
-				editor.commit();
-			}
-		} else if (type == SET_KEY_PPT) {
-			typeNow = SET_KEY_PPT;
-			keys.put(upBtn,new byte[]{ 38});//up arrow
-			keys.put(downBtn,new byte[]{ 40});//down arrow
-			keys.put(leftBtn,new byte[]{ 37});//left arrow
-			keys.put(rightBtn,new byte[]{ 39});//right arrow
-			keys.put(selectGunBtn,new byte[]{ 27});// esc(stop fullscrenn) (X)
-			keys.put(dropGunBtn,new byte[]{ 16, 116});// shift+F5(begin fullscreen) (Y)
-			if (editor != null) {
-				editor.putInt(IMyPreference.KEY_TYPE, typeNow);
-				editor.commit();
-			}
-		} else if (type == SET_KEY_PLAYER) {
-			typeNow = SET_KEY_PLAYER;
-			keys.put(upBtn,new byte[]{ 17,18,38});//crtl + alt + up(turn up)
-			keys.put(downBtn,new byte[]{ 17,18,40});//crtl + alt + down(turn down)
-			keys.put(leftBtn,new byte[]{ 17,18,37});//crtl + alt + left(previous)
-			keys.put(rightBtn,new byte[]{17,18, 39});//crtl + alt + right(next)
-			keys.put(selectGunBtn,new byte[]{ 17,18,116});//crtl + alt + f5(play) (X)
-			keys.put(dropGunBtn,new byte[]{ 17,18,117});//crtl + alt + f6(stop) (Y)
-			if (editor != null) {
-				editor.putInt(IMyPreference.KEY_TYPE, typeNow);
-				editor.commit();
-			}
+		applyDefault();
+		if (editor != null) {
+			editor.putInt(IMyPreference.KEY_TYPE, typeNow);
+			editor.commit();
 		}
-
 	}
-	
+
 	/**
 	 * 根据电脑端接收到的消息来设置按键，现在这个逻辑不用了。
 	 * 
@@ -176,6 +144,12 @@ public class HandleKeys  implements IBlueToothConst {
 	}
 	
 	public void setKeys(KeyInfo info,Editor editor) {
+		if (info == null) {// 方案已被删除
+			setKeys(null, SET_KEY_HANDLE, editor);
+			return;
+		}
+		// 先整体替换为新映射，避免未设置的按钮残留上一套方案的键
+		Map<String, byte[]> keys = new HashMap<String, byte[]>();
 		typeNow = info.getKeyId();
 		keys.put(upBtn,info.getBytes(KeyTableOperator.KEY_TABLE_UP_FIELD));
 		keys.put(downBtn,info.getBytes(KeyTableOperator.KEY_TABLE_DOWN_FIELD));
@@ -190,6 +164,7 @@ public class HandleKeys  implements IBlueToothConst {
 
 		keys.put(selectBtn,info.getBytes(KeyTableOperator.KEY_TABLE_SELECT_FIELD));
 		keys.put(startBtn,info.getBytes(KeyTableOperator.KEY_TABLE_START_FIELD));
+		this.keys = keys;
 		
 		if (editor != null) {
 			editor.putInt(IMyPreference.KEY_TYPE,info.getKeyId());

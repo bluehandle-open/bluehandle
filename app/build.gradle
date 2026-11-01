@@ -13,6 +13,8 @@ android {
         versionName "1.8.3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        // minSdk 16 需要靠 AppCompat 渲染 VectorDrawable 图标
+        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {

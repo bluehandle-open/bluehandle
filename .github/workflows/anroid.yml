@@ -47,10 +47,11 @@ jobs:
           distribution: temurin
           java-version: 17
       # 3. 安装 Android SDK 和 Build Tools
+      # 显式列出要装的包：默认列表里的 tools 已从 SDK 仓库下架，会导致安装失败
       - name: Install Android SDK
-        uses: android-actions/setup-android@v2
-      - name: Install Android Build Tools
-        run: echo y | sdkmanager "build-tools;${{ env.BUILD_TOOLS_VERSION }}"
+        uses: android-actions/setup-android@v3
+        with:
+          packages: "platform-tools platforms;android-31 build-tools;${{ env.BUILD_TOOLS_VERSION }}"
       # 设置gradle环境(比如: 6.5)、打包命令
       - uses: gradle/gradle-build-action@v2
         with:

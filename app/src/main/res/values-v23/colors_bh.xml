@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 6.0 起状态栏图标可以是深色，浅色主题下状态栏与页面同色。深色主题取 values-night -->
+<resources>
+    <color name="bh_status_bar">#F4F6FA</color>
+</resources>

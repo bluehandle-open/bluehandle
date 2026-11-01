@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>电视遥控器 语音输入</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#8AB8FF}a:hover{color:#B8D3FF}
+button{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #0B1220; color: #E8EDF7; font-family: 'Noto Sans SC', system-ui, sans-serif; padding: 16px 24px 28px; display: flex; flex-direction: column; gap: 22px">
+
+  <div style="display: flex; align-items: center; justify-content: space-between; height: 48px">
+    <a href="TvRemote.dc.html" aria-label="关闭语音输入" style="width: 44px; height: 44px; border-radius: 12px; border: 1px solid #27334D; background: #141D2E; color: #E8EDF7; display: flex; align-items: center; justify-content: center">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+    </a>
+    <div style="font-size: 17px; font-weight: 700">语音输入</div>
+    <button style="height: 36px; padding: 0 12px; border-radius: 10px; border: 1px solid #27334D; background: #141D2E; color: #E8EDF7; font-size: 13px; display: flex; align-items: center; gap: 4px; cursor: pointer">
+      普通话
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+    </button>
+  </div>
+
+  <div style="background: #141D2E; border: 1px solid #27334D; border-radius: 20px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px; min-height: 150px; box-sizing: border-box">
+    <div style="display: flex; align-items: center; justify-content: space-between">
+      <div style="font-size: 12px; color: #9AA6BD">识别结果 · 点击可修改</div>
+      <button aria-label="清空识别结果" style="width: 32px; height: 32px; border-radius: 8px; border: none; background: transparent; color: #9AA6BD; display: flex; align-items: center; justify-content: center; cursor: pointer">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"></path></svg>
+      </button>
+    </div>
+    <div style="font-size: 24px; font-weight: 500; line-height: 1.45">
+      明天上午十点在三楼会议室<span style="color: #9AA6BD">开周会</span><span style="display: inline-block; width: 2px; height: 26px; margin-left: 3px; vertical-align: -4px; background: {{accent}}"></span>
+    </div>
+  </div>
+
+  <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px">
+    <div style="position: relative; width: 236px; height: 236px">
+      <div style="position: absolute; inset: 0; border-radius: 50%; background: rgba(47, 111, 235, 0.10)"></div>
+      <div style="position: absolute; inset: 28px; border-radius: 50%; background: rgba(47, 111, 235, 0.18)"></div>
+      <button aria-label="停止聆听" style="position: absolute; inset: 58px; border-radius: 50%; border: none; background: {{accent}}; color: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3"></path></svg>
+      </button>
+    </div>
+    <div style="display: flex; align-items: flex-end; gap: 4px; height: 28px" aria-hidden="true">
+      <span style="width: 4px; height: 10px; border-radius: 2px; background: #8AB8FF"></span>
+      <span style="width: 4px; height: 20px; border-radius: 2px; background: #8AB8FF"></span>
+      <span style="width: 4px; height: 28px; border-radius: 2px; background: #8AB8FF"></span>
+      <span style="width: 4px; height: 16px; border-radius: 2px; background: #8AB8FF"></span>
+      <span style="width: 4px; height: 24px; border-radius: 2px; background: #8AB8FF"></span>
+      <span style="width: 4px; height: 12px; border-radius: 2px; background: #8AB8FF"></span>
+      <span style="width: 4px; height: 20px; border-radius: 2px; background: #8AB8FF"></span>
+      <span style="width: 4px; height: 8px; border-radius: 2px; background: #8AB8FF"></span>
+    </div>
+    <div style="font-size: 15px; color: #E8EDF7">正在聆听…</div>
+    <div style="font-size: 12px; color: #9AA6BD">说完后停顿 1 秒自动结束，点击麦克风可提前停止</div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 8px">
+    <div style="font-size: 12px; color: #9AA6BD">发送到电脑后</div>
+    <div style="display: flex; background: #141D2E; border: 1px solid #27334D; border-radius: 12px; padding: 4px; gap: 4px">
+      <button style="flex: 1; height: 38px; border: none; border-radius: 9px; background: transparent; color: #9AA6BD; font-size: 14px; cursor: pointer">只输入文字</button>
+      <button style="flex: 1; height: 38px; border: none; border-radius: 9px; background: #1C2740; color: #E8EDF7; font-size: 14px; font-weight: 500; cursor: pointer">输入并回车</button>
+    </div>
+  </div>
+
+  <div style="display: flex; gap: 10px">
+    <button style="flex: 1; height: 52px; border-radius: 16px; border: 1px solid #27334D; background: #141D2E; color: #E8EDF7; font-size: 15px; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path><path d="M3 3v5h5"></path></svg>
+      重说
+    </button>
+    <button style="flex: 2; height: 52px; border-radius: 16px; border: none; background: #F5A524; color: #1A1206; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"></path></svg>
+      发送到电脑
+    </button>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#2F6FEB","options":["#2F6FEB","#6D5AE6","#0E8A7E"]},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+renderVals() {
+return { accent: this.props.accent ?? '#2F6FEB' };
+}
+}
+</script>
+</body>
+</html>

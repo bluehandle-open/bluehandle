@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 键位方案行：单选圆点 + 名称/摘要 + 可选的编辑按钮 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/bh_gap"
+    android:background="@drawable/bh_bg_card_selectable"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:minHeight="68dp"
+    android:orientation="horizontal"
+    android:paddingStart="16dp"
+    android:paddingTop="10dp"
+    android:paddingEnd="4dp"
+    android:paddingBottom="10dp">
+
+    <View
+        android:id="@+id/scheme_radio"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:background="@drawable/bh_radio"
+        android:duplicateParentState="true" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="8dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/scheme_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/bh_text"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/scheme_summary"
+            style="@style/BhText.Caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:maxLines="2" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/scheme_current"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:text="当前"
+        android:textColor="@color/bh_primary_text"
+        android:textSize="12sp"
+        android:visibility="gone" />
+
+    <ImageButton
+        android:id="@+id/scheme_edit"
+        android:layout_width="@dimen/bh_touch_min"
+        android:layout_height="@dimen/bh_touch_min"
+        android:background="@drawable/bh_bg_row"
+        android:scaleType="center"
+        android:visibility="gone"
+        app:srcCompat="@drawable/bh_ic_edit"
+        app:tint="@color/bh_text_secondary" />
+</LinearLayout>

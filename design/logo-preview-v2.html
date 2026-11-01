@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>蓝色手柄 · 图标第二轮：扁平化与辨识度</title>
+<style>
+  :root { --bg:#0B1220; --card:#141D2E; --line:#27334D; --text:#E8EDF7; --muted:#9AA6BD; --primary:#2F6FEB; --ptext:#8AB8FF; --action:#F5A524; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Microsoft YaHei UI","PingFang SC",sans-serif; padding:32px 40px 60px; }
+  h1 { font-size:24px; margin:0 0 6px; }
+  .lead { color:var(--muted); font-size:14px; line-height:1.8; margin:0 0 26px; max-width:1000px; }
+  .lead b { color:var(--text); font-weight:500; }
+  .concept { background:var(--card); border:1px solid var(--line); border-radius:20px; padding:24px 28px; margin-bottom:22px; }
+  .concept.rec { border-color:var(--primary); box-shadow:0 0 0 3px rgba(47,111,235,.25); }
+  .head { display:flex; align-items:baseline; gap:12px; margin-bottom:4px; }
+  .head h2 { font-size:18px; margin:0; }
+  .badge { font-size:12px; background:var(--primary); color:#fff; padding:2px 8px; border-radius:6px; }
+  .why { color:var(--muted); font-size:13px; line-height:1.75; margin:0 0 18px; max-width:1050px; }
+  .why b { color:var(--text); font-weight:500; }
+  .row { display:flex; gap:32px; align-items:flex-end; flex-wrap:wrap; }
+  .cap { color:var(--muted); font-size:12px; text-align:center; margin-top:8px; }
+  .ic { display:block; overflow:hidden; }
+  .m-squircle { border-radius:30%; } .m-circle { border-radius:50%; } .m-round { border-radius:22%; }
+  .home { display:flex; gap:20px; padding:16px 20px; border-radius:16px; }
+  .home.dark { background:linear-gradient(160deg,#1b2440,#0d1424); }
+  .home.light { background:linear-gradient(160deg,#dfe7f5,#b9c8e4); }
+  .app { width:60px; text-align:center; font-size:11px; }
+  .home.dark .app { color:#fff; } .home.light .app { color:#1b2440; }
+  .app .ic { margin:0 auto 6px; filter:drop-shadow(0 2px 4px rgba(0,0,0,.3)); }
+  .other { width:50px; height:50px; border-radius:30%; margin:0 auto 6px; }
+  .tiny { display:flex; gap:14px; align-items:flex-end; }
+  .mono { display:flex; gap:12px; align-items:center; background:#000; padding:10px 14px; border-radius:10px; }
+  .appbar { background:var(--bg); border:1px solid var(--line); border-radius:14px; padding:12px 14px; width:300px; }
+  .appbar .t { display:flex; align-items:center; gap:10px; font-weight:700; font-size:17px; }
+  .appbar .icons { display:flex; gap:8px; margin-top:12px; }
+  .appbar .icons span { width:38px; height:38px; border-radius:10px; background:#1C2740; color:var(--ptext); display:flex; align-items:center; justify-content:center; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <!-- 108×108 自适应图标画布；主体限制在中心直径 66 的安全区 -->
+  <symbol id="bg" viewBox="0 0 108 108"><rect width="108" height="108" fill="#2F6FEB"/></symbol>
+
+  <!-- A 线条方向键：与应用内线条图标同一语言 -->
+  <symbol id="fgA" viewBox="0 0 108 108">
+    <path d="M47 29h14a2 2 0 0 1 2 2v14h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H63v14a2 2 0 0 1-2 2H47a2 2 0 0 1-2-2V63H31a2 2 0 0 1-2-2V47a2 2 0 0 1 2-2h14V31a2 2 0 0 1 2-2z" fill="none" stroke="#fff" stroke-width="6" stroke-linejoin="round"/>
+    <circle cx="54" cy="54" r="6" fill="#F5A524"/>
+  </symbol>
+
+  <!-- B 方向键 + 信号：完整方向键，右上角的空当发出信号 -->
+  <symbol id="fgB" viewBox="0 0 108 108">
+    <g transform="translate(2 -2)">
+      <path d="M44 32h12a3 3 0 0 1 3 3v14h14a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H59v14a3 3 0 0 1-3 3H44a3 3 0 0 1-3-3V67H27a3 3 0 0 1-3-3V52a3 3 0 0 1 3-3h14V35a3 3 0 0 1 3-3z" fill="#fff"/>
+      <circle cx="50" cy="58" r="5.5" fill="#F5A524"/>
+      <path d="M63.6 37.1A9 9 0 0 1 70.9 44.4M64.95 29.26A17 17 0 0 1 78.74 43.05" fill="none" stroke="#fff" stroke-width="5.5" stroke-linecap="round"/>
+    </g>
+  </symbol>
+
+  <!-- C 按下的方向键：右臂是橙色，像正被按下 -->
+  <symbol id="fgC" viewBox="0 0 108 108">
+    <path d="M47 29h14a3 3 0 0 1 3 3v13h-20V32a3 3 0 0 1 3-3zM44 63h20v13a3 3 0 0 1-3 3H47a3 3 0 0 1-3-3zM32 44h13v20H32a3 3 0 0 1-3-3V47a3 3 0 0 1 3-3zM44 44h20v20H44z" fill="#fff"/>
+    <path d="M64 44h12a3 3 0 0 1 3 3v14a3 3 0 0 1-3 3H64z" fill="#F5A524"/>
+  </symbol>
+
+  <!-- D 手机里的方向键：线条手机 + 实心方向键 -->
+  <symbol id="fgD" viewBox="0 0 108 108">
+    <rect x="35" y="25" width="38" height="58" rx="9" fill="none" stroke="#fff" stroke-width="5.5"/>
+    <path d="M50.5 40h7a1.5 1.5 0 0 1 1.5 1.5V48h6.5a1.5 1.5 0 0 1 1.5 1.5v7a1.5 1.5 0 0 1-1.5 1.5H59v6.5a1.5 1.5 0 0 1-1.5 1.5h-7a1.5 1.5 0 0 1-1.5-1.5V58h-6.5a1.5 1.5 0 0 1-1.5-1.5v-7a1.5 1.5 0 0 1 1.5-1.5H49v-6.5a1.5 1.5 0 0 1 1.5-1.5z" fill="#fff"/>
+    <circle cx="54" cy="53" r="3" fill="#F5A524"/>
+    <path d="M50 75h8" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+  </symbol>
+
+  <!-- 现在的图标，作对照 -->
+  <symbol id="fgNow" viewBox="0 0 108 108">
+    <g transform="translate(11.88 11.88) scale(.78)">
+      <path d="M47 24h14a5 5 0 0 1 5 5v13h13a5 5 0 0 1 5 5v14a5 5 0 0 1-5 5H66v13a5 5 0 0 1-5 5H47a5 5 0 0 1-5-5V66H29a5 5 0 0 1-5-5V47a5 5 0 0 1 5-5h13V29a5 5 0 0 1 5-5z" fill="#fff"/>
+      <path d="M54 30l-4.5 5.5h9zM54 78l-4.5-5.5h9zM30 54l5.5-4.5v9zM78 54l-5.5-4.5v9z" fill="#2F6FEB"/>
+      <circle cx="54" cy="54" r="7.5" fill="#F5A524"/>
+    </g>
+  </symbol>
+  <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3D82F7"/><stop offset="1" stop-color="#1C4CC8"/></linearGradient>
+  <symbol id="bgNow" viewBox="0 0 108 108"><rect width="108" height="108" fill="url(#g)"/></symbol>
+</svg>
+
+<h1>应用图标 · 第二轮</h1>
+<p class="lead">
+  目标：<b>扁平</b>——纯色底、无渐变、无投影，线条粗细和圆角向应用内的线条图标（24 网格、1.8 线宽、圆头）看齐；
+  <b>有辨识度</b>——轮廓一眼能和别的应用分开，单色剪影（通知栏、系统设置里的小图标）也认得出。
+  现在的圆角白色十字有个隐患：<b>和医疗、急救类图标几乎一样</b>，在一屏图标里很难第一眼认出来。下面每个方案都打破了"对称十字"的轮廓。
+  每行最后一格把图标放进应用首页顶栏，和应用内的线条图标排在一起，看风格是否统一。
+</p>
+
+<div id="list"></div>
+
+<script>
+const icons = {
+  gamepad: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="7" width="20" height="11" rx="5.5"/><path d="M7 11v3M5.5 12.5h3"/><circle cx="16" cy="11.5" r=".9" fill="currentColor"/><circle cx="18" cy="13.5" r=".9" fill="currentColor"/></svg>',
+  remote: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="7" y="2" width="10" height="20" rx="3"/><circle cx="12" cy="9" r="2.5"/><path d="M10 15h4M10 18h4"/></svg>',
+  ppt: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v4M8 20h8M10 8l4 2-4 2z"/></svg>',
+  mic: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>',
+  wifi: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M2 8.5a15 15 0 0 1 20 0M5 12a10 10 0 0 1 14 0M8.5 15.5a5 5 0 0 1 7 0"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>',
+};
+const concepts = [
+  { id:"B", name:"方向键 + 信号", rec:true,
+    why:"完整的实心方向键，<b>右上角的空当里发出两道信号弧</b>：方向键是“手柄”，信号是“无线连到电脑”，正好是这个应用做的事。信号让轮廓变得不对称，和医疗十字、普通游戏图标、音量图标都分得开，单色剪影也认得出；信号弧和应用内图标一样是圆头线条，实心十字保证小尺寸清晰。" },
+  { id:"C", name:"按下的方向键",
+    why:"十字本身做平做实，<b>右臂换成动作橙，像正被按下</b>。改动最小、和现在最像，老用户熟悉；橙色一角让轮廓不对称，避开医疗十字。缺点是单色剪影仍然是十字，通知栏里辨识度一般。" },
+  { id:"A", name:"线条方向键",
+    why:"十字改成粗线描边，中间一个橙点，<b>和应用内的线条图标是同一种画法</b>，风格最统一。但线条图标在桌面上偏轻，和别的应用放在一起不够醒目；轮廓仍是十字。" },
+  { id:"D", name:"手机里的方向键",
+    why:"线条手机外框里放一个小方向键，直接表达“手机当手柄”。风格统一，但手机外框在工具类应用里很常见，方向键缩小后在 24px 以下看不清。" },
+  { id:"Now", name:"现在的图标（对照）", bg:"bgNow",
+    why:"渐变底、实心十字加四个蓝色小三角和橙色中键。细节多、有立体感，和扁平的线条图标不搭；轮廓是对称十字。" },
+];
+const svg = (id, size, cls="", bg="bg") =>
+  `<svg class="ic ${cls}" width="${size}" height="${size}" viewBox="18 18 72 72"><use href="#${bg}" width="108" height="108"/><use href="#fg${id}" width="108" height="108" ${id === "Now" ? "" : 'transform="translate(9.72 9.72) scale(.82)"'}/></svg>`;
+const mono = (id, size) =>
+  `<svg width="${size}" height="${size}" viewBox="18 18 72 72" style="filter:brightness(0) invert(1)"><use href="#fg${id}" width="108" height="108" ${id === "Now" ? "" : 'transform="translate(9.72 9.72) scale(.82)"'}/></svg>`;
+const others = ["#E8554E","#34A853","#F4B400"];
+const home = (c, cls) => `<div class="home ${cls}">
+  <div class="app">${svg(c.id,50,"m-squircle",c.bg)}蓝色手柄</div>
+  ${["相机","微信","设置"].map((n,i)=>`<div class="app"><div class="other" style="background:${others[i]}"></div>${n}</div>`).join("")}
+</div>`;
+document.getElementById("list").innerHTML = concepts.map(c => `
+<section class="concept ${c.rec?"rec":""}">
+  <div class="head"><h2>${c.id === "Now" ? "" : "方案 " + c.id + " · "}${c.name}</h2>${c.rec?'<span class="badge">推荐</span>':""}</div>
+  <p class="why">${c.why}</p>
+  <div class="row">
+    <div>${svg(c.id,136,"m-squircle",c.bg)}<div class="cap">方圆（小米 / 三星）</div></div>
+    <div>${svg(c.id,92,"m-circle",c.bg)}<div class="cap">圆形（Pixel）</div></div>
+    <div>${home(c,"dark")}<div class="cap">深色壁纸</div></div>
+    <div>${home(c,"light")}<div class="cap">浅色壁纸</div></div>
+    <div><div class="tiny">${svg(c.id,32,"m-round",c.bg)}${svg(c.id,24,"m-round",c.bg)}${svg(c.id,16,"m-round",c.bg)}</div><div class="cap">32 / 24 / 16px</div></div>
+    <div><div class="mono">${mono(c.id,28)}${mono(c.id,20)}</div><div class="cap">单色剪影（通知栏）</div></div>
+    <div><div class="appbar"><div class="t">${svg(c.id,36,"m-round",c.bg)}蓝色手柄</div>
+      <div class="icons">${Object.values(icons).map(i=>`<span>${i}</span>`).join("")}</div></div>
+      <div class="cap">首页顶栏 + 应用内线条图标</div></div>
+  </div>
+</section>`).join("");
+</script>
+</body>
+</html>

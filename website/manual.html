@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>使用手册 · 蓝色手柄</title>
+<meta name="description" content="蓝色手柄使用手册：安装、Wi‑Fi 与蓝牙连接、游戏手柄、电脑遥控器、语音输入、PPT 演示、电脑端与常见问题。">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">跳到正文</a>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><img src="assets/logo.svg" alt="">蓝色手柄</a>
+    <nav aria-label="主导航">
+      <a href="index.html#modes">功能</a>
+      <a href="manual.html" aria-current="page">使用手册</a>
+      <a href="https://github.com/bluehandle-open">GitHub</a>
+      <a class="cta" href="index.html#download">免费下载</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap doc">
+  <aside class="toc" aria-label="目录">
+    <p>目录</p>
+    <ol>
+      <li><a href="#install">安装</a></li>
+      <li><a href="#connect">连接电脑</a>
+        <ol>
+          <li><a href="#wifi">Wi‑Fi 连接</a></li>
+          <li><a href="#bluetooth">蓝牙连接</a></li>
+        </ol>
+      </li>
+      <li><a href="#gamepad">游戏手柄</a>
+        <ol>
+          <li><a href="#schemes">键位方案</a></li>
+          <li><a href="#key-edit">自定义按键</a></li>
+        </ol>
+      </li>
+      <li><a href="#remote">电脑遥控器</a>
+        <ol>
+          <li><a href="#numpad">数字键</a></li>
+        </ol>
+      </li>
+      <li><a href="#voice">语音输入</a></li>
+      <li><a href="#ppt">PPT 演示</a></li>
+      <li><a href="#pc">电脑端</a></li>
+      <li><a href="#settings">手机端设置</a></li>
+      <li><a href="#faq">常见问题</a></li>
+    </ol>
+  </aside>
+
+  <article class="article" id="main">
+    <h1>使用手册</h1>
+    <p class="intro">蓝色手柄由两部分组成：手机端负责发出按键和文字，电脑端负责在电脑上执行。两边都要安装，连上之后就能用手机控制电脑。</p>
+
+    <!-- ============================================================ -->
+    <h2 id="install">安装</h2>
+    <table>
+      <tr><th></th><th>手机端</th><th>电脑端</th></tr>
+      <tr><td>系统要求</td><td>Android 4.1 及以上</td><td>Windows 10 / 11（64 位），需要系统自带的 WebView2</td></tr>
+      <tr><td>下载</td><td><a href="https://github.com/bluehandle-open/bluehandle/releases/latest">GitHub Releases</a> 里的 APK</td><td><a href="https://github.com/bluehandle-open/bluehandle-go/releases/latest">GitHub Releases</a> 里的 <code>bluehandle.exe</code></td></tr>
+      <tr><td>安装方式</td><td>打开 APK 安装。系统提示"未知来源"时，按提示允许</td><td>不需要安装，双击 exe 运行</td></tr>
+    </table>
+    <p>第一次打开手机端会显示一份简短的引导，讲清楚怎么装电脑端、怎么连接。以后可以在首页的「使用帮助」里再看。</p>
+    <div class="note tip"><b>手机上找不到电脑端下载地址？</b>引导的第 2 页有「把下载地址发到电脑」，可以通过微信、QQ 或邮件把链接发到电脑上打开。</div>
+
+    <!-- ============================================================ -->
+    <h2 id="connect">连接电脑</h2>
+    <p>手机首页的连接卡片可以在 <b>Wi‑Fi</b> 和 <b>蓝牙</b> 之间切换。Wi‑Fi 适合家里和办公室；没有网络的场合（比如会议室）用蓝牙。连接成功后手机停在首页，状态变成"已连接"，再选要用的模式。</p>
+    <figure>
+      <img src="assets/screens/main.webp" alt="手机端首页：连接卡片和三种模式" loading="lazy">
+      <img src="assets/screens/pc-connect.webp" alt="电脑端：输入手机地址并连接" loading="lazy">
+      <figcaption>左：手机端首页；右：电脑端连接页</figcaption>
+    </figure>
+
+    <h3 id="wifi">Wi‑Fi 连接</h3>
+    <p>Wi‑Fi 连接时，是<b>电脑去连手机</b>：手机先等待，电脑再根据手机的地址发起连接。</p>
+    <ol>
+      <li>手机和电脑连到同一个 Wi‑Fi（同一个路由器下即可）。</li>
+      <li>手机首页选「Wi‑Fi」，点「开始连接」。卡片下方会显示本机地址，例如 <code>192.168.1.23:8088</code>。</li>
+      <li>电脑端在「Wi‑Fi」标签下输入这个地址（端口是默认的 8088 时可以不填），点「连接」。</li>
+      <li>两边都显示"已连接"就成功了。</li>
+    </ol>
+    <p>电脑端会记住最近连接过的手机，下次直接在"最近连接"里点「连接」。</p>
+    <div class="note warn"><b>手机路由器开了"访客网络"或"AP 隔离"时连不上</b>这类设置会禁止同一个 Wi‑Fi 下的设备互相访问。换成主网络，或在路由器里关掉隔离。</div>
+
+    <h3 id="bluetooth">蓝牙连接</h3>
+    <p>蓝牙连接前，手机和电脑要先在系统里<b>配对</b>，只需要配对一次。</p>
+    <ol>
+      <li><b>配对</b>：手机打开「设置 → 蓝牙」，保持在这个页面（手机才能被搜到）。电脑打开「设置 → 蓝牙和其他设备 → 添加设备 → 蓝牙」，选你的手机，两边确认配对码。</li>
+      <li>手机首页选「蓝牙」，点「开始连接」。Android 12 及以上第一次使用时会请求"附近设备"权限，请允许。</li>
+      <li>电脑端切到「蓝牙」标签，列表里列出已配对的设备，手机排在最前面。点手机后面的「连接」。</li>
+    </ol>
+    <p>列表里没有你的手机，说明还没配对，可以点「打开电脑蓝牙设置」去配对；配对后点「刷新」。蓝牙连接最长等 20 秒，手机需要在电脑附近（10 米以内）。</p>
+
+    <!-- ============================================================ -->
+    <h2 id="gamepad">游戏手柄</h2>
+    <p>首页点「游戏手柄」，选一套键位方案后进入横屏手柄。左边是方向键，右边是 A / B / X / Y，中间是 Select 和 Start，每个按钮对应电脑上的一个键（或组合键）。</p>
+    <figure><img class="wide" src="assets/screens/gamepad.webp" alt="横屏游戏手柄" loading="lazy"></figure>
+    <ul>
+      <li><b>多指操作</b>：可以多根手指同时按；按住一个键滑出按钮范围时，这个键会松开，不会卡住。</li>
+      <li><b>顶栏</b>：左边返回首页（不会断开连接），点方案名可以换方案；右边可以开关重力感应、按键震动，以及断开连接。</li>
+      <li><b>重力感应</b>：开启后左右倾斜手机就会发送左右方向键，适合赛车游戏。灵敏度在设置里调。</li>
+    </ul>
+
+    <h3 id="schemes">键位方案</h3>
+    <p>内置的"默认键位"如下，适合大多数模拟器：</p>
+    <table>
+      <tr><th>手柄按钮</th><th>电脑按键</th><th>手柄按钮</th><th>电脑按键</th></tr>
+      <tr><td>上 / 下 / 左 / 右</td><td><kbd>W</kbd> <kbd>S</kbd> <kbd>A</kbd> <kbd>D</kbd></td><td>A / B</td><td><kbd>J</kbd> <kbd>K</kbd></td></tr>
+      <tr><td>X / Y</td><td><kbd>U</kbd> <kbd>I</kbd></td><td>Select / Start</td><td><kbd>1</kbd> <kbd>5</kbd></td></tr>
+    </table>
+    <p>可以给不同的游戏各建一套方案。在键位方案页点「新建方案」，或点已有方案右边的编辑按钮修改；长按方案可以删除。上次使用的方案会自动选中。</p>
+
+    <h3 id="key-edit">自定义按键</h3>
+    <figure><img src="assets/screens/keyedit.webp" alt="自定义按键编辑页" loading="lazy"></figure>
+    <ol>
+      <li>在下方的按钮宫格里点要修改的手柄按钮。</li>
+      <li>上方会显示这个按钮当前对应的键，最多可以设 3 个键，组成组合键（例如 <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd>）。</li>
+      <li>从分类键盘（字母数字、功能键、方向键、媒体）里点选按键，填进空位。</li>
+      <li>改完所有按钮后保存。</li>
+    </ol>
+
+    <!-- ============================================================ -->
+    <h2 id="remote">电脑遥控器</h2>
+    <p>竖屏单手使用，外观像电视遥控器，控制的是电脑。把电脑接到电视或投影上时最好用。</p>
+    <figure><img src="assets/screens/tvremote.webp" alt="电脑遥控器" loading="lazy"></figure>
+    <table>
+      <tr><th>按钮</th><th>电脑上的效果</th></tr>
+      <tr><td>锁屏</td><td>锁定电脑（由电脑端调用系统锁屏，等同 <kbd>Win</kbd>+<kbd>L</kbd>）</td></tr>
+      <tr><td>切换窗口</td><td><kbd>Alt</kbd>+<kbd>Tab</kbd></td></tr>
+      <tr><td>静音</td><td>系统静音（媒体键）</td></tr>
+      <tr><td>方向盘 / OK</td><td>方向键 / <kbd>Enter</kbd></td></tr>
+      <tr><td>返回</td><td><kbd>Esc</kbd></td></tr>
+      <tr><td>桌面</td><td><kbd>Win</kbd>+<kbd>D</kbd>，显示桌面</td></tr>
+      <tr><td>菜单</td><td>右键菜单键</td></tr>
+      <tr><td>音量 + / −</td><td>系统音量加减</td></tr>
+      <tr><td>翻页 ▲ / ▼</td><td><kbd>PgUp</kbd> / <kbd>PgDn</kbd></td></tr>
+      <tr><td>上一曲 / 播放暂停 / 下一曲</td><td>媒体键，控制正在播放的音乐和视频</td></tr>
+    </table>
+    <p>方向键、OK、音量和翻页支持按住：手指不松开，电脑上这个键就一直按着。底部的「语音输入」和「数字键」会打开对应的页面。</p>
+
+    <h3 id="numpad">数字键</h3>
+    <p>0–9、小数点、退格和回车。每按一次就立即发送到电脑，屏幕上方只回显最近的输入，方便确认。适合输入集数、页码和验证码。</p>
+
+    <!-- ============================================================ -->
+    <h2 id="voice">语音输入</h2>
+    <p>在遥控器里点「语音输入」打开。说出的话会作为文字，输入到电脑上当前光标所在的位置。</p>
+    <figure><img src="assets/screens/tvvoice.webp" alt="语音输入页" loading="lazy"></figure>
+    <h3>两种说法</h3>
+    <ul>
+      <li><b>按住说话</b>（推荐）：按住麦克风开始听，说完松手，文字直接发到电脑。说的过程中停顿也没关系，手指不松就一直在听。按住时手指往上滑，松手就取消这次输入。</li>
+      <li><b>点一下</b>：点一下麦克风开始听，停顿后自动结束。识别结果留在上方的文本框里，可以修改，确认后点「发送到电脑」。</li>
+    </ul>
+    <p>设置里的"按住说话，松手直接发送"关掉后，按住说话松手时也会先显示结果，确认后再发送。</p>
+    <h3>其他选项</h3>
+    <ul>
+      <li><b>识别语言</b>：点右上角在普通话、粤语、English 之间切换。</li>
+      <li><b>发送后</b>："只输入文字"，或"输入并回车"（适合搜索框，说完就搜）。</li>
+      <li><b>直接打字</b>：文本框也可以用手机键盘输入，同样点「发送到电脑」。</li>
+    </ul>
+    <h3>识别引擎</h3>
+    <p>默认用手机自带的语音识别服务（"内置识别"），首次使用需要允许录音权限。手机上没有可用的识别服务时，会自动改用"系统输入法"：这时页面上是文本框，点输入法键盘上的麦克风说话即可。可以在设置里手动切换。</p>
+
+    <!-- ============================================================ -->
+    <h2 id="ppt">PPT 演示</h2>
+    <p>竖屏单手使用，按钮大，不用看屏幕也能按准。</p>
+    <figure><img src="assets/screens/ppt.webp" alt="PPT 演示页" loading="lazy"></figure>
+    <ul>
+      <li><b>翻页</b>：底部大按钮是下一页，上面是上一页（<kbd>PgDn</kbd> / <kbd>PgUp</kbd>）。</li>
+      <li><b>音量键翻页</b>：音量加上一页，音量减下一页，默认开启。只在这个页面打开、屏幕亮着时有效。</li>
+      <li><b>放映控制</b>：从当前页放映（<kbd>Shift</kbd>+<kbd>F5</kbd>）、黑屏（<kbd>B</kbd>，再按一次恢复）、退出放映（<kbd>Esc</kbd>）。</li>
+      <li><b>计时</b>：显示已演讲的时间和距目标时长还剩多少，可以暂停、清零。目标时长在设置里调（5–120 分钟，默认 20 分钟）。剩余 2 分钟时手机长震一次提醒，不发出声音。</li>
+      <li>开启"按键震动"后，每次翻页手机会轻震一下。</li>
+    </ul>
+
+    <!-- ============================================================ -->
+    <h2 id="pc">电脑端</h2>
+    <figure><img src="assets/screens/pc-connected.webp" alt="电脑端已连接：按键数、文字数、心跳和最近收到" loading="lazy"></figure>
+    <h3>已连接页面</h3>
+    <ul>
+      <li><b>统计</b>：本次收到的按键数、文字段数，以及心跳。手机每秒发一次心跳，超过 3 秒没收到会标红。</li>
+      <li><b>最近收到</b>：按时间列出每个按键、组合键、按住的时长和收到的文字。长文字点一下可以展开看全文。</li>
+      <li><b>暂停接收</b>：连接保持，但手机上的操作暂时不在电脑上生效。暂停时会松开所有还按着的键。</li>
+      <li><b>断开</b>：主动断开，不会自动重连。</li>
+    </ul>
+    <h3>托盘</h3>
+    <p>关闭窗口后程序缩到屏幕右下角的托盘里继续运行。托盘图标右下角的圆点：绿色是已连接，橙色是已暂停。右键托盘图标可以打开主窗口、连接上次的手机、暂停 / 继续接收、断开、打开设置和退出。</p>
+    <h3>设置</h3>
+    <table>
+      <tr><th>设置项</th><th>说明</th></tr>
+      <tr><td>端口</td><td>Wi‑Fi 连接用的端口，需与手机设置一致，默认 8088</td></tr>
+      <tr><td>启动时自动连接上次的手机</td><td>手机还没在等待时，每 3 秒重试一次</td></tr>
+      <tr><td>意外断开后自动重连</td><td>网络抖动、手机短暂离开后自动重试；手机主动断开时不重连</td></tr>
+      <tr><td>开机自动启动</td><td>开机后只在托盘显示</td></tr>
+      <tr><td>关闭窗口时缩到托盘</td><td>关掉后，关闭窗口就是退出程序</td></tr>
+      <tr><td>最近收到里显示文字内容</td><td>关闭后只显示字数，适合别人能看到屏幕的场合</td></tr>
+    </table>
+    <div class="note tip"><b>控制以管理员身份运行的程序</b>部分游戏、任务管理器等以管理员身份运行的程序，只接受同样以管理员身份运行的程序发来的按键。这时设置页会出现"以管理员身份重启"，点一下即可。</div>
+
+    <!-- ============================================================ -->
+    <h2 id="settings">手机端设置</h2>
+    <p>首页右上角的齿轮进入设置。</p>
+    <table>
+      <tr><th>分组</th><th>设置项</th><th>说明</th></tr>
+      <tr><td>外观</td><td>主题</td><td>跟随系统（默认）/ 浅色 / 深色。Android 10 以下没有系统深色模式，跟随系统时显示浅色</td></tr>
+      <tr><td rowspan="3">连接</td><td>默认连接方式</td><td>首页默认选中 Wi‑Fi 还是蓝牙</td></tr>
+      <tr><td>Wi‑Fi 端口</td><td>默认 8088，改了要和电脑端一致</td></tr>
+      <tr><td>系统网络设置</td><td>打开系统的 Wi‑Fi 与蓝牙设置页</td></tr>
+      <tr><td rowspan="2">反馈</td><td>按键震动</td><td>按下任意按键时短震一下，默认关</td></tr>
+      <tr><td>屏幕常亮</td><td>连接期间不自动熄屏，默认开</td></tr>
+      <tr><td>游戏手柄</td><td>重力感应 / 灵敏度</td><td>左右倾斜手机发送方向键</td></tr>
+      <tr><td rowspan="2">PPT 演示</td><td>音量键翻页 / 目标演讲时长</td><td>默认开 / 20 分钟</td></tr>
+      <tr><td>剩余 2 分钟时提醒</td><td>长震动一次，默认开</td></tr>
+      <tr><td rowspan="3">语音输入</td><td>识别语言 / 识别引擎</td><td>见<a href="#voice">语音输入</a></td></tr>
+      <tr><td>按住说话，松手直接发送</td><td>默认开</td></tr>
+      <tr><td>发送到电脑后默认</td><td>只输入文字 / 输入并回车</td></tr>
+      <tr><td>其他</td><td>键位方案管理、使用帮助、下载电脑端、关于</td><td></td></tr>
+    </table>
+
+    <!-- ============================================================ -->
+    <h2 id="faq">常见问题</h2>
+    <h3>电脑端提示"连接超时"</h3>
+    <ol>
+      <li>确认手机和电脑连着同一个 Wi‑Fi。电脑插网线、手机连 Wi‑Fi 也可以，只要在同一个路由器下。</li>
+      <li>路由器是否开了"访客网络"或"AP 隔离"，有的话换主网络或关掉。</li>
+      <li>电脑上的代理、VPN 或安全软件可能拦截局域网连接，可以先关掉试试。</li>
+      <li>地址要和手机首页显示的一致。手机的地址可能会变，以首页当前显示的为准。</li>
+    </ol>
+    <h3>电脑端提示"手机拒绝了连接"</h3>
+    <p>说明电脑找到了手机，但手机没有在等待：手机上点「开始连接」，确认状态是"等待电脑端接入"。也检查一下两边的端口是否一致。</p>
+    <h3>蓝牙列表里没有手机 / 连不上</h3>
+    <ul>
+      <li>手机要先和电脑在系统里配对，配对后在电脑端点「刷新」。</li>
+      <li>手机首页要选「蓝牙」并点「开始连接」，电脑端才能连上。</li>
+      <li>电脑端提示"电脑的蓝牙不可用"时，在 Windows 设置里打开蓝牙。</li>
+    </ul>
+    <h3>连上了，但某个程序里按键没反应</h3>
+    <p>先看电脑端"最近收到"里有没有这个按键：没有，是连接或手机端的问题；有，多半是目标程序以管理员身份运行，见上文<a href="#pc">电脑端</a>的说明。另外检查电脑端是否处于"暂停接收"。</p>
+    <h3>用着用着断开了</h3>
+    <p>手机熄屏或切到后台时，系统可能暂停应用。保持"屏幕常亮"开启，并尽量让蓝色手柄留在前台。电脑端开着"意外断开后自动重连"时，手机重新点「开始连接」后会自动连回去。</p>
+    <h3>语音输入没反应</h3>
+    <ul>
+      <li>首次使用内置识别要允许录音权限。拒绝过的话，到系统设置里给蓝色手柄开启麦克风权限。</li>
+      <li>手机没有语音识别服务时，在设置里把识别引擎改成"系统输入法"，用输入法自带的语音输入。</li>
+      <li>文字会输入到电脑当前光标所在的位置，确认电脑上的输入框已经获得焦点。</li>
+    </ul>
+    <h3>熄屏后音量键还能翻页吗？</h3>
+    <p>不能，音量键翻页只在 PPT 页面打开、屏幕亮着时有效。演讲时保持"屏幕常亮"开启即可。</p>
+
+    <p style="margin-top:56px;color:var(--muted);font-size:14px">想了解手机和电脑之间的通信格式，见 <a href="https://github.com/bluehandle-open/bluehandle/blob/master/docs/protocol.md">协议说明</a>。发现问题或有建议，欢迎到 <a href="https://github.com/bluehandle-open/bluehandle/issues">GitHub Issues</a> 反馈。</p>
+  </article>
+</div>
+
+<footer>
+  <div class="wrap">
+    <a class="brand" href="index.html"><img src="assets/logo.svg" alt="" width="26" height="26">蓝色手柄</a>
+    <span class="grow"></span>
+    <a href="index.html">首页</a>
+    <a href="https://github.com/bluehandle-open/bluehandle">手机端源码</a>
+    <a href="https://github.com/bluehandle-open/bluehandle-go">电脑端源码</a>
+    <span>MIT 许可证</span>
+  </div>
+</footer>
+</body>
+</html>

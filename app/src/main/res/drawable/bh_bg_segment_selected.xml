@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 分段切换的选中项：主色蓝底，深浅主题一致 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/bh_primary" />
+    <corners android:radius="9dp" />
+</shape>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:importantForAccessibility="no"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/bh_guide_welcome" />
+
+    <TextView style="@style/BhGuide.Title" android:text="把手机变成电脑的&#10;手柄、遥控器和键盘" />
+
+    <TextView style="@style/BhGuide.Desc" android:text="打游戏、躺着看视频、上台讲 PPT、对着手机说话打字——都不用再走到电脑前。" />
+</LinearLayout>

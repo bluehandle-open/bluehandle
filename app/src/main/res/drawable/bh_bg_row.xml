@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 设置项行：按下时提亮 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true" android:drawable="@color/bh_surface_raised" />
+    <item android:drawable="@android:color/transparent" />
+</selector>

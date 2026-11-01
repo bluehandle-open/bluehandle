@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>自定义按键编辑</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#8AB8FF}a:hover{color:#B8D3FF}
+button,input{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #0B1220; color: #E8EDF7; font-family: 'Noto Sans SC', system-ui, sans-serif; padding: 16px 20px 24px; display: flex; flex-direction: column; gap: 18px">
+
+  <div style="display: flex; align-items: center; justify-content: space-between; height: 48px">
+    <a href="GamepadScheme.dc.html" aria-label="返回键位方案" style="width: 44px; height: 44px; border-radius: 12px; border: 1px solid #27334D; background: #141D2E; color: #E8EDF7; display: flex; align-items: center; justify-content: center">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg>
+    </a>
+    <div style="font-size: 17px; font-weight: 700">编辑方案</div>
+    <button style="height: 40px; padding: 0 18px; border-radius: 12px; border: none; background: {{accent}}; color: #FFFFFF; font-size: 15px; font-weight: 700; cursor: pointer">保存</button>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 6px">
+    <label for="scheme-name" style="font-size: 13px; color: #9AA6BD">方案名称</label>
+    <input id="scheme-name" type="text" placeholder="例如：赛车游戏" style="height: 46px; border-radius: 12px; border: 1px solid #27334D; background: #141D2E; color: #E8EDF7; font-size: 15px; padding: 0 14px; box-sizing: border-box; outline: none">
+  </div>
+
+  <div style="background: #141D2E; border: 1.5px solid {{accent}}; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+    <div style="display: flex; align-items: center; justify-content: space-between">
+      <div style="font-size: 14px; font-weight: 700">“上” 键 · 最多 3 键组合</div>
+      <button style="height: 30px; padding: 0 10px; border-radius: 8px; border: 1px solid #27334D; background: transparent; color: #9AA6BD; font-size: 12px; cursor: pointer">清空</button>
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px">
+      <button aria-label="第一个键 W" style="flex: 1; height: 48px; border-radius: 12px; border: 1.5px solid {{accent}}; background: #1C2740; color: #E8EDF7; font-size: 18px; font-weight: 700; cursor: pointer">W</button>
+      <span style="color: #9AA6BD; font-size: 16px">+</span>
+      <button aria-label="第二个键 空" style="flex: 1; height: 48px; border-radius: 12px; border: 1px dashed #3A4866; background: transparent; color: #9AA6BD; font-size: 13px; cursor: pointer">空</button>
+      <span style="color: #9AA6BD; font-size: 16px">+</span>
+      <button aria-label="第三个键 空" style="flex: 1; height: 48px; border-radius: 12px; border: 1px dashed #3A4866; background: transparent; color: #9AA6BD; font-size: 13px; cursor: pointer">空</button>
+    </div>
+    <div style="display: flex; gap: 6px">
+      <button style="height: 30px; padding: 0 12px; border-radius: 15px; border: none; background: #E8EDF7; color: #0B1220; font-size: 12px; font-weight: 500; cursor: pointer">字母数字</button>
+      <button style="height: 30px; padding: 0 12px; border-radius: 15px; border: 1px solid #27334D; background: transparent; color: #9AA6BD; font-size: 12px; cursor: pointer">功能键</button>
+      <button style="height: 30px; padding: 0 12px; border-radius: 15px; border: 1px solid #27334D; background: transparent; color: #9AA6BD; font-size: 12px; cursor: pointer">方向键</button>
+      <button style="height: 30px; padding: 0 12px; border-radius: 15px; border: 1px solid #27334D; background: transparent; color: #9AA6BD; font-size: 12px; cursor: pointer">媒体</button>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px">
+      <button style="height: 38px; border-radius: 9px; border: 1px solid #27334D; background: #0B1220; color: #E8EDF7; font-size: 14px; cursor: pointer">Q</button>
+      <button style="height: 38px; border-radius: 9px; border: none; background: {{accent}}; color: #FFFFFF; font-size: 14px; font-weight: 700; cursor: pointer">W</button>
+      <button style="height: 38px; border-radius: 9px; border: 1px solid #27334D; background: #0B1220; color: #E8EDF7; font-size: 14px; cursor: pointer">E</button>
+      <button style="height: 38px; border-radius: 9px; border: 1px solid #27334D; background: #0B1220; color: #E8EDF7; font-size: 14px; cursor: pointer">R</button>
+      <button style="height: 38px; border-radius: 9px; border: 1px solid #27334D; background: #0B1220; color: #E8EDF7; font-size: 14px; cursor: pointer">T</button>
+      <button style="height: 38px; border-radius: 9px; border: 1px solid #27334D; background: #0B1220; color: #E8EDF7; font-size: 14px; cursor: pointer">Y</button>
+      <button style="height: 38px; border-radius: 9px; border: 1px solid #27334D; background: #0B1220; color: #E8EDF7; font-size: 14px; cursor: pointer">U</button>
+      <button style="height: 38px; border-radius: 9px; border: 1px solid #27334D; background: #0B1220; color: #E8EDF7; font-size: 14px; cursor: pointer">A</button>
+      <button style="height: 38px; border-radius: 9px; border: 1px solid #27334D; background: #0B1220; color: #E8EDF7; font-size: 14px; cursor: pointer">S</button>
+      <button style="height: 38px; border-radius: 9px; border: 1px solid #27334D; background: #0B1220; color: #E8EDF7; font-size: 14px; cursor: pointer">D</button>
+      <button style="height: 38px; border-radius: 9px; border: 1px solid #27334D; background: #0B1220; color: #E8EDF7; font-size: 14px; cursor: pointer">F</button>
+      <button style="height: 38px; border-radius: 9px; border: 1px solid #27334D; background: #0B1220; color: #E8EDF7; font-size: 14px; cursor: pointer">J</button>
+      <button style="height: 38px; border-radius: 9px; border: 1px solid #27334D; background: #0B1220; color: #E8EDF7; font-size: 14px; cursor: pointer">K</button>
+      <button style="height: 38px; border-radius: 9px; border: 1px solid #27334D; background: #0B1220; color: #9AA6BD; font-size: 12px; cursor: pointer">更多</button>
+    </div>
+  </div>
+
+  <div style="font-size: 14px; font-weight: 700">按键映射</div>
+
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+    <button style="height: 54px; border-radius: 14px; border: 1.5px solid {{accent}}; background: #16223A; color: #E8EDF7; display: flex; align-items: center; justify-content: space-between; padding: 0 14px; cursor: pointer">
+      <span style="font-size: 14px; color: #9AA6BD">上</span><span style="font-size: 15px; font-weight: 700">W</span>
+    </button>
+    <button style="height: 54px; border-radius: 14px; border: 1px solid #27334D; background: #141D2E; color: #E8EDF7; display: flex; align-items: center; justify-content: space-between; padding: 0 14px; cursor: pointer">
+      <span style="font-size: 14px; color: #9AA6BD">下</span><span style="font-size: 15px; font-weight: 700">S</span>
+    </button>
+    <button style="height: 54px; border-radius: 14px; border: 1px solid #27334D; background: #141D2E; color: #E8EDF7; display: flex; align-items: center; justify-content: space-between; padding: 0 14px; cursor: pointer">
+      <span style="font-size: 14px; color: #9AA6BD">左</span><span style="font-size: 15px; font-weight: 700">A</span>
+    </button>
+    <button style="height: 54px; border-radius: 14px; border: 1px solid #27334D; background: #141D2E; color: #E8EDF7; display: flex; align-items: center; justify-content: space-between; padding: 0 14px; cursor: pointer">
+      <span style="font-size: 14px; color: #9AA6BD">右</span><span style="font-size: 15px; font-weight: 700">D</span>
+    </button>
+    <button style="height: 54px; border-radius: 14px; border: 1px solid #27334D; background: #141D2E; color: #E8EDF7; display: flex; align-items: center; justify-content: space-between; padding: 0 14px; cursor: pointer">
+      <span style="font-size: 14px; color: #9AA6BD">X</span><span style="font-size: 15px; font-weight: 700">U</span>
+    </button>
+    <button style="height: 54px; border-radius: 14px; border: 1px solid #27334D; background: #141D2E; color: #E8EDF7; display: flex; align-items: center; justify-content: space-between; padding: 0 14px; cursor: pointer">
+      <span style="font-size: 14px; color: #9AA6BD">Y</span><span style="font-size: 15px; font-weight: 700">I</span>
+    </button>
+    <button style="height: 54px; border-radius: 14px; border: 1px solid #27334D; background: #141D2E; color: #E8EDF7; display: flex; align-items: center; justify-content: space-between; padding: 0 14px; cursor: pointer">
+      <span style="font-size: 14px; color: #9AA6BD">A</span><span style="font-size: 15px; font-weight: 700">J</span>
+    </button>
+    <button style="height: 54px; border-radius: 14px; border: 1px solid #27334D; background: #141D2E; color: #E8EDF7; display: flex; align-items: center; justify-content: space-between; padding: 0 14px; cursor: pointer">
+      <span style="font-size: 14px; color: #9AA6BD">B</span><span style="font-size: 15px; font-weight: 700">K</span>
+    </button>
+    <button style="height: 54px; border-radius: 14px; border: 1px solid #27334D; background: #141D2E; color: #E8EDF7; display: flex; align-items: center; justify-content: space-between; padding: 0 14px; cursor: pointer">
+      <span style="font-size: 14px; color: #9AA6BD">Select</span><span style="font-size: 15px; font-weight: 700">1</span>
+    </button>
+    <button style="height: 54px; border-radius: 14px; border: 1px solid #27334D; background: #141D2E; color: #E8EDF7; display: flex; align-items: center; justify-content: space-between; padding: 0 14px; cursor: pointer">
+      <span style="font-size: 14px; color: #9AA6BD">Start</span><span style="font-size: 15px; font-weight: 700">5</span>
+    </button>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#2F6FEB","options":["#2F6FEB","#6D5AE6","#0E8A7E"]},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+renderVals() {
+return { accent: this.props.accent ?? '#2F6FEB' };
+}
+}
+</script>
+</body>
+</html>

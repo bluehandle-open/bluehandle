@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 电脑遥控器（外观模仿电视遥控器）。对应设计稿 TvRemote 画板 -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bh_bg"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingStart="24dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="24dp">
+
+        <!-- 顶栏 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="@dimen/bh_touch_min"
+                android:layout_height="@dimen/bh_touch_min"
+                android:background="@drawable/bh_bg_card"
+                android:contentDescription="返回首页，连接保持"
+                android:scaleType="center"
+                app:srcCompat="@drawable/bh_ic_chevron_left"
+                app:tint="@color/bh_text" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/BhText.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="电脑遥控器" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:id="@+id/status_dot"
+                        android:layout_width="7dp"
+                        android:layout_height="7dp"
+                        android:background="@drawable/bh_dot" />
+
+                    <TextView
+                        android:id="@+id/status_text"
+                        style="@style/BhText.Caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <Space
+                android:layout_width="@dimen/bh_touch_min"
+                android:layout_height="0dp" />
+        </LinearLayout>
+
+        <!-- 锁屏 / 切换窗口 / 静音 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:orientation="horizontal">
+
+            <include android:id="@+id/key_lock" layout="@layout/bh_remote_key" />
+            <Space android:layout_width="12dp" android:layout_height="0dp" />
+            <include android:id="@+id/key_switch" layout="@layout/bh_remote_key" />
+            <Space android:layout_width="12dp" android:layout_height="0dp" />
+            <include android:id="@+id/key_mute" layout="@layout/bh_remote_key" />
+        </LinearLayout>
+
+        <!-- 方向盘 -->
+        <FrameLayout
+            android:layout_width="256dp"
+            android:layout_height="256dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bh_bg_ring">
+
+            <FrameLayout
+                android:id="@+id/key_up"
+                android:layout_width="96dp"
+                android:layout_height="74dp"
+                android:layout_gravity="top|center_horizontal"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/bh_bg_ring_btn"
+                android:contentDescription="方向上">
+
+                <ImageView android:layout_width="26dp" android:layout_height="26dp" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_chevron_up" app:tint="@color/bh_text" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/key_down"
+                android:layout_width="96dp"
+                android:layout_height="74dp"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="6dp"
+                android:background="@drawable/bh_bg_ring_btn"
+                android:contentDescription="方向下">
+
+                <ImageView android:layout_width="26dp" android:layout_height="26dp" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_chevron_down" app:tint="@color/bh_text" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/key_left"
+                android:layout_width="74dp"
+                android:layout_height="96dp"
+                android:layout_gravity="start|center_vertical"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/bh_bg_ring_btn"
+                android:contentDescription="方向左">
+
+                <ImageView android:layout_width="26dp" android:layout_height="26dp" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_chevron_left" app:tint="@color/bh_text" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/key_right"
+                android:layout_width="74dp"
+                android:layout_height="96dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="6dp"
+                android:background="@drawable/bh_bg_ring_btn"
+                android:contentDescription="方向右">
+
+                <ImageView android:layout_width="26dp" android:layout_height="26dp" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_chevron_right" app:tint="@color/bh_text" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/key_ok"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bh_bg_ok"
+                android:contentDescription="确定，回车"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="OK" android:textColor="@color/bh_on_primary" android:textSize="20sp" android:textStyle="bold" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Enter" android:textColor="@color/bh_on_primary_secondary" android:textSize="10sp" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <!-- 返回 / 桌面 / 菜单 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:orientation="horizontal"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
+
+            <include android:id="@+id/key_esc" layout="@layout/bh_remote_key" />
+            <Space android:layout_width="16dp" android:layout_height="0dp" />
+            <include android:id="@+id/key_desktop" layout="@layout/bh_remote_key" />
+            <Space android:layout_width="16dp" android:layout_height="0dp" />
+            <include android:id="@+id/key_menu" layout="@layout/bh_remote_key" />
+        </LinearLayout>
+
+        <!-- 音量 / 语音与数字键 / 翻页 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_marginTop="18dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="84dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/bh_bg_rocker"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp">
+
+                <FrameLayout android:id="@+id/key_vol_up" android:layout_width="64dp" android:layout_height="52dp" android:background="@drawable/bh_bg_ring_btn" android:contentDescription="音量加">
+                    <ImageView android:layout_width="22dp" android:layout_height="22dp" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_plus" app:tint="@color/bh_text" />
+                </FrameLayout>
+                <TextView android:layout_width="wrap_content" android:layout_height="0dp" android:layout_weight="1" android:gravity="center" android:text="音量" android:textColor="@color/bh_text_secondary" android:textSize="12sp" />
+                <FrameLayout android:id="@+id/key_vol_down" android:layout_width="64dp" android:layout_height="52dp" android:background="@drawable/bh_bg_ring_btn" android:contentDescription="音量减">
+                    <ImageView android:layout_width="22dp" android:layout_height="22dp" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_minus" app:tint="@color/bh_text" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="14dp"
+                android:layout_marginEnd="14dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/key_voice"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="3"
+                    android:background="@drawable/bh_bg_card_selected"
+                    android:clickable="true"
+                    android:contentDescription="语音输入"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView android:layout_width="28dp" android:layout_height="28dp" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_mic" app:tint="@color/bh_primary_text" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="语音输入" android:textColor="@color/bh_primary_text" android:textSize="13sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/key_numpad"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_weight="2"
+                    android:background="@drawable/bh_bg_card"
+                    android:clickable="true"
+                    android:contentDescription="数字键"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="123" android:textColor="@color/bh_text" android:textSize="17sp" android:textStyle="bold" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="8dp" android:text="数字键" android:textColor="@color/bh_text_secondary" android:textSize="11sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="84dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/bh_bg_rocker"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp">
+
+                <FrameLayout android:id="@+id/key_page_up" android:layout_width="64dp" android:layout_height="52dp" android:background="@drawable/bh_bg_ring_btn" android:contentDescription="向上翻页">
+                    <ImageView android:layout_width="22dp" android:layout_height="22dp" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_chevron_up" app:tint="@color/bh_text" />
+                </FrameLayout>
+                <LinearLayout android:layout_width="wrap_content" android:layout_height="0dp" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="翻页" android:textColor="@color/bh_text_secondary" android:textSize="12sp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="PgUp/Dn" android:textColor="@color/bh_text_secondary" android:textSize="9sp" />
+                </LinearLayout>
+                <FrameLayout android:id="@+id/key_page_down" android:layout_width="64dp" android:layout_height="52dp" android:background="@drawable/bh_bg_ring_btn" android:contentDescription="向下翻页">
+                    <ImageView android:layout_width="22dp" android:layout_height="22dp" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_chevron_down" app:tint="@color/bh_text" />
+                </FrameLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:minHeight="20dp" />
+
+        <!-- 媒体键 -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <FrameLayout android:id="@+id/key_prev" android:layout_width="56dp" android:layout_height="56dp" android:background="@drawable/bh_pad_round" android:contentDescription="上一曲">
+                <ImageView android:layout_width="22dp" android:layout_height="22dp" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_media_prev" app:tint="@color/bh_text" />
+            </FrameLayout>
+            <FrameLayout android:id="@+id/key_play" android:layout_width="72dp" android:layout_height="72dp" android:layout_marginStart="20dp" android:layout_marginEnd="20dp" android:background="@drawable/bh_pad_round_action" android:contentDescription="播放或暂停">
+                <ImageView android:layout_width="26dp" android:layout_height="26dp" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_media_play_pause" app:tint="@color/bh_on_action" />
+            </FrameLayout>
+            <FrameLayout android:id="@+id/key_next" android:layout_width="56dp" android:layout_height="56dp" android:background="@drawable/bh_pad_round" android:contentDescription="下一曲">
+                <ImageView android:layout_width="22dp" android:layout_height="22dp" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_media_next" app:tint="@color/bh_text" />
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

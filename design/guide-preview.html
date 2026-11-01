@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>蓝色手柄 · 新用户引导</title>
+<style>
+  :root { --bg:#0B1220; --card:#141D2E; --card2:#101827; --line:#27334D; --line2:#1D2638; --text:#E8EDF7; --muted:#9AA6BD; --faint:#5B6680;
+          --primary:#2F6FEB; --ptext:#8AB8FF; --action:#F5A524; --ok:#3FB27F; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:#E9ECF2; color:#141A26; font-family:"Microsoft YaHei UI","PingFang SC","Noto Sans SC",sans-serif; padding:28px 36px 48px; }
+  header h1 { margin:0 0 6px; font-size:26px; }
+  header p { margin:0 0 6px; color:#4A5468; font-size:14px; line-height:1.7; max-width:1100px; }
+  .boards { display:flex; gap:28px; flex-wrap:wrap; margin-top:22px; }
+  .label { font-size:14px; font-weight:700; margin-bottom:10px; }
+  .label span { font-weight:400; color:#4A5468; font-size:12px; margin-left:8px; }
+  .phone { width:360px; height:640px; background:var(--bg); color:var(--text); border-radius:28px; padding:16px 22px 22px; display:flex; flex-direction:column; box-shadow:0 18px 40px rgba(20,26,38,.25); position:relative; overflow:hidden; }
+  .top { height:40px; display:flex; align-items:center; justify-content:space-between; color:var(--muted); font-size:14px; }
+  .step { font-size:12px; color:var(--ptext); letter-spacing:1px; }
+  .skip { color:var(--muted); }
+  .art { flex:1; display:flex; align-items:center; justify-content:center; }
+  h2 { font-size:22px; margin:0 0 10px; line-height:1.4; }
+  .desc { font-size:14px; color:var(--muted); line-height:1.75; margin:0; }
+  .desc b { color:var(--text); font-weight:500; }
+  .dots { display:flex; gap:6px; justify-content:center; margin:22px 0 16px; }
+  .dots i { width:6px; height:6px; border-radius:3px; background:#2A3550; }
+  .dots i.on { width:20px; background:var(--primary); }
+  .btn { height:50px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:700; }
+  .btn.primary { background:var(--primary); color:#fff; }
+  .btn.action { background:var(--action); color:#1A1206; }
+  .modes { display:grid; grid-template-columns:1fr 1fr; gap:10px; width:100%; }
+  .mode { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:14px; }
+  .mode .ico { width:38px; height:38px; border-radius:11px; background:#1A2540; color:var(--ptext); display:flex; align-items:center; justify-content:center; margin-bottom:10px; }
+  .mode b { display:block; font-size:15px; margin-bottom:3px; }
+  .mode span { font-size:12px; color:var(--muted); line-height:1.5; }
+  .chip { display:inline-block; font-family:Consolas,monospace; background:var(--card2); border:1px solid var(--line); border-radius:6px; padding:0 6px; color:var(--ptext); font-size:13px; }
+  .note { margin-top:26px; font-size:13px; color:#4A5468; line-height:1.8; max-width:1100px; }
+  .note li { margin-bottom:4px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>新用户引导 · 4 页</h1>
+  <p>替换现在的 5 张旧截图（2013 年的旧界面和 Java 版电脑端，已经和应用对不上）。新引导用原生布局加矢量插图绘制，不再用截图：界面以后再改，引导也不会过时；深色风格和应用一致；文字可以被读屏软件朗读。左右滑动翻页，右上角随时"跳过"，最后一页"开始使用"回到首页。首次打开自动显示，之后从首页"使用帮助"和设置页进入。</p>
+</header>
+
+<div class="boards">
+
+  <!-- 1 欢迎 -->
+  <div>
+    <div class="label">1 · 欢迎<span>用一句话说清楚这个应用能做什么</span></div>
+    <div class="phone">
+      <div class="top"><span></span><span class="skip">跳过</span></div>
+      <div class="art">
+        <svg width="250" height="230" viewBox="0 0 250 230">
+          <!-- 电脑 -->
+          <rect x="70" y="20" width="160" height="104" rx="10" fill="#141D2E" stroke="#27334D" stroke-width="2"/>
+          <rect x="82" y="32" width="136" height="80" rx="4" fill="#101827"/>
+          <path d="M96 52h60M96 66h86M96 80h40" stroke="#27334D" stroke-width="6" stroke-linecap="round"/>
+          <rect x="140" y="80" width="2.5" height="14" fill="#8AB8FF"/>
+          <path d="M130 124h40l6 16h-52z" fill="#1A2336"/>
+          <!-- 手机 -->
+          <rect x="22" y="92" width="74" height="128" rx="14" fill="#2F6FEB"/>
+          <rect x="29" y="104" width="60" height="104" rx="8" fill="#0B1220"/>
+          <g transform="translate(59 156) scale(.62) translate(-54 -54)">
+            <path d="M47 24h14a5 5 0 0 1 5 5v13h13a5 5 0 0 1 5 5v14a5 5 0 0 1-5 5H66v13a5 5 0 0 1-5 5H47a5 5 0 0 1-5-5V66H29a5 5 0 0 1-5-5V47a5 5 0 0 1 5-5h13V29a5 5 0 0 1 5-5z" fill="#fff"/>
+            <circle cx="54" cy="54" r="7.5" fill="#F5A524"/>
+          </g>
+          <!-- 信号 -->
+          <path d="M104 86a14 14 0 0 1 14 14M104 66a34 34 0 0 1 34 34" fill="none" stroke="#8AB8FF" stroke-width="5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h2>把手机变成电脑的<br>手柄、遥控器和键盘</h2>
+      <p class="desc">打游戏、躺着看视频、上台讲 PPT、对着手机说话打字——都不用再走到电脑前。</p>
+      <div class="dots"><i class="on"></i><i></i><i></i><i></i></div>
+      <div class="btn primary">下一步</div>
+    </div>
+  </div>
+
+  <!-- 2 电脑端 -->
+  <div>
+    <div class="label">2 · 装电脑端<span>没有电脑端什么都用不了，最先说</span></div>
+    <div class="phone">
+      <div class="top"><span class="step">第 1 步 / 共 2 步</span><span class="skip">跳过</span></div>
+      <div class="art">
+        <svg width="250" height="230" viewBox="0 0 250 230">
+          <rect x="25" y="28" width="200" height="150" rx="12" fill="#141D2E" stroke="#27334D" stroke-width="2"/>
+          <path d="M25 52h200" stroke="#27334D" stroke-width="2"/>
+          <circle cx="41" cy="40" r="4" fill="#2F6FEB"/>
+          <rect x="50" y="36" width="54" height="8" rx="4" fill="#27334D"/>
+          <!-- 窗口里的连接表单 -->
+          <rect x="45" y="72" width="160" height="30" rx="7" fill="#101827" stroke="#2F6FEB" stroke-width="2"/>
+          <text x="58" y="92" fill="#E8EDF7" font-size="13" font-family="Consolas,monospace">192.168.1.23</text>
+          <rect x="45" y="114" width="160" height="30" rx="7" fill="#2F6FEB"/>
+          <text x="125" y="134" fill="#fff" font-size="13" text-anchor="middle" font-weight="700">连接手机</text>
+          <path d="M100 178h50l8 22H92z" fill="#1A2336"/>
+          <!-- 下载箭头 -->
+          <circle cx="205" cy="40" r="26" fill="#F5A524"/>
+          <path d="M205 26v22M195 40l10 10 10-10M194 56h22" stroke="#1A1206" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </div>
+      <h2>先在电脑上安装<br>蓝色手柄电脑端</h2>
+      <p class="desc">支持 Windows。手机发出的按键和文字，由它在电脑上执行。</p>
+      <div class="dots"><i></i><i class="on"></i><i></i><i></i></div>
+      <div class="btn primary" style="background:transparent;border:1px solid var(--line);color:var(--text);font-weight:500;margin-bottom:10px">把下载地址发到电脑</div>
+      <div class="btn primary">已经装好，下一步</div>
+    </div>
+  </div>
+
+  <!-- 3 连接 -->
+  <div>
+    <div class="label">3 · 连接<span>Wi‑Fi 是电脑连手机，方向要讲清楚</span></div>
+    <div class="phone">
+      <div class="top"><span class="step">第 2 步 / 共 2 步</span><span class="skip">跳过</span></div>
+      <h2 style="margin-top:4px">把手机和电脑连起来</h2>
+      <p class="desc" style="margin-bottom:8px">Wi‑Fi 连接时，是电脑去连手机。</p>
+      <div class="art" style="flex-direction:column;gap:18px;align-items:stretch;justify-content:center">
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:26px;height:26px;border-radius:13px;background:#1A2540;color:var(--ptext);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</div>
+          <div><b style="font-size:15px">手机和电脑连同一个 Wi‑Fi</b><div class="desc" style="font-size:13px">在同一个路由器下就行</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:26px;height:26px;border-radius:13px;background:#1A2540;color:var(--ptext);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</div>
+          <div style="flex:1"><b style="font-size:15px">手机首页点「开始连接」</b>
+            <div style="margin-top:8px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:8px;font-size:13px">
+              <i style="width:8px;height:8px;border-radius:4px;background:var(--action)"></i><span style="color:var(--muted)">等待电脑连接 · </span><span class="chip">192.168.1.23</span>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:26px;height:26px;border-radius:13px;background:#1A2540;color:var(--ptext);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">3</div>
+          <div><b style="font-size:15px">在电脑端输入这个地址，点「连接手机」</b><div class="desc" style="font-size:13px">手机显示"已连接"就成功了</div></div>
+        </div>
+      </div>
+      <p class="desc" style="font-size:12px;color:var(--faint)">没有 Wi‑Fi 也可以在首页切换到蓝牙连接。</p>
+      <div class="dots"><i></i><i></i><i class="on"></i><i></i></div>
+      <div class="btn primary">下一步</div>
+    </div>
+  </div>
+
+  <!-- 4 选模式 -->
+  <div>
+    <div class="label">4 · 选模式<span>连上以后在首页选，最后一页收尾</span></div>
+    <div class="phone">
+      <div class="top"><span></span><span></span></div>
+      <h2 style="margin-top:4px">连上以后，选一种用法</h2>
+      <p class="desc" style="margin-bottom:16px">随时可以回首页换，连接不会断开。</p>
+      <div class="art" style="align-items:flex-start">
+        <div class="modes">
+          <div class="mode"><div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="7" width="20" height="11" rx="5.5"/><path d="M7 11v3M5.5 12.5h3"/><circle cx="16" cy="11.5" r=".9" fill="currentColor"/><circle cx="18" cy="13.5" r=".9" fill="currentColor"/></svg></div><b>游戏手柄</b><span>横屏手柄，按键可以自定义</span></div>
+          <div class="mode"><div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="7" y="2" width="10" height="20" rx="3"/><circle cx="12" cy="9" r="2.5"/><path d="M10 15h4M10 18h4"/></svg></div><b>遥控器</b><span>音量、方向、数字键，躺着看视频</span></div>
+          <div class="mode"><div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v4M8 20h8M10 8l4 2-4 2z"/></svg></div><b>PPT 演示</b><span>翻页、计时，音量键也能翻</span></div>
+          <div class="mode"><div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div><b>语音输入</b><span>在遥控器里，按住说话，文字直接打到电脑上</span></div>
+        </div>
+      </div>
+      <div class="dots"><i></i><i></i><i></i><i class="on"></i></div>
+      <div class="btn action">开始使用</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="note">
+  <b>交互与实现说明</b>
+  <ul>
+    <li>翻页用 AndroidX ViewPager（已在依赖里），左右滑动或点"下一步"；页码点跟随。系统返回键在第 2–4 页回到上一页，第 1 页退出引导。</li>
+    <li>第 2 页"把下载地址发到电脑"调用系统分享，把下载链接发给微信 / QQ / 邮件，电脑上打开就能下载；不再在手机上下载 PC 安装包。</li>
+    <li>第 3 页的地址取手机当前 Wi‑Fi 实际 IP；没连 Wi‑Fi 时显示"请先连接 Wi‑Fi"。</li>
+    <li>删除旧资源：guide01–05.png、guide_dot_*.png、course.xml、MyScrollLayout。</li>
+  </ul>
+</div>
+</body>
+</html>

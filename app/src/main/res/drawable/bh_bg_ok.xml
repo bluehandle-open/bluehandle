@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 方向盘中心 OK 键：主色圆 + 底色描边 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape android:shape="oval">
+            <solid android:color="#2459C2" />
+            <stroke android:width="6dp" android:color="@color/bh_bg" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@color/bh_primary" />
+            <stroke android:width="6dp" android:color="@color/bh_bg" />
+        </shape>
+    </item>
+</selector>

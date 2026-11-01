@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PPT 演示：竖屏单手、盲操作。对应设计稿 Ppt 画板 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bh_bg"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/bh_page_padding"
+    android:paddingTop="16dp"
+    android:paddingEnd="@dimen/bh_page_padding"
+    android:paddingBottom="20dp">
+
+    <!-- 顶栏 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="@dimen/bh_touch_min"
+            android:layout_height="@dimen/bh_touch_min"
+            android:background="@drawable/bh_bg_card"
+            android:contentDescription="返回首页，连接保持"
+            android:scaleType="center"
+            app:srcCompat="@drawable/bh_ic_chevron_left"
+            app:tint="@color/bh_text" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/BhText.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PPT 演示" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/status_dot"
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:background="@drawable/bh_dot" />
+
+                <TextView
+                    android:id="@+id/status_text"
+                    style="@style/BhText.Caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btn_settings"
+            android:layout_width="@dimen/bh_touch_min"
+            android:layout_height="@dimen/bh_touch_min"
+            android:background="@drawable/bh_bg_card"
+            android:contentDescription="演示设置"
+            android:scaleType="center"
+            app:srcCompat="@drawable/bh_ic_sliders"
+            app:tint="@color/bh_text" />
+    </LinearLayout>
+
+    <!-- 计时器 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/bh_bg_card"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/BhText.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="已演讲" />
+
+            <TextView
+                android:id="@+id/tv_elapsed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFeatureSettings="tnum"
+                android:text="00:00"
+                android:textColor="@color/bh_text"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_remaining"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/bh_action"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/btn_timer_toggle"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bh_bg_small_button"
+                    android:contentDescription="暂停计时"
+                    android:scaleType="center"
+                    app:srcCompat="@drawable/bh_ic_pause"
+                    app:tint="@color/bh_text" />
+
+                <ImageButton
+                    android:id="@+id/btn_timer_reset"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bh_bg_small_button"
+                    android:contentDescription="重置计时"
+                    android:scaleType="center"
+                    app:srcCompat="@drawable/bh_ic_refresh"
+                    app:tint="@color/bh_text" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 从当前页 / 黑屏 / 退出放映 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:orientation="horizontal">
+
+        <include android:id="@+id/key_from_current" layout="@layout/bh_remote_key" />
+        <Space android:layout_width="10dp" android:layout_height="0dp" />
+        <include android:id="@+id/key_black" layout="@layout/bh_remote_key" />
+        <Space android:layout_width="10dp" android:layout_height="0dp" />
+        <include android:id="@+id/key_exit" layout="@layout/bh_remote_key" />
+    </LinearLayout>
+
+    <!-- 上一页 -->
+    <LinearLayout
+        android:id="@+id/btn_prev"
+        android:layout_width="match_parent"
+        android:layout_height="104dp"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/bh_bg_card"
+        android:clickable="true"
+        android:contentDescription="上一页"
+        android:focusable="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView android:layout_width="26dp" android:layout_height="26dp" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_chevron_up" app:tint="@color/bh_text" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="10dp" android:text="上一页" android:textColor="@color/bh_text" android:textSize="18sp" />
+    </LinearLayout>
+
+    <!-- 下一页：占满剩余高度，盲操作也容易按到 -->
+    <LinearLayout
+        android:id="@+id/btn_next"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="14dp"
+        android:layout_weight="1"
+        android:background="@drawable/bh_bg_primary"
+        android:clickable="true"
+        android:contentDescription="下一页"
+        android:focusable="true"
+        android:gravity="center"
+        android:minHeight="180dp"
+        android:orientation="vertical">
+
+        <ImageView android:layout_width="44dp" android:layout_height="44dp" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_chevron_down" app:tint="@color/bh_on_primary" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="下一页" android:textColor="@color/bh_on_primary" android:textSize="26sp" android:textStyle="bold" />
+        <TextView android:id="@+id/tv_volume_hint" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="也可以按手机音量键翻页" android:textColor="@color/bh_on_primary_secondary" android:textSize="13sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_feedback_status"
+        style="@style/BhText.Caption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center" />
+</LinearLayout>
