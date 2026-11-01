@@ -60,7 +60,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/bh_bg_card"
         android:orientation="vertical"
         android:paddingStart="20dp"
@@ -101,7 +101,7 @@
             android:layout_marginEnd="12dp"
             android:background="@android:color/transparent"
             android:gravity="top|start"
-            android:hint="说话或打字，文字会输入到电脑当前光标处"
+            android:hint="说话或打字，文字会输入到电脑光标处"
             android:importantForAutofill="no"
             android:inputType="textMultiLine"
             android:maxLines="6"
@@ -109,7 +109,7 @@
             android:textColor="@color/bh_text"
             android:textColorHint="@color/bh_text_secondary"
             android:textCursorDrawable="@null"
-            android:textSize="22sp" />
+            android:textSize="20sp" />
     </LinearLayout>
 
     <!-- 内置识别：麦克风区。wrap_content + weight：屏幕够高时占满剩余空间，不够时保持自身高度并让页面滚动 -->
@@ -122,8 +122,8 @@
         android:orientation="vertical">
 
         <FrameLayout
-            android:layout_width="220dp"
-            android:layout_height="220dp">
+            android:layout_width="184dp"
+            android:layout_height="184dp">
 
             <View
                 android:id="@+id/mic_halo_outer"
@@ -133,15 +133,15 @@
 
             <View
                 android:id="@+id/mic_halo_inner"
-                android:layout_width="164dp"
-                android:layout_height="164dp"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
                 android:layout_gravity="center"
                 android:background="@drawable/bh_bg_mic_halo_inner" />
 
             <FrameLayout
                 android:id="@+id/btn_mic"
-                android:layout_width="112dp"
-                android:layout_height="112dp"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
                 android:layout_gravity="center"
                 android:background="@drawable/bh_bg_mic"
                 android:clickable="true"
@@ -149,8 +149,8 @@
                 android:focusable="true">
 
                 <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
                     android:layout_gravity="center"
                     android:importantForAccessibility="no"
                     app:srcCompat="@drawable/bh_ic_mic"
@@ -161,8 +161,8 @@
         <LinearLayout
             android:id="@+id/wave"
             android:layout_width="wrap_content"
-            android:layout_height="28dp"
-            android:layout_marginTop="16dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="8dp"
             android:gravity="bottom"
             android:importantForAccessibility="noHideDescendants"
             android:orientation="horizontal" />
@@ -171,18 +171,19 @@
             android:id="@+id/tv_mic_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:accessibilityLiveRegion="polite"
             android:textColor="@color/bh_text"
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/tv_mic_hint"
             style="@style/BhText.Caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="4dp"
             android:gravity="center"
-            android:text="说完后停顿片刻自动结束，点击麦克风可提前停止" />
+            android:text="上滑取消 · 点一下也能开始，停顿后自动结束" />
     </LinearLayout>
 
     <!-- 系统输入法：提示 -->
@@ -198,23 +199,32 @@
         android:textSize="14sp"
         android:visibility="gone" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
     <TextView
         style="@style/BhText.Caption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="发送到电脑后" />
+        android:layout_marginEnd="12dp"
+        android:text="发送后" />
 
     <LinearLayout
         android:id="@+id/seg_send_mode"
-        android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="0dp"
+        android:layout_height="42dp"
+        android:layout_weight="1"
         android:background="@drawable/bh_bg_segment"
         android:orientation="horizontal"
         android:padding="4dp">
 
         <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="只输入文字" android:textSize="14sp" />
         <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="输入并回车" android:textSize="14sp" />
+    </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -248,13 +258,5 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <TextView
-        style="@style/BhText.Caption"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:text="文字输入需要支持该功能的新版电脑端"
-        android:textSize="11sp" />
 </LinearLayout>
 </ScrollView>

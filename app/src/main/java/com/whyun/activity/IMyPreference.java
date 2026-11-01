@@ -29,10 +29,12 @@ public interface IMyPreference {
 	public static final String PPT_REMIND = "ppt_remind";
 	/** String，语音识别语言，默认 zh-CN */
 	public static final String VOICE_LANGUAGE = "voice_language";
-	/** String，语音识别引擎：ime 系统输入法 / builtin 内置识别，默认 ime */
+	/** String，语音识别引擎：ime 系统输入法 / builtin 内置识别，默认 builtin（识别服务不可用时退回 ime） */
 	public static final String VOICE_ENGINE = "voice_engine";
 	/** boolean，语音发送后默认按回车，默认开 */
 	public static final String VOICE_SEND_ENTER = "voice_send_enter";
+	/** boolean，内置识别按住说话松手后直接发送，默认开 */
+	public static final String VOICE_HOLD_SEND = "voice_hold_send";
 
 	public static final int DEFAULT_SENSITIVITY = 50;
 	public static final int DEFAULT_PPT_MINUTES = 20;

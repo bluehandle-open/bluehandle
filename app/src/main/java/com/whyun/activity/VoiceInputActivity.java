@@ -6,10 +6,15 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
+import android.view.HapticFeedbackConstants;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -32,12 +37,18 @@ import com.whyun.util.AppPrefs;
  * <li>系统输入法（默认）：自动弹出软键盘，用输入法自带的麦克风说话，不需要录音权限；</li>
  * <li>内置识别：用 SpeechRecognizer 识别，部分结果实时写入文本框，需要录音权限。</li>
  * </ul>
+ * 内置识别的麦克风有两种用法：点一下开始、停顿后自动结束；或按住说话、松手结束、上滑取消。
+ * 按住说话可在设置里选择松手后直接发送。
  * 识别结果都可以先修改再发送，发送走 TEXT 消息，电脑端需要支持 0x50。
  */
 public class VoiceInputActivity extends BaseControlActivity {
 
 	private static final int REQ_RECORD_AUDIO = 1;
 	private static final int WAVE_BARS = 7;
+	/** 按住说话时手指上滑超过这个距离（dp）松手即取消 */
+	private static final int CANCEL_SLIDE_DP = 72;
+	/** 按住说话时放宽静音判定，避免说话间隙被提前截断（部分识别服务会忽略） */
+	private static final long HOLD_SILENCE_MS = 10_000;
 
 	private EditText etText;
 	private TextView tvMicStatus;
@@ -54,6 +65,25 @@ public class VoiceInputActivity extends BaseControlActivity {
 	/** 本次识别开始前文本框里已有的内容，识别结果追加在它后面 */
 	private String prefix = "";
 
+	private final Handler handler = new Handler(Looper.getMainLooper());
+	/** 手指正按住麦克风说话 */
+	private boolean holding;
+	/** 按住时手指已上滑到取消区域 */
+	private boolean cancelZone;
+	/** 已松手，等最终结果；若设置了直接发送，结果到达后发送 */
+	private boolean awaitingHoldResult;
+	/** 按住期间识别已自行结束，结果已在文本框里 */
+	private boolean holdResultReady;
+	private float downY;
+	/** 按住前文本框里的内容，上滑取消时恢复 */
+	private String beforeHold = "";
+	private final Runnable beginHold = new Runnable() {
+		@Override
+		public void run() {
+			startHold();
+		}
+	};
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -68,9 +98,9 @@ public class VoiceInputActivity extends BaseControlActivity {
 		haloInner = findViewById(R.id.mic_halo_inner);
 		wave = (LinearLayout) findViewById(R.id.wave);
 
-		builtin = IMyPreference.VOICE_ENGINE_BUILTIN.equals(
-				AppPrefs.get(this, IMyPreference.VOICE_ENGINE, IMyPreference.VOICE_ENGINE_IME))
-				&& SpeechRecognizer.isRecognitionAvailable(this);
+		builtin = SpeechRecognizer.isRecognitionAvailable(this)
+				&& IMyPreference.VOICE_ENGINE_BUILTIN.equals(
+						AppPrefs.get(this, IMyPreference.VOICE_ENGINE, IMyPreference.VOICE_ENGINE_BUILTIN));
 
 		sendMode = new SegmentedControl((LinearLayout) findViewById(R.id.seg_send_mode));
 		sendMode.select(AppPrefs.get(this, IMyPreference.VOICE_SEND_ENTER, true) ? 1 : 0);
@@ -86,7 +116,7 @@ public class VoiceInputActivity extends BaseControlActivity {
 			public void onClick(View v) {
 				etText.setText("");
 				if (builtin) {
-					startListening();
+					startListening(false);
 				} else {
 					showKeyboard();
 				}
@@ -148,18 +178,128 @@ public class VoiceInputActivity extends BaseControlActivity {
 		btnMic.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (listening) {
-					recognizer.stopListening();
-				} else {
-					startListening();
-				}
+				toggleListening();// 短按，或读屏软件的双击
 			}
 		});
-		renderListening(false, "点击麦克风开始说话");
-		if (hasRecordPermission()) {
-			startListening();
-		} else {
+		btnMic.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent e) {
+				return onMicTouch(e);
+			}
+		});
+		renderListening(false, IDLE_HINT);
+		if (!AppPrefs.get(this, IMyPreference.VOICE_HOLD_SEND, true)) {
+			((TextView) findViewById(R.id.tv_mic_hint)).setText("松手后先显示结果 · 上滑取消");
+		}
+		if (!hasRecordPermission()) {
 			ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.RECORD_AUDIO }, REQ_RECORD_AUDIO);
+		}
+	}
+
+	private static final String IDLE_HINT = "按住说话，松手发送";
+
+	private void toggleListening() {
+		if (listening) {
+			recognizer.stopListening();
+		} else {
+			startListening(false);
+		}
+	}
+
+	/** 短按交给点击处理；按住超过长按时间进入按住说话 */
+	private boolean onMicTouch(MotionEvent e) {
+		switch (e.getActionMasked()) {
+		case MotionEvent.ACTION_DOWN:
+			btnMic.getParent().requestDisallowInterceptTouchEvent(true);
+			downY = e.getRawY();
+			cancelZone = false;
+			btnMic.setPressed(true);
+			handler.postDelayed(beginHold, ViewConfiguration.getLongPressTimeout());
+			return true;
+		case MotionEvent.ACTION_MOVE:
+			if (holding) {
+				boolean inZone = downY - e.getRawY() > dp(CANCEL_SLIDE_DP);
+				if (inZone != cancelZone) {
+					cancelZone = inZone;
+					tvMicStatus.setText(inZone ? "松开手指，取消这次输入" : "正在聆听，松手结束 · 上滑取消");
+					btnMic.setAlpha(inZone ? 0.5f : 1f);
+				}
+			}
+			return true;
+		case MotionEvent.ACTION_UP:
+			btnMic.setPressed(false);
+			handler.removeCallbacks(beginHold);
+			if (holding) {
+				endHold(cancelZone);
+			} else {
+				btnMic.performClick();
+			}
+			return true;
+		case MotionEvent.ACTION_CANCEL:
+			btnMic.setPressed(false);
+			handler.removeCallbacks(beginHold);
+			if (holding) {
+				endHold(true);
+			}
+			return true;
+		default:
+			return false;
+		}
+	}
+
+	private void startHold() {
+		if (!hasRecordPermission()) {
+			startListening(false);// 申请权限
+			return;
+		}
+		holding = true;
+		beforeHold = etText.getText().toString();
+		awaitingHoldResult = false;
+		holdResultReady = false;
+		btnMic.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+		btnMic.animate().scaleX(1.12f).scaleY(1.12f).setDuration(120).start();
+		if (!listening) {
+			startListening(true);
+		}
+		tvMicStatus.setText("正在聆听，松手结束 · 上滑取消");
+	}
+
+	private void endHold(boolean cancel) {
+		holding = false;
+		btnMic.animate().scaleX(1f).scaleY(1f).setDuration(120).start();
+		btnMic.setAlpha(1f);
+		if (cancel) {
+			if (recognizer != null) {
+				recognizer.cancel();
+			}
+			etText.setText(beforeHold);
+			etText.setSelection(etText.length());
+			renderListening(false, "已取消");
+			return;
+		}
+		if (listening) {
+			awaitingHoldResult = true;
+			recognizer.stopListening();
+			tvMicStatus.setText("正在识别…");
+		} else if (holdResultReady) {
+			finishHold();
+		}
+	}
+
+	/** 按住期间重新开始识别，新结果追加在已识别文字后面 */
+	private void continueHold() {
+		startListening(true);
+		tvMicStatus.setText(cancelZone ? "松开手指，取消这次输入" : "正在聆听，松手结束 · 上滑取消");
+	}
+
+	/** 按住说话得到最终结果后：按设置直接发送，或留给用户确认 */
+	private void finishHold() {
+		awaitingHoldResult = false;
+		holdResultReady = false;
+		if (AppPrefs.get(this, IMyPreference.VOICE_HOLD_SEND, true) && !etText.getText().toString().trim().isEmpty()) {
+			send();
+		} else {
+			renderListening(false, "识别完成，可修改后发送");
 		}
 	}
 
@@ -175,13 +315,14 @@ public class VoiceInputActivity extends BaseControlActivity {
 			return;
 		}
 		if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-			startListening();
+			renderListening(false, IDLE_HINT);
 		} else {
 			renderListening(false, "没有录音权限，可以直接打字，或在设置里改用系统输入法");
 		}
 	}
 
-	private void startListening() {
+	/** hold 为 true 时放宽静音判定，让说话的人自己决定何时结束 */
+	private void startListening(boolean hold) {
 		if (!hasRecordPermission()) {
 			ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.RECORD_AUDIO }, REQ_RECORD_AUDIO);
 			return;
@@ -199,6 +340,10 @@ public class VoiceInputActivity extends BaseControlActivity {
 		intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, currentLanguage());
 		intent.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true);
 		intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getPackageName());
+		if (hold) {
+			intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS, HOLD_SILENCE_MS);
+			intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS, HOLD_SILENCE_MS);
+		}
 		recognizer.startListening(intent);
 		renderListening(true, "正在聆听…");
 	}
@@ -207,13 +352,13 @@ public class VoiceInputActivity extends BaseControlActivity {
 		if (recognizer != null && listening) {
 			recognizer.cancel();
 		}
-		renderListening(false, "点击麦克风开始说话");
+		renderListening(false, IDLE_HINT);
 	}
 
 	private void renderListening(boolean on, String status) {
 		listening = on;
 		tvMicStatus.setText(status);
-		btnMic.setContentDescription(on ? "停止说话" : "开始说话");
+		btnMic.setContentDescription(on ? "停止说话" : "开始说话，长按可按住说话");
 		haloOuter.setVisibility(on ? View.VISIBLE : View.INVISIBLE);
 		haloInner.setVisibility(on ? View.VISIBLE : View.INVISIBLE);
 		wave.setVisibility(on ? View.VISIBLE : View.INVISIBLE);
@@ -229,7 +374,7 @@ public class VoiceInputActivity extends BaseControlActivity {
 		haloOuter.setScaleY(s);
 		haloInner.setScaleX(0.95f + level * 0.08f);
 		haloInner.setScaleY(0.95f + level * 0.08f);
-		int max = dp(28);
+		int max = dp(24);
 		int min = dp(6);
 		for (int i = 0; i < wave.getChildCount(); i++) {
 			// 中间高两边低，看起来像声波
@@ -276,12 +421,40 @@ public class VoiceInputActivity extends BaseControlActivity {
 
 		@Override
 		public void onError(int error) {
+			boolean silence = error == SpeechRecognizer.ERROR_NO_MATCH || error == SpeechRecognizer.ERROR_SPEECH_TIMEOUT;
+			if (holding) {
+				listening = false;
+				if (silence) {
+					continueHold();// 只是停顿太久，手指还按着就接着听
+				} else {
+					holdResultReady = false;
+					tvMicStatus.setText(errorText(error));
+				}
+				return;
+			}
+			if (awaitingHoldResult && holdResultReady && silence) {
+				finishHold();// 松手前最后一段没说话，前面已识别的句子照常处理
+				return;
+			}
+			awaitingHoldResult = false;
+			holdResultReady = false;
 			renderListening(false, errorText(error));
 		}
 
 		@Override
 		public void onResults(Bundle results) {
 			showRecognized(results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION));
+			if (holding) {
+				// 识别服务按停顿自行结束了一句，手指还按着：保留这句，接着听下一句
+				listening = false;
+				holdResultReady = true;
+				continueHold();
+				return;
+			}
+			if (awaitingHoldResult) {
+				finishHold();
+				return;
+			}
 			renderListening(false, "识别完成，可修改后发送");
 		}
 
@@ -332,7 +505,7 @@ public class VoiceInputActivity extends BaseControlActivity {
 		AppPrefs.put(this, IMyPreference.VOICE_LANGUAGE, codes[next]);
 		renderLanguage();
 		if (listening) {
-			startListening();// 用新语言重新开始
+			startListening(holding);// 用新语言重新开始
 		}
 	}
 

@@ -209,6 +209,7 @@
 
             <include android:id="@+id/row_voice_lang" layout="@layout/bh_row_value" />
             <include android:id="@+id/row_voice_engine" layout="@layout/bh_row_value" />
+            <include android:id="@+id/row_voice_hold_send" layout="@layout/bh_row_switch" />
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -258,6 +258,9 @@ public class SettingsActivity extends AppCompatActivity implements IMyPreference
 			}
 		});
 
+		switchRow(R.id.row_voice_hold_send, "按住说话，松手直接发送", "内置识别时有效；关闭则先显示结果，确认后再发送",
+				VOICE_HOLD_SEND, true, null);
+
 		SegmentedControl seg = new SegmentedControl((LinearLayout) findViewById(R.id.seg_voice_send));
 		seg.select(AppPrefs.get(this, VOICE_SEND_ENTER, true) ? 1 : 0);
 		seg.setOnSelectedListener(new SegmentedControl.OnSelectedListener() {
@@ -269,7 +272,7 @@ public class SettingsActivity extends AppCompatActivity implements IMyPreference
 	}
 
 	private String currentEngine(boolean builtinAvailable) {
-		String e = AppPrefs.get(this, VOICE_ENGINE, VOICE_ENGINE_IME);
+		String e = AppPrefs.get(this, VOICE_ENGINE, VOICE_ENGINE_BUILTIN);
 		return builtinAvailable ? e : VOICE_ENGINE_IME;
 	}
 
