@@ -55,12 +55,11 @@ public abstract class BaseControlActivity extends AppCompatActivity implements C
 	protected void onResume() {
 		super.onResume();
 		connection.addListener(this);
+		renderStatus();
 		if (!connection.isConnected()) {
 			onDisconnected();
 			showConnectionLost();// 在后台期间断线
-			return;
 		}
-		renderStatus();
 	}
 
 	@Override
@@ -71,7 +70,15 @@ public abstract class BaseControlActivity extends AppCompatActivity implements C
 
 	@Override
 	public void onConnectionChanged(ConnectionManager.State state, int connectType, int reason) {
-		if (state == ConnectionManager.State.IDLE) {
+		if (state == ConnectionManager.State.CONNECTED) {
+			// 蓝牙断线后自动重新等待，电脑端重连上来就直接继续用
+			if (lostDialog != null && lostDialog.isShowing()) {
+				lostDialog.dismiss();
+			}
+			renderStatus();
+			onReconnected();
+		} else {
+			renderStatus();
 			onDisconnected();
 			showConnectionLost();
 		}
@@ -81,16 +88,24 @@ public abstract class BaseControlActivity extends AppCompatActivity implements C
 	protected void onDisconnected() {
 	}
 
+	/** 蓝牙断线后电脑端又自动连上时调用，子类可恢复 {@link #onDisconnected} 停掉的东西 */
+	protected void onReconnected() {
+	}
+
 	private void renderStatus() {
+		ConnectionManager.State state = connection.getState();
 		TextView text = (TextView) findViewById(R.id.status_text);
 		if (text != null) {
-			text.setText("已连接 · " + (connection.getConnectType() == IBlueToothConst.BLUETOOTH_TYPE ? "蓝牙" : "Wi‑Fi"));
+			String type = connection.getConnectType() == IBlueToothConst.BLUETOOTH_TYPE ? "蓝牙" : "Wi‑Fi";
+			text.setText(state == ConnectionManager.State.CONNECTED ? "已连接 · " + type
+					: state == ConnectionManager.State.WAITING ? "等待重新连接…" : "未连接");
 		}
 		View dot = findViewById(R.id.status_dot);
 		if (dot != null) {
 			// 直接改形状颜色：5.x 上 DrawableCompat.wrap 返回新对象，着色不会作用到控件上
 			((GradientDrawable) dot.getBackground().mutate()).setColor(
-					ContextCompat.getColor(this, R.color.bh_status_connected));
+					ContextCompat.getColor(this, state == ConnectionManager.State.CONNECTED ? R.color.bh_status_connected
+							: state == ConnectionManager.State.WAITING ? R.color.bh_action : R.color.bh_text_secondary));
 		}
 	}
 
@@ -118,12 +133,19 @@ public abstract class BaseControlActivity extends AppCompatActivity implements C
 	}
 
 	private void showConnectionLost() {
-		if (isFinishing() || (lostDialog != null && lostDialog.isShowing())) {
+		if (isFinishing()) {
+			return;
+		}
+		String message = connection.getState() == ConnectionManager.State.WAITING
+				? "与电脑的连接已中断，正在等待电脑端重新连接。连上后这个提示会自动消失，也可以回到首页。"
+				: "与电脑的连接已中断，电脑端可能已经退出。请回到首页重新连接。";
+		if (lostDialog != null && lostDialog.isShowing()) {
+			lostDialog.setMessage(message);// 例如重新等待失败，转为未连接
 			return;
 		}
 		lostDialog = new AlertDialog.Builder(this)
 		.setTitle("连接已断开")
-		.setMessage("与电脑的连接已中断，电脑端可能已经退出。请回到首页重新连接。")
+		.setMessage(message)
 		.setCancelable(false)
 		.setPositiveButton("回到首页", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {

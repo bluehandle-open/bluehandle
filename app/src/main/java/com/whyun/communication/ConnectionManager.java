@@ -39,7 +39,7 @@ public final class ConnectionManager implements IBlueToothConst {
 	public static final int REASON_USER = 1;
 	/** 监听失败，例如端口被占用、缺少蓝牙权限 */
 	public static final int REASON_FAILED = 2;
-	/** 已连接后与电脑端的通信中断 */
+	/** 已连接后与电脑端的通信中断。Wi‑Fi 回到 IDLE，蓝牙自动回到 WAITING */
 	public static final int REASON_LOST = 3;
 
 	public interface Listener {
@@ -116,13 +116,44 @@ public final class ConnectionManager implements IBlueToothConst {
 			return;
 		}
 		connectType = type;
+		setState(State.WAITING, REASON_NONE);
+		listen(type, wifiPort);
+	}
+
+	/** 建立新的监听与会话对象并开始等待接入。主线程调用，state 应已是 WAITING。 */
+	private void listen(int type, int wifiPort) {
 		SessionHandler h = new SessionHandler();
 		currentHandler = h;
 		server = ServerFactory.getServer(h, type, wifiPort);
 		session = ServerFactory.getSocketThread(type);
 		session.setpHandler(h);
-		setState(State.WAITING, REASON_NONE);
 		new Thread(server, "bluehandle-listen").start();
+	}
+
+	/**
+	 * 蓝牙连接中断后自动重新等待，电脑端重连即可，手机上不用再点一次。
+	 * 会话对象是单例，旧连接要在发送线程里关完才能开始新的监听，
+	 * 否则迟到的 close() 会把刚接入的新连接一起关掉。
+	 * 监听本身失败（蓝牙关闭、没有权限）仍回到未连接，不会循环重试。
+	 */
+	private void rewaitBluetooth() {
+		teardown();
+		setState(State.WAITING, REASON_LOST);
+		final Handler main = new Handler(Looper.getMainLooper());
+		sender.execute(new Runnable() {
+			@Override
+			public void run() {
+				main.post(new Runnable() {
+					@Override
+					public void run() {
+						// 期间用户可能已取消等待，或又点了开始连接
+						if (state == State.WAITING && currentHandler == null) {
+							listen(BLUETOOTH_TYPE, 0);
+						}
+					}
+				});
+			}
+		});
 	}
 
 	/** 断开连接或取消等待。主线程调用。 */
@@ -255,8 +286,12 @@ public final class ConnectionManager implements IBlueToothConst {
 				break;
 			case CLIENT_CONN_ERR:
 				if (state == State.CONNECTED) {
-					teardown();
-					setState(State.IDLE, REASON_LOST);
+					if (connectType == BLUETOOTH_TYPE) {
+						rewaitBluetooth();
+					} else {
+						teardown();
+						setState(State.IDLE, REASON_LOST);
+					}
 				}
 				break;
 			}

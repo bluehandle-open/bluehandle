@@ -307,7 +307,8 @@ public class MainActivity extends AppCompatActivity implements IBlueToothConst, 
 		if (reason == ConnectionManager.REASON_FAILED) {
 			ActivityUtil.toastShow(this, "开启服务失败，请检查网络或蓝牙权限");
 		} else if (reason == ConnectionManager.REASON_LOST) {
-			ActivityUtil.toastShow(this, "与电脑的连接已断开");
+			ActivityUtil.toastShow(this, state == ConnectionManager.State.WAITING
+					? "连接已断开，正在等待电脑端重新连接" : "与电脑的连接已断开");
 		}
 		render();
 	}

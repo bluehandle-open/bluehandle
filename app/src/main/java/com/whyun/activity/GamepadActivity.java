@@ -123,6 +123,11 @@ public class GamepadActivity extends BaseControlActivity implements IBlueToothCo
 		stopSteering();
 	}
 
+	@Override
+	protected void onReconnected() {
+		applyToggles();// 重新打开重力感应
+	}
+
 	private void applyScheme() {
 		tvScheme.setText("键位：" + GamepadSchemeActivity.applySelectedScheme(this));
 		findViewById(R.id.btn_scheme).setContentDescription("当前键位 " + tvScheme.getText() + "，点击更换或编辑键位方案");
