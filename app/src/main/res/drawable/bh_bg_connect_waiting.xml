@@ -3,7 +3,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="true">
         <shape android:shape="oval">
-            <solid android:color="#24304D" />
+            <solid android:color="@color/bh_ring_pressed" />
             <stroke android:width="10dp" android:color="@color/bh_primary" />
         </shape>
     </item>

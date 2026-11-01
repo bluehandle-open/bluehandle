@@ -15,6 +15,8 @@ public interface IMyPreference {
 	public static final String GUIDE_SEEN = "guide_seen";
 	/** 引导内容大改时加一，让升级的老用户也看一遍。2：UI 改版后的新引导 */
 	public static final int GUIDE_VERSION = 2;
+	/** String，外观：system 跟随系统 / light 浅色 / dark 深色，默认 system */
+	public static final String THEME_MODE = "theme_mode";
 	/** boolean，重力感应 */
 	public static final String ENABLE_GRAVITY = "enable_gravity";
 	/** int 0-100，重力感应灵敏度 */
@@ -43,4 +45,7 @@ public interface IMyPreference {
 	public static final int DEFAULT_PPT_MINUTES = 20;
 	public static final String VOICE_ENGINE_IME = "ime";
 	public static final String VOICE_ENGINE_BUILTIN = "builtin";
+	public static final String THEME_SYSTEM = "system";
+	public static final String THEME_LIGHT = "light";
+	public static final String THEME_DARK = "dark";
 }

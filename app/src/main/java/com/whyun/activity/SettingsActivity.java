@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.speech.SpeechRecognizer;
@@ -60,6 +61,7 @@ public class SettingsActivity extends AppCompatActivity implements IMyPreference
 			}
 		});
 
+		setupAppearance();
 		setupConnection();
 		setupFeedback();
 		setupGamepad();
@@ -72,6 +74,25 @@ public class SettingsActivity extends AppCompatActivity implements IMyPreference
 	protected void onResume() {
 		super.onResume();
 		refreshSchemeCount();// 从键位管理返回后数量可能变化
+	}
+
+	// ---------------------------------------------------------------- 外观
+
+	private static final String[] THEMES = { THEME_SYSTEM, THEME_LIGHT, THEME_DARK };
+
+	private void setupAppearance() {
+		// 10 以上系统有深色模式，“跟随系统”名副其实，不用解释
+		findViewById(R.id.tv_theme_hint).setVisibility(
+				Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q ? View.GONE : View.VISIBLE);
+		SegmentedControl seg = new SegmentedControl((LinearLayout) findViewById(R.id.seg_theme));
+		seg.select(indexOf(THEMES, AppPrefs.get(this, THEME_MODE, THEME_SYSTEM)));
+		seg.setOnSelectedListener(new SegmentedControl.OnSelectedListener() {
+			@Override
+			public void onSelected(int index) {
+				AppPrefs.put(SettingsActivity.this, THEME_MODE, THEMES[index]);
+				AppPrefs.applyTheme(SettingsActivity.this);// 打开的页面会按新主题重建
+			}
+		});
 	}
 
 	// ---------------------------------------------------------------- 连接

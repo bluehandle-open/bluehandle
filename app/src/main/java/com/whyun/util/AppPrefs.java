@@ -3,6 +3,8 @@ package com.whyun.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.appcompat.app.AppCompatDelegate;
+
 import com.whyun.IBlueToothConst;
 import com.whyun.activity.IMyPreference;
 
@@ -31,6 +33,23 @@ public final class AppPrefs implements IMyPreference {
 
 	public static void setConnectType(Context context, int type) {
 		of(context).edit().putString(CONNECT_TYPE, String.valueOf(type)).apply();
+	}
+
+	/**
+	 * 按“外观”设置切换浅色 / 深色。跟随系统在 Android 10 以下等同于浅色，因为这些系统没有深色模式。
+	 * 已打开的 AppCompatActivity 会自动重建。
+	 */
+	public static void applyTheme(Context context) {
+		String mode = get(context, THEME_MODE, THEME_SYSTEM);
+		int night;
+		if (THEME_LIGHT.equals(mode)) {
+			night = AppCompatDelegate.MODE_NIGHT_NO;
+		} else if (THEME_DARK.equals(mode)) {
+			night = AppCompatDelegate.MODE_NIGHT_YES;
+		} else {
+			night = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
+		}
+		AppCompatDelegate.setDefaultNightMode(night);
 	}
 
 	public static int wifiPort(Context context) {

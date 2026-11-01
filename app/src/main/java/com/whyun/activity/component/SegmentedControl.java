@@ -1,5 +1,6 @@
 package com.whyun.activity.component;
 
+import android.graphics.Typeface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -10,7 +11,7 @@ import com.whyun.bluetooth.R;
 
 /**
  * 设计稿里的分段切换：容器使用 bh_bg_segment 背景，子项为 TextView。
- * 选中项提亮背景与文字，其余透明。
+ * 选中项用主色蓝底、白色粗体字，其余透明。
  */
 public class SegmentedControl {
 
@@ -54,8 +55,10 @@ public class SegmentedControl {
 			child.setBackgroundResource(on ? R.drawable.bh_bg_segment_selected : android.R.color.transparent);
 			child.setSelected(on);
 			if (child instanceof TextView) {
-				((TextView) child).setTextColor(ContextCompat.getColor(child.getContext(),
-						on ? R.color.bh_text : R.color.bh_text_secondary));
+				TextView tv = (TextView) child;
+				tv.setTextColor(ContextCompat.getColor(child.getContext(),
+						on ? R.color.bh_on_primary : R.color.bh_text_secondary));
+				tv.setTypeface(null, on ? Typeface.BOLD : Typeface.NORMAL);
 			}
 		}
 	}

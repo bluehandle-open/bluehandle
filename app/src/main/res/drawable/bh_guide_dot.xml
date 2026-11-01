@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 引导页页码点 -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
-    <solid android:color="#2A3550" />
+    <solid android:color="@color/bh_dot_off" />
     <corners android:radius="3dp" />
 </shape>

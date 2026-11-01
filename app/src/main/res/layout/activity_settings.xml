@@ -17,8 +17,48 @@
 
         <include layout="@layout/bh_page_header" />
 
+        <!-- 外观 -->
+        <TextView style="@style/BhText.Section" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:text="外观" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bh_bg_group"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="主题"
+                android:textColor="@color/bh_text"
+                android:textSize="@dimen/bh_text_body" />
+
+            <LinearLayout
+                android:id="@+id/seg_theme"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bh_bg_segment"
+                android:orientation="horizontal"
+                android:padding="4dp">
+
+                <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="跟随系统" android:textSize="14sp" />
+                <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="浅色" android:textSize="14sp" />
+                <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="深色" android:textSize="14sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_theme_hint"
+                style="@style/BhText.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Android 10 以下没有系统深色模式，“跟随系统”时显示浅色" />
+        </LinearLayout>
+
         <!-- 连接 -->
-        <TextView style="@style/BhText.Section" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:text="连接" />
+        <TextView style="@style/BhText.Section" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="连接" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

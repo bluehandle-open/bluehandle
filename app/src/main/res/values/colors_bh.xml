@@ -1,24 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 改版后的深色控制台配色，对应 design/ui-preview.html -->
+<!-- 浅色主题配色，对应 design/theme-preview.html。深色值在 values-night/colors_bh.xml，
+     两个文件的颜色名必须一一对应 -->
 <resources>
-    <color name="bh_bg">#0B1220</color>
-    <color name="bh_surface">#141D2E</color>
-    <color name="bh_surface_raised">#1C2740</color>
-    <color name="bh_surface_selected">#16223A</color>
-    <color name="bh_border">#27334D</color>
-    <color name="bh_divider">#1F2A40</color>
-    <color name="bh_border_dashed">#3A4866</color>
-    <color name="bh_text">#E8EDF7</color>
-    <color name="bh_text_secondary">#9AA6BD</color>
+    <color name="bh_bg">#F4F6FA</color>
+    <color name="bh_surface">#FFFFFF</color>
+    <color name="bh_surface_raised">#E9EEF6</color>
+    <color name="bh_surface_selected">#EAF1FE</color>
+    <color name="bh_border">#DCE2EC</color>
+    <color name="bh_divider">#E9EDF3</color>
+    <color name="bh_border_dashed">#B8C2D4</color>
+    <color name="bh_text">#141A26</color>
+    <color name="bh_text_secondary">#5B6680</color>
     <color name="bh_primary">#2F6FEB</color>
-    <color name="bh_primary_text">#8AB8FF</color>
+    <color name="bh_primary_text">#1F5BD6</color>
     <color name="bh_on_primary">#FFFFFF</color>
     <color name="bh_on_primary_secondary">#D6E4FF</color>
     <color name="bh_action">#F5A524</color>
     <color name="bh_on_action">#1A1206</color>
-    <color name="bh_action_surface">#2A2112</color>
-    <color name="bh_action_border">#5A4318</color>
-    <color name="bh_action_muted">#D9A54A</color>
-    <color name="bh_status_connected">#4C9AFF</color>
-    <color name="bh_switch_off">#33405C</color>
+    <color name="bh_action_surface">#FFF3DC</color>
+    <color name="bh_action_border">#F0D199</color>
+    <color name="bh_action_muted">#B26B00</color>
+    <color name="bh_status_connected">#1F6FE0</color>
+    <color name="bh_switch_off">#C9D1DE</color>
+    <!-- 橙色浅底按下 -->
+    <color name="bh_action_pressed">#FFE6B8</color>
+    <!-- 等待连接的大按钮按下 -->
+    <color name="bh_ring_pressed">#DCE6FA</color>
+    <!-- 未选中的单选圈 -->
+    <color name="bh_radio_off">#C3CBD8</color>
+    <!-- 未选中的页码点 -->
+    <color name="bh_dot_off">#C9D1DE</color>
+    <!-- 状态栏、导航栏。6.0 / 8.1 以下系统图标只能是白色，所以浅色主题下用深色底，
+         values-v23 / values-v27 再换成浅色底配深色图标 -->
+    <color name="bh_status_bar">#5B6680</color>
+    <color name="bh_nav_bar">#141A26</color>
 </resources>
