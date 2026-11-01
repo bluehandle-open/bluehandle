@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 应用内的 logo（首页顶栏），与启动图标同一造型：蓝色圆角方块 + 方向键 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="36dp"
+    android:height="36dp"
+    android:viewportWidth="72"
+    android:viewportHeight="72">
+    <path
+        android:fillColor="#2F6FEB"
+        android:pathData="M16,0h40a16,16 0 0,1 16,16v40a16,16 0 0,1 -16,16H16a16,16 0 0,1 -16,-16V16a16,16 0 0,1 16,-16z" />
+    <group
+        android:translateX="-18"
+        android:translateY="-18">
+        <group
+            android:pivotX="54"
+            android:pivotY="54"
+            android:scaleX="0.78"
+            android:scaleY="0.78">
+            <path
+                android:fillColor="#FFFFFF"
+                android:pathData="M47,24h14a5,5 0 0,1 5,5v13h13a5,5 0 0,1 5,5v14a5,5 0 0,1 -5,5H66v13a5,5 0 0,1 -5,5H47a5,5 0 0,1 -5,-5V66H29a5,5 0 0,1 -5,-5V47a5,5 0 0,1 5,-5h13V29a5,5 0 0,1 5,-5z" />
+            <path
+                android:fillColor="#2F6FEB"
+                android:pathData="M54,30l-4.5,5.5h9z M54,78l-4.5,-5.5h9z M30,54l5.5,-4.5v9z M78,54l-5.5,-4.5v9z" />
+            <path
+                android:fillColor="#F5A524"
+                android:pathData="M54,46.5a7.5,7.5 0 1,1 0,15a7.5,7.5 0 1,1 0,-15z" />
+        </group>
+    </group>
+</vector>

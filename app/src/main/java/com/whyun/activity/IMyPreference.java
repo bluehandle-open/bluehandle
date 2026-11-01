@@ -11,7 +11,10 @@ public interface IMyPreference {
 	/** int，手柄键位方案：负数为内置默认键位，非负为自定义方案 id */
 	public static final String KEY_TYPE = "keyType";
 	public static final String REMOVE_AD = "remove_ad";
-	public static final String FIRST_OPEN = "first_open";
+	/** int，已看过的引导版本，小于 {@link #GUIDE_VERSION} 时首页自动显示引导 */
+	public static final String GUIDE_SEEN = "guide_seen";
+	/** 引导内容大改时加一，让升级的老用户也看一遍。2：UI 改版后的新引导 */
+	public static final int GUIDE_VERSION = 2;
 	/** boolean，重力感应 */
 	public static final String ENABLE_GRAVITY = "enable_gravity";
 	/** int 0-100，重力感应灵敏度 */

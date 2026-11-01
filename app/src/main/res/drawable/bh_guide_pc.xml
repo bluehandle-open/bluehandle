@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 引导插图：电脑端窗口与下载标记。由 design/guide-preview.html 转换 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="250dp"
+    android:height="230dp"
+    android:viewportWidth="250"
+    android:viewportHeight="230">
+    <path android:fillColor="#141D2E" android:strokeColor="#27334D" android:strokeWidth="2"
+        android:pathData="M37,28h176a12,12 0 0,1 12,12v126a12,12 0 0,1 -12,12H37a12,12 0 0,1 -12,-12V40a12,12 0 0,1 12,-12z" />
+    <path android:strokeColor="#27334D" android:strokeWidth="2" android:pathData="M25,52h200" />
+    <path android:fillColor="#2F6FEB" android:pathData="M41,36a4,4 0 1,1 0,8a4,4 0 1,1 0,-8z" />
+    <path android:fillColor="#27334D" android:pathData="M54,36h46a4,4 0 0,1 0,8H54a4,4 0 0,1 0,-8z" />
+    <path android:fillColor="#101827" android:strokeColor="#2F6FEB" android:strokeWidth="2"
+        android:pathData="M52,72h146a7,7 0 0,1 7,7v16a7,7 0 0,1 -7,7H52a7,7 0 0,1 -7,-7V79a7,7 0 0,1 7,-7z" />
+    <path android:strokeColor="#E8EDF7" android:strokeWidth="5" android:strokeLineCap="round" android:pathData="M60,87h74" />
+    <path android:fillColor="#2F6FEB" android:pathData="M52,114h146a7,7 0 0,1 7,7v16a7,7 0 0,1 -7,7H52a7,7 0 0,1 -7,-7v-16a7,7 0 0,1 7,-7z" />
+    <path android:strokeColor="#FFFFFF" android:strokeWidth="5" android:strokeLineCap="round" android:pathData="M105,129h40" />
+    <path android:fillColor="#1A2336" android:pathData="M100,178h50l8,22H92z" />
+    <path android:fillColor="#F5A524" android:pathData="M205,14a26,26 0 1,1 0,52a26,26 0 1,1 0,-52z" />
+    <path android:strokeColor="#1A1206" android:strokeWidth="4" android:strokeLineCap="round" android:strokeLineJoin="round"
+        android:pathData="M205,26v22M195,40l10,10l10,-10M194,56h22" />
+</vector>

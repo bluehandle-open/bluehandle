@@ -66,7 +66,7 @@ public  class DownloadService extends Service {
                 new Intent(this, MainActivity.class), piFlags);
 
         notificationBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.icon)
+                .setSmallIcon(R.drawable.bh_ic_notify)
                 .setContentTitle("下载蓝色手柄电脑端")
                 .setContentText("进度" + _progress + "%")
                 .setProgress(100, 0, false)

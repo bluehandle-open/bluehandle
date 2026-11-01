@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:importantForAccessibility="no"
+        android:scaleType="centerInside"
+        android:src="@drawable/bh_guide_pc" />
+
+    <TextView style="@style/BhGuide.Title" android:text="先在电脑上安装&#10;蓝色手柄电脑端" />
+
+    <TextView style="@style/BhGuide.Desc" android:text="支持 Windows。手机发出的按键和文字，由它在电脑上执行。" />
+</LinearLayout>

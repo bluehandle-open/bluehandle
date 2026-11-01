@@ -27,6 +27,6 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/textView1"
         android:layout_alignParentLeft="true"
-        android:src="@drawable/icon" />
+        android:src="@mipmap/ic_launcher" />
 
 </RelativeLayout>

@@ -211,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements IBlueToothConst, 
 	}
 
 	private void startWifiMode() {
-		if (localWifiIp() == null) {
+		if (localWifiIp(this) == null) {
 			ActivityUtil.toastShow(this, "当前 Wi‑Fi 不可用，请连接 Wi‑Fi 后重试");
 			return;
 		}
@@ -219,8 +219,8 @@ public class MainActivity extends AppCompatActivity implements IBlueToothConst, 
 	}
 
 	/** 返回本机 Wi-Fi 地址，Wi-Fi 未连接时返回 null */
-	private String localWifiIp() {
-		WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+	static String localWifiIp(Context context) {
+		WifiManager wifi = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 		if (wifi == null || wifi.getWifiState() != WifiManager.WIFI_STATE_ENABLED) {
 			return null;
 		}
@@ -358,15 +358,15 @@ public class MainActivity extends AppCompatActivity implements IBlueToothConst, 
 		if (type == BLUETOOTH_TYPE) {
 			statusDetail.setText("在电脑端通过蓝牙搜索本机");
 		} else {
-			String ip = localWifiIp();
+			String ip = localWifiIp(this);
 			statusDetail.setText(ip == null ? "请先连接 Wi‑Fi"
 					: "本机地址 " + ip + ":" + AppPrefs.wifiPort(this));
 		}
 	}
 
 	private void showGuideOnFirstOpen() {
-		if (AppPrefs.get(this, IMyPreference.FIRST_OPEN, true)) {
-			AppPrefs.put(this, IMyPreference.FIRST_OPEN, false);
+		if (AppPrefs.get(this, IMyPreference.GUIDE_SEEN, 0) < IMyPreference.GUIDE_VERSION) {
+			AppPrefs.put(this, IMyPreference.GUIDE_SEEN, IMyPreference.GUIDE_VERSION);
 			startActivity(new Intent(this, GuideActivity.class));
 		}
 	}

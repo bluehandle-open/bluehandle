@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>蓝色手柄 · 应用图标方案</title>
+<style>
+  :root { --bg:#0B1220; --card:#141D2E; --line:#27334D; --text:#E8EDF7; --muted:#9AA6BD; --primary:#2F6FEB; --action:#F5A524; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Microsoft YaHei UI","PingFang SC",sans-serif; padding:32px 40px 60px; }
+  h1 { font-size:24px; margin:0 0 6px; }
+  .lead { color:var(--muted); font-size:14px; line-height:1.7; margin:0 0 28px; max-width:900px; }
+  .concept { background:var(--card); border:1px solid var(--line); border-radius:20px; padding:24px 28px; margin-bottom:22px; }
+  .concept.rec { border-color:var(--primary); box-shadow:0 0 0 3px rgba(47,111,235,.25); }
+  .head { display:flex; align-items:baseline; gap:12px; margin-bottom:4px; }
+  .head h2 { font-size:18px; margin:0; }
+  .badge { font-size:12px; background:var(--primary); color:#fff; padding:2px 8px; border-radius:6px; }
+  .why { color:var(--muted); font-size:13px; line-height:1.7; margin:0 0 18px; }
+  .row { display:flex; gap:36px; align-items:flex-end; flex-wrap:wrap; }
+  .cap { color:var(--muted); font-size:12px; text-align:center; margin-top:8px; }
+  .ic { display:block; overflow:hidden; }
+  .m-squircle { border-radius:30%; } .m-circle { border-radius:50%; } .m-round { border-radius:22%; }
+  .home { display:flex; gap:22px; padding:18px 22px; border-radius:16px; }
+  .home.dark { background:linear-gradient(160deg,#1b2440,#0d1424); }
+  .home.light { background:linear-gradient(160deg,#dfe7f5,#b9c8e4); }
+  .app { width:64px; text-align:center; font-size:11px; }
+  .home.dark .app { color:#fff; } .home.light .app { color:#1b2440; }
+  .app .ic { margin:0 auto 6px; filter:drop-shadow(0 2px 4px rgba(0,0,0,.35)); }
+  .other { width:52px; height:52px; border-radius:30%; margin:0 auto 6px; }
+  .tiny { display:flex; gap:14px; align-items:flex-end; }
+  .bar { display:flex; align-items:center; gap:10px; background:var(--bg); border:1px solid var(--line); border-radius:12px; padding:10px 14px; width:250px; }
+  .bar b { font-size:17px; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3D82F7"/><stop offset="1" stop-color="#1C4CC8"/>
+    </linearGradient>
+  </defs>
+  <!-- 自适应图标：画布 108×108，安全区为中心直径 66 的圆 -->
+  <symbol id="bg" viewBox="0 0 108 108"><rect width="108" height="108" fill="url(#g)"/></symbol>
+
+  <!-- A 联网手柄 -->
+  <symbol id="fgA" viewBox="0 0 108 108">
+    <rect x="27" y="51" width="54" height="29" rx="14.5" fill="none" stroke="#fff" stroke-width="5.5"/>
+    <path d="M40 60.5v10M35 65.5h10" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/>
+    <circle cx="65" cy="62" r="3.6" fill="#F5A524"/><circle cx="71.5" cy="68.5" r="3.6" fill="#fff"/>
+    <path d="M48.3 42.3a8 8 0 0 1 11.4 0M43.4 37.4a15 15 0 0 1 21.2 0" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/>
+  </symbol>
+
+  <!-- B 方向键 -->
+  <symbol id="fgB" viewBox="0 0 108 108">
+    <path d="M47 24h14a5 5 0 0 1 5 5v13h13a5 5 0 0 1 5 5v14a5 5 0 0 1-5 5H66v13a5 5 0 0 1-5 5H47a5 5 0 0 1-5-5V66H29a5 5 0 0 1-5-5V47a5 5 0 0 1 5-5h13V29a5 5 0 0 1 5-5z" fill="#fff"/>
+    <path d="M54 30l-4.5 5.5h9z M54 78l-4.5-5.5h9z M30 54l5.5-4.5v9z M78 54l-5.5-4.5v9z" fill="#2F6FEB"/>
+    <circle cx="54" cy="54" r="7.5" fill="#F5A524"/>
+  </symbol>
+
+  <!-- C 手机遥控 -->
+  <symbol id="fgC" viewBox="0 0 108 108">
+    <rect x="31" y="26" width="30" height="54" rx="8" fill="none" stroke="#fff" stroke-width="5"/>
+    <path d="M42 33h8" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="46" cy="56" r="7" fill="#F5A524"/>
+    <path d="M70.5 47.5a9 9 0 0 1 0 13M76.5 41.5a17.5 17.5 0 0 1 0 25" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/>
+  </symbol>
+
+  <!-- D 键帽 + 光标 -->
+  <symbol id="fgD" viewBox="0 0 108 108">
+    <rect x="28" y="33" width="52" height="49" rx="12" fill="#B9CFFB"/>
+    <rect x="28" y="27" width="52" height="47" rx="12" fill="#fff"/>
+    <path d="M47 37v25l6.5-6.2 4.6 10 4.6-2.1-4.6-9.8h9z" fill="#2F6FEB" stroke="#2F6FEB" stroke-width="2.5" stroke-linejoin="round"/>
+  </symbol>
+</svg>
+
+<h1>蓝色手柄 · 应用图标方案</h1>
+<p class="lead">应用已经从"游戏手柄"变成"用手机控制电脑"：手柄、遥控器、PPT、语音输入。四套方案都沿用主色蓝（#2F6FEB 渐变）和动作橙（#F5A524），按 Android 自适应图标规范绘制（108×108 画布，主体在中心直径 66 的安全区内），所以在圆形、方圆、圆角方形各种桌面遮罩下都不会被裁掉。电脑端图标会同步换成同一套。</p>
+
+<div id="list"></div>
+
+<script>
+const concepts = [
+  { id:"B", name:"方向键", rec:true,
+    why:"手柄、遥控器、PPT 翻页都离不开方向键，一个十字就把所有模式概括了；形状最简单，16px 也认得出；橙色中键呼应应用里的“确定 / 发送”按钮。和电视遥控器、游戏机的联想都很直接。" },
+  { id:"A", name:"联网手柄",
+    why:"延续现在电脑端的线条手柄，老用户最熟悉；上方加信号弧表示“无线连到电脑”。缺点是只说了“手柄”，遥控器、语音这些新功能体现不出来，小尺寸下信号弧会糊。" },
+  { id:"C", name:"手机遥控",
+    why:"手机轮廓 + 向外发射的信号，直接说明“用手机控制别的设备”。但手机加信号的造型在应用商店里很常见（投屏、遥控类 App），辨识度一般。" },
+  { id:"D", name:"键帽 + 光标",
+    why:"键盘键帽加鼠标指针，强调“手机当电脑键盘鼠标”。适合语音输入、遥控这些新方向，但和“手柄”这个名字关系最远，游戏用户可能找不到。" },
+];
+const svg = (id, size, cls="") =>
+  `<svg class="ic ${cls}" width="${size}" height="${size}" viewBox="18 18 72 72"><use href="#bg" width="108" height="108"/><use href="#fg${id}" width="108" height="108" transform="translate(11.88 11.88) scale(.78)"/></svg>`;
+const others = ["#E8554E","#34A853","#F4B400","#8E5BE8"];
+const home = (id, cls) => `<div class="home ${cls}">
+  <div class="app">${svg(id,52,"m-squircle")}蓝色手柄</div>
+  ${["相机","微信","设置"].map((n,i)=>`<div class="app"><div class="other" style="background:${others[i]}"></div>${n}</div>`).join("")}
+</div>`;
+document.getElementById("list").innerHTML = concepts.map(c => `
+<section class="concept ${c.rec?"rec":""}">
+  <div class="head"><h2>方案 ${c.id} · ${c.name}</h2>${c.rec?'<span class="badge">推荐</span>':""}</div>
+  <p class="why">${c.why}</p>
+  <div class="row">
+    <div>${svg(c.id,144,"m-squircle")}<div class="cap">方圆（小米 / 三星）</div></div>
+    <div>${svg(c.id,96,"m-circle")}<div class="cap">圆形（Pixel）</div></div>
+    <div>${svg(c.id,96,"m-round")}<div class="cap">圆角方形（旧系统）</div></div>
+    <div>${home(c.id,"dark")}<div class="cap">深色壁纸</div></div>
+    <div>${home(c.id,"light")}<div class="cap">浅色壁纸</div></div>
+    <div><div class="tiny">${svg(c.id,32,"m-round")}${svg(c.id,24,"m-round")}${svg(c.id,16,"m-round")}</div><div class="cap">32 / 24 / 16px</div></div>
+    <div><div class="bar">${svg(c.id,36,"m-round")}<b>蓝色手柄</b></div><div class="cap">应用内首页顶栏</div></div>
+  </div>
+</section>`).join("");
+</script>
+</body>
+</html>

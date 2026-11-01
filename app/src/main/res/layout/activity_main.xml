@@ -23,19 +23,11 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <FrameLayout
+            <ImageView
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:background="@drawable/bh_bg_logo">
-
-                <ImageView
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:layout_gravity="center"
-                    android:importantForAccessibility="no"
-                    app:srcCompat="@drawable/bh_ic_gamepad"
-                    app:tint="@color/bh_on_primary" />
-            </FrameLayout>
+                android:importantForAccessibility="no"
+                app:srcCompat="@drawable/bh_logo" />
 
             <TextView
                 android:layout_width="0dp"
