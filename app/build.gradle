@@ -9,8 +9,8 @@ android {
         applicationId "com.whyun.bluehandle"
         minSdk 16
         targetSdk 31
-        versionCode 15
-        versionName "1.8.3"
+        versionCode 16
+        versionName "2.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         // minSdk 16 需要靠 AppCompat 渲染 VectorDrawable 图标
