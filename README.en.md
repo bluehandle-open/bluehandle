@@ -47,7 +47,7 @@ The PC app's source code lives in [bluehandle-go](https://github.com/bluehandle-
   <img src="website/assets/screens/pc-connected.webp" width="280" alt="PC app: connected">
 </p>
 
-See the user manual [`website/manual.html`](website/manual.html) (Chinese) for details.
+See the user manual [bluehandle.pages.dev/manual](https://bluehandle.pages.dev/manual) (Chinese) for details.
 
 ## FAQ
 
@@ -82,7 +82,7 @@ Grant the microphone permission on first use. If the phone has no speech recogni
 
 BlueHandle itself doesn't. The phone and the PC communicate directly without any server. Speech recognition is handled by the phone's recognition service or input method; whether that goes online depends on the service itself.
 
-For more, see the [FAQ in the manual](website/manual.html#faq) or open an [issue](https://github.com/bluehandle-open/bluehandle/issues).
+For more, see the [FAQ in the manual](https://bluehandle.pages.dev/manual#faq) or open an [issue](https://github.com/bluehandle-open/bluehandle/issues).
 
 ## Development
 

@@ -45,7 +45,7 @@
   <img src="website/assets/screens/pc-connected.webp" width="280" alt="电脑端：已连接">
 </p>
 
-完整说明见使用手册 [`website/manual.html`](website/manual.html)。
+完整说明见使用手册 [bluehandle.pages.dev/manual](https://bluehandle.pages.dev/manual)。
 
 ## 常见问题
 
@@ -80,7 +80,7 @@
 
 蓝色手柄本身不会。手机和电脑直接通信，不经过任何服务器。语音识别由手机自带的识别服务或输入法完成，是否联网取决于这些服务本身。
 
-更多问题见使用手册的[常见问题](website/manual.html#faq)，或到 [Issues](https://github.com/bluehandle-open/bluehandle/issues) 反馈。
+更多问题见使用手册的[常见问题](https://bluehandle.pages.dev/manual#faq)，或到 [Issues](https://github.com/bluehandle-open/bluehandle/issues) 反馈。
 
 ## 开发
 
