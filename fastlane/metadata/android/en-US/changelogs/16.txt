@@ -1,0 +1,5 @@
+2.0.0 — a complete redesign:
+• Now a phone-to-PC controller, with new PC remote, presentation and voice input modes
+• Per-game key-mapping profiles for the gamepad; up to 3 keys per button
+• New interface and icon, with light and dark themes
+• Bluetooth permissions for Android 12+, and reconnecting now works

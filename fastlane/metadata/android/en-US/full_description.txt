@@ -1,0 +1,31 @@
+Turn your phone into a gamepad, remote control and keyboard for your PC. The phone and the PC talk directly over Wi-Fi or Bluetooth — no server in between, and no data is collected.
+
+You also need the free, open-source PC app running on Windows 10 / 11:
+https://github.com/bluehandle-open/bluehandle-go/releases/latest
+
+Note: the app's interface is currently available in Simplified Chinese only.
+
+Four modes:
+
+• Gamepad: landscape, two hands — D-pad, A / B / X / Y, Select and Start. Multi-touch and tilt control. Create a key-mapping profile for each game; each button can send a combination of up to 3 keys.
+• PC remote: portrait, one hand — arrows, OK, Back, volume, media playback, lock screen, show desktop, switch windows, page up/down, plus a numeric keypad. Hook your PC up to a TV or projector and control it from the couch.
+• Presentation: big page-turn buttons, and the phone's volume keys turn pages too. A talk timer vibrates when 2 minutes remain. Start from the current slide, black out the screen or end the show with one tap.
+• Voice input: hold to talk, release, and the text is typed at the PC's current cursor position — optionally followed by Enter.
+
+How to use:
+1. Run bluehandle.exe on your PC.
+2. Open BlueHandle on your phone, choose Wi-Fi or Bluetooth and tap Connect.
+   - Wi-Fi: put the phone and PC on the same network, then enter the address shown on the phone's home screen in the PC app.
+   - Bluetooth: pair the phone with the PC in system settings first, then pick the phone in the PC app.
+3. Once connected, pick a mode. Switching modes never drops the connection.
+
+Permissions:
+• Bluetooth: to connect to the PC over Bluetooth.
+• Network: to connect to the PC over your local Wi-Fi network, and to download the PC app from GitHub when you ask for it.
+• Microphone: only while you use voice input; speech is turned into text by your phone's built-in speech recognition service.
+• Vibration: button feedback and talk-timer alerts.
+
+Light and dark themes; follows the system setting by default.
+
+Manual: https://bluehandle.pages.dev/manual
+Source code (MIT): https://github.com/bluehandle-open/bluehandle
