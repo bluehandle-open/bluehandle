@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>蓝色手柄 · 图标第五轮：FC 式外形</title>
+<style>
+  :root { --bg:#0B1220; --card:#141D2E; --line:#27334D; --text:#E8EDF7; --muted:#9AA6BD; --primary:#2F6FEB; --ptext:#8AB8FF; --action:#F5A524; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Microsoft YaHei UI","PingFang SC",sans-serif; padding:32px 40px 60px; }
+  h1 { font-size:24px; margin:0 0 6px; }
+  .lead { color:var(--muted); font-size:14px; line-height:1.8; margin:0 0 26px; max-width:1000px; }
+  .concept { background:var(--card); border:1px solid var(--line); border-radius:20px; padding:24px 28px; margin-bottom:22px; }
+  .concept.rec { border-color:var(--primary); box-shadow:0 0 0 3px rgba(47,111,235,.25); }
+  .head { display:flex; align-items:baseline; gap:12px; margin-bottom:4px; }
+  .head h2 { font-size:18px; margin:0; }
+  .badge { font-size:12px; background:var(--primary); color:#fff; padding:2px 8px; border-radius:6px; }
+  .badge.old { background:#3a465f; }
+  .why { color:var(--muted); font-size:13px; line-height:1.75; margin:0 0 18px; max-width:1050px; }
+  .row { display:flex; gap:32px; align-items:flex-end; flex-wrap:wrap; }
+  .cap { color:var(--muted); font-size:12px; text-align:center; margin-top:8px; }
+  .ic { display:block; overflow:hidden; }
+  .m-squircle { border-radius:30%; } .m-circle { border-radius:50%; } .m-round { border-radius:22%; }
+  .home { display:flex; gap:20px; padding:16px 20px; border-radius:16px; }
+  .home.dark { background:linear-gradient(160deg,#1b2440,#0d1424); }
+  .home.light { background:linear-gradient(160deg,#dfe7f5,#b9c8e4); }
+  .app { width:60px; text-align:center; font-size:11px; }
+  .home.dark .app { color:#fff; } .home.light .app { color:#1b2440; }
+  .app .ic { margin:0 auto 6px; filter:drop-shadow(0 2px 4px rgba(0,0,0,.3)); }
+  .other { width:48px; height:48px; border-radius:30%; margin:0 auto 6px; }
+  .mono { display:flex; gap:12px; align-items:center; background:#000; padding:10px 14px; border-radius:10px; }
+  .appbar { background:var(--bg); border:1px solid var(--line); border-radius:14px; padding:12px 14px; width:260px; }
+  .appbar .t { display:flex; align-items:center; gap:10px; font-weight:700; font-size:17px; }
+  .appbar.light { background:#F4F7FC; color:#1b2440; border-color:#d5ddeb; }
+</style>
+</head>
+<body>
+<h1>图标第五轮：FC 式外形</h1>
+<p class="lead">外形改成 FC（红白机）手柄那样不带握把的圆润造型，依旧只用白色线条勾勒：左边十字键，右边两颗按键并排，橙色只留一颗。最下面附上一轮的 E 作对比。</p>
+
+<svg id="defs" width="0" height="0" style="position:absolute"></svg>
+<div id="out"></div>
+
+<script>
+// 手柄轮廓（未缩放坐标，宽 19..89，高 38..79），整体缩放 0.86 移到画布中心
+const BODY = 'M38 38H70C79 38 84 44 86 53L89 66C91 74 86 79 80 77C76 76 73 72 70 68H38C35 72 32 76 28 77C22 79 17 74 19 66L22 53C24 44 29 38 38 38Z';
+const G = inner => `<g transform="matrix(.86 0 0 .86 7.56 6.12)" fill="none" stroke-linecap="round" stroke-linejoin="round">${inner}</g>`;
+// FC 式外形：没有握把，直接画在 108 画布上（中心 54,54，安全区半径 33）
+const L = inner => `<g fill="none" stroke-linecap="round" stroke-linejoin="round">${inner}</g>`;
+const xcross = (cx, cy, r, w) => `<path d="M${cx-r} ${cy}H${cx+r}M${cx} ${cy-r}V${cy+r}" stroke="#fff" stroke-width="${w}"/>`;
+const keys = (b, a, r, o) => `<circle cx="${b}" cy="54" r="${r}" fill="#fff" stroke="none"/><circle cx="${a}" cy="54" r="${r}" fill="${o}" stroke="none"/>`;
+const variants = {
+  I: o => L(`<rect x="22" y="39" width="64" height="30" rx="15" stroke="#fff" stroke-width="5"/>` +
+       xcross(38, 54, 6.5, 5) + keys(64, 74, 3.8, o)),
+  J: o => L(`<rect x="22" y="39" width="64" height="30" rx="7" stroke="#fff" stroke-width="5"/>` +
+       xcross(36, 54, 6.5, 5) + `<path d="M48 58h3M54 58h3" stroke="#fff" stroke-width="3"/>` + keys(66, 75.5, 3.8, o)),
+  K: o => L(`<ellipse cx="54" cy="54" rx="32" ry="18" stroke="#fff" stroke-width="5"/>` +
+       xcross(39, 54, 6, 5) + keys(64, 73, 3.6, o)),
+  L: o => L(`<rect x="22" y="39" width="64" height="30" rx="15" stroke="#fff" stroke-width="5"/>` +
+       xcross(38, 54, 6.5, 5) + `<circle cx="64" cy="54" r="3" stroke="#fff" stroke-width="4"/><circle cx="74" cy="54" r="3" stroke="${o}" stroke-width="4"/>`),
+  E4: o => `<g transform="matrix(.86 0 0 .86 7.56 6.12)" fill="none" stroke-linecap="round" stroke-linejoin="round">` +
+       `<path d="M38 38H70C79 38 84 44 86 53L89 66C91 74 86 79 80 77C76 76 73 72 70 68H38C35 72 32 76 28 77C22 79 17 74 19 66L22 53C24 44 29 38 38 38Z" stroke="#fff" stroke-width="5"/>` +
+       `<path d="M30 52H42M36 46V58" stroke="#fff" stroke-width="5"/><circle cx="68.5" cy="55.5" r="3" stroke="#fff" stroke-width="4"/><circle cx="75.5" cy="48.5" r="3" stroke="${o}" stroke-width="4"/></g>`,
+};
+document.getElementById('defs').innerHTML =
+  '<symbol id="bg" viewBox="0 0 108 108"><rect width="108" height="108" fill="#2F6FEB"/></symbol>' +
+  Object.entries(variants).map(([id, f]) =>
+    `<symbol id="fg${id}" viewBox="0 0 108 108">${f('#F5A524')}</symbol><symbol id="mono${id}" viewBox="0 0 108 108">${f('#fff')}</symbol>`).join('');
+
+const concepts = [
+  { id:'I', title:'I 胶囊', rec:true, why:'两端半圆的胶囊外形，左边线条十字键，右边一白一橙两颗实心按键并排（像 FC 的 B、A）。线条最顺，各种遮罩下都居中饱满。' },
+  { id:'J', title:'J 圆角矩形', why:'更贴近 FC 原型的小圆角矩形，中间加两道短横表示 SELECT / START。最有"红白机"味道，但多了两笔，32px 时略挤。' },
+  { id:'K', title:'K 椭圆', why:'真正的椭圆外形，最柔和。十字键靠近边缘，左右两端比较窄，按键空间稍紧。' },
+  { id:'L', title:'L 胶囊 + 空心按键', why:'与 I 同一外形，两颗按键改成空心圆圈，整个图标都是线条，最"素描"。小尺寸下按键比 I 弱一些。' },
+  { id:'E4', title:'上一轮 E（对比）', old:true, why:'带握把的 PS 式轮廓。' },
+];
+const tile = (id, size, mask) =>
+  `<svg class="ic ${mask}" width="${size}" height="${size}" viewBox="0 0 108 108"><use href="#bg"/><use href="#fg${id}"/></svg>`;
+const logo72 = (id, size) =>
+  `<svg width="${size}" height="${size}" viewBox="18 18 72 72"><rect x="18" y="18" width="72" height="72" rx="16" fill="#2F6FEB"/><use href="#fg${id}" width="108" height="108"/></svg>`;
+const mono = (id, size) =>
+  `<svg width="${size}" height="${size}" viewBox="22 22 64 64"><use href="#mono${id}" width="108" height="108"/></svg>`;
+const others = ['#E8453C','#34A853','#7B61FF'];
+const home = (id, cls) => `<div class="home ${cls}">` +
+  `<div class="app"><div class="other" style="background:${others[0]}"></div>相机</div>` +
+  `<div class="app">${tile(id,48,'m-squircle')}蓝色手柄</div>` +
+  `<div class="app"><div class="other" style="background:${others[1]}"></div>电话</div>` +
+  `<div class="app"><div class="other" style="background:${others[2]};border-radius:50%"></div>音乐</div></div>`;
+document.getElementById('out').innerHTML = concepts.map(c => `
+<section class="concept${c.rec ? ' rec' : ''}">
+  <div class="head"><h2>${c.title}</h2>${c.rec ? '<span class="badge">推荐</span>' : ''}${c.old ? '<span class="badge old">对比</span>' : ''}</div>
+  <p class="why">${c.why}</p>
+  <div class="row">
+    <div>${tile(c.id,160,'m-squircle')}<div class="cap">圆角方形 160</div></div>
+    <div>${tile(c.id,120,'m-circle')}<div class="cap">圆形遮罩</div></div>
+    <div>${tile(c.id,96,'m-round')}<div class="cap">小圆角 96</div></div>
+    <div>${tile(c.id,48,'m-squircle')}<div class="cap">48</div></div>
+    <div>${tile(c.id,32,'m-squircle')}<div class="cap">32</div></div>
+    <div>${home(c.id,'dark')}<div class="cap">深色桌面</div></div>
+    <div>${home(c.id,'light')}<div class="cap">浅色桌面</div></div>
+    <div><div class="mono">${mono(c.id,24)}${mono(c.id,18)}<span style="color:#ccc;font-size:12px">蓝色手柄已连接</span></div><div class="cap">通知栏剪影</div></div>
+    <div><div class="appbar"><div class="t">${logo72(c.id,36)}蓝色手柄</div></div><div class="cap">深色顶栏</div></div>
+    <div><div class="appbar light"><div class="t">${logo72(c.id,36)}蓝色手柄</div></div><div class="cap">浅色顶栏</div></div>
+  </div>
+</section>`).join('');
+</script>
+</body>
+</html>
