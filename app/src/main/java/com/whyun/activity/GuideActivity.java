@@ -1,6 +1,5 @@
 package com.whyun.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.whyun.IBlueToothConst;
+import com.whyun.activity.component.PcDownloadHelper;
 import com.whyun.bluetooth.R;
 
 /**
@@ -108,7 +107,7 @@ public class GuideActivity extends AppCompatActivity {
 		btnShare.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				shareDownloadUrl();
+				PcDownloadHelper.share(GuideActivity.this);
 			}
 		});
 		render(0);
@@ -158,13 +157,5 @@ public class GuideActivity extends AppCompatActivity {
 		}
 		String ip = MainActivity.localWifiIp(this);
 		tvIp.setText(ip == null ? "请先连接 Wi‑Fi" : ip);
-	}
-
-	/** 手机上装不了电脑端：把下载地址分享出去，在电脑上打开 */
-	private void shareDownloadUrl() {
-		Intent send = new Intent(Intent.ACTION_SEND);
-		send.setType("text/plain");
-		send.putExtra(Intent.EXTRA_TEXT, "蓝色手柄电脑端下载地址：" + IBlueToothConst.URL_DOWNLOAD);
-		startActivity(Intent.createChooser(send, "把下载地址发到电脑"));
 	}
 }

@@ -21,7 +21,7 @@ How to use:
 
 Permissions:
 • Bluetooth: to connect to the PC over Bluetooth.
-• Network: to connect to the PC over your local Wi-Fi network, and to download the PC app from GitHub when you ask for it.
+• Network: to connect to the PC over your local Wi-Fi network.
 • Microphone: only while you use voice input; speech is turned into text by your phone's built-in speech recognition service.
 • Vibration: button feedback and talk-timer alerts.
 

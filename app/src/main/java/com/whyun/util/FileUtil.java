@@ -1,9 +1,6 @@
 package com.whyun.util;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
 import android.content.Context;
 import android.os.Environment;
@@ -35,22 +32,5 @@ public final class FileUtil {
 			logger.warn("create dir failed: " + dir);
 		}
 		return dir;
-	}
-
-	/**
-	 * 把文本内容写入应用专属目录下的文件。文件已存在时直接覆盖。
-	 *
-	 * @return 实际写入的文件
-	 */
-	public static File saveFile(Context context, String filename, String content) throws IOException {
-		File f = new File(getAppDir(context, null), filename);
-		BufferedWriter output = new BufferedWriter(new FileWriter(f, false));
-		try {
-			output.write(content);
-		} finally {
-			output.close();
-		}
-		logger.debug("file saved: " + f.getAbsolutePath());
-		return f;
 	}
 }

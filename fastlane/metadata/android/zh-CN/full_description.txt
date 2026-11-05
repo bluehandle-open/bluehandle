@@ -19,7 +19,7 @@ https://github.com/bluehandle-open/bluehandle-go/releases/latest
 
 权限说明：
 • 蓝牙：用蓝牙方式连接电脑。
-• 网络：用 Wi-Fi 方式在局域网内连接电脑；在应用内下载电脑端程序时访问 GitHub。
+• 网络：用 Wi-Fi 方式在局域网内连接电脑。
 • 麦克风：仅在使用语音输入时录音，交给手机系统自带的语音识别服务转成文字。
 • 振动：按键反馈和演讲计时提醒。
 

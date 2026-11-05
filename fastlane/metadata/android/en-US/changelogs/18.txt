@@ -1,0 +1,2 @@
+2.0.2:
+• "Download PC app" now shows the download address (copy or share it to your PC) instead of downloading a Windows file onto the phone

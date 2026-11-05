@@ -65,8 +65,8 @@ public interface IBlueToothConst {
 	
 	public static final int TOP_LEVEL_LOG = MyLog.DEBUG;
 	
-	/** 电脑端下载地址，由 bluehandle-go 的站点提供最新版本的 bluehandle.exe */
-	public static final String URL_DOWNLOAD = "https://bluehandle-go.pages.dev/download/bluehandle.exe";
-	public static final String SAVE_FILE_NAME = "blue_handle_pc.7z";
-	public static final String SAVE_URL_FILE = "download.txt";
+	/** 电脑端下载页（bluehandle-go 的站点），用户在电脑浏览器里打开 */
+	public static final String URL_PC_SITE = "https://bluehandle-go.pages.dev";
+	/** 展示给用户看、方便手敲的形式 */
+	public static final String URL_PC_SITE_DISPLAY = "bluehandle-go.pages.dev";
 }
