@@ -1,0 +1,3 @@
+2.0.1:
+• New FC-style gamepad logo
+• Store listing metadata for F-Droid
