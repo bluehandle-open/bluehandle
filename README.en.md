@@ -86,7 +86,7 @@ For more, see the [FAQ in the manual](https://bluehandle.pages.dev/manual#faq) o
 
 ## Development
 
-- Building requires JDK 17: `./gradlew assembleDebug`
+- Building requires JDK 21: `./gradlew assembleDebug`
 - The phone–PC protocol is documented in [`docs/protocol.md`](docs/protocol.md); the PC repository contains an identical copy.
 - `website/` holds the landing page and user manual (static pages); `design/` holds design mockups and the scripts that generate the logo and screenshots.
 - Pushing a `v*` tag makes GitHub Actions build, sign and publish the APK as a Release.

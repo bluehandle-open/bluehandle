@@ -1,0 +1,2 @@
+2.0.3:
+• Build toolchain updated to JDK 21 / Gradle 8.9 (no functional changes)

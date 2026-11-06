@@ -9,8 +9,8 @@ android {
         applicationId "com.whyun.bluehandle"
         minSdk 16
         targetSdk 31
-        versionCode 18
-        versionName "2.0.2"
+        versionCode 19
+        versionName "2.0.3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         // minSdk 16 需要靠 AppCompat 渲染 VectorDrawable 图标
@@ -26,6 +26,10 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    lint {
+        // AGP 8 把 targetSdk 31 视为过期并在 release lint 中报错；暂不升级 targetSdk
+        disable 'ExpiredTargetSdkVersion'
     }
     namespace 'com.whyun.bluetooth'
 }

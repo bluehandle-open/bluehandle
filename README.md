@@ -84,7 +84,7 @@
 
 ## 开发
 
-- 编译需要 JDK 17：`./gradlew assembleDebug`
+- 编译需要 JDK 21：`./gradlew assembleDebug`
 - 手机与电脑之间的通信协议见 [`docs/protocol.md`](docs/protocol.md)，电脑端仓库中有一份相同的文档。
 - `website/` 是宣传页与使用手册（纯静态页面），`design/` 是设计稿和生成 logo、截图的脚本。
 - 推送 `v*` tag 时，GitHub Actions 会编译、签名 APK 并发布 Release。
