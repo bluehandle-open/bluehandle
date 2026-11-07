@@ -1,0 +1,2 @@
+2.0.4:
+• Release builds are now shrunk and optimized with R8 (smaller APK, no functional changes)

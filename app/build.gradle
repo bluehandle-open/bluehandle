@@ -9,8 +9,8 @@ android {
         applicationId "com.whyun.bluehandle"
         minSdk 16
         targetSdk 31
-        versionCode 19
-        versionName "2.0.3"
+        versionCode 20
+        versionName "2.0.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         // minSdk 16 需要靠 AppCompat 渲染 VectorDrawable 图标
@@ -19,7 +19,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
