@@ -4,9 +4,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView style="@style/BhGuide.Title" android:text="把手机和电脑连起来" />
+    <TextView style="@style/BhGuide.Title" android:text="@string/ui_connect_your_phone_and_computer" />
 
-    <TextView style="@style/BhGuide.Desc" android:text="Wi‑Fi 连接时，是电脑去连手机。" />
+    <TextView style="@style/BhGuide.Desc" android:text="@string/ui_with_wi_fi_the_computer_connects_to_your_phone" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,7 +42,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="手机和电脑连同一个 Wi‑Fi"
+                    android:text="@string/ui_connect_both_devices_to_the_same_wi_fi"
                     android:textColor="@color/bh_text"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -52,7 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:text="在同一个路由器下就行"
+                    android:text="@string/ui_both_devices_must_use_the_same_router"
                     android:textSize="13sp" />
             </LinearLayout>
         </LinearLayout>
@@ -85,7 +85,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="手机首页点「开始连接」"
+                    android:text="@string/ui_tap_start_connection_on_your_phone_s_home_screen"
                     android:textColor="@color/bh_text"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -112,7 +112,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="等待电脑连接 · "
+                        android:text="@string/ui_waiting_address_prefix"
                         android:textSize="13sp" />
 
                     <TextView
@@ -157,7 +157,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="在电脑端输入这个地址，点「连接手机」"
+                    android:text="@string/ui_enter_this_address_in_the_desktop_app_and_click_connect_to_phone"
                     android:textColor="@color/bh_text"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -167,7 +167,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:text="手机显示“已连接”就成功了"
+                    android:text="@string/ui_your_phone_will_show_connected_when_ready"
                     android:textSize="13sp" />
             </LinearLayout>
         </LinearLayout>
@@ -178,5 +178,5 @@
         style="@style/BhText.Caption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="没有 Wi‑Fi 也可以在首页切换到蓝牙连接。" />
+        android:text="@string/ui_you_can_also_switch_to_bluetooth_on_the_home_screen" />
 </LinearLayout>

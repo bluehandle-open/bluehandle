@@ -187,16 +187,16 @@ public class VoiceInputActivity extends BaseControlActivity {
 				return onMicTouch(e);
 			}
 		});
-		renderListening(false, IDLE_HINT);
+		renderListening(false, getString(IDLE_HINT));
 		if (!AppPrefs.get(this, IMyPreference.VOICE_HOLD_SEND, true)) {
-			((TextView) findViewById(R.id.tv_mic_hint)).setText("松手后先显示结果 · 上滑取消");
+			((TextView) findViewById(R.id.tv_mic_hint)).setText(getString(R.string.ui_release_to_review_slide_up_to_cancel));
 		}
 		if (!hasRecordPermission()) {
 			ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.RECORD_AUDIO }, REQ_RECORD_AUDIO);
 		}
 	}
 
-	private static final String IDLE_HINT = "按住说话，松手发送";
+	private static final int IDLE_HINT = R.string.ui_hold_to_speak_release_to_send;
 
 	private void toggleListening() {
 		if (listening) {
@@ -221,7 +221,7 @@ public class VoiceInputActivity extends BaseControlActivity {
 				boolean inZone = downY - e.getRawY() > dp(CANCEL_SLIDE_DP);
 				if (inZone != cancelZone) {
 					cancelZone = inZone;
-					tvMicStatus.setText(inZone ? "松开手指，取消这次输入" : "正在聆听，松手结束 · 上滑取消");
+					tvMicStatus.setText(inZone ? getString(R.string.ui_release_to_cancel_this_input) : getString(R.string.ui_listening_release_to_finish_slide_up_to_cancel));
 					btnMic.setAlpha(inZone ? 0.5f : 1f);
 				}
 			}
@@ -261,7 +261,7 @@ public class VoiceInputActivity extends BaseControlActivity {
 		if (!listening) {
 			startListening(true);
 		}
-		tvMicStatus.setText("正在聆听，松手结束 · 上滑取消");
+		tvMicStatus.setText(getString(R.string.ui_listening_release_to_finish_slide_up_to_cancel));
 	}
 
 	private void endHold(boolean cancel) {
@@ -274,13 +274,13 @@ public class VoiceInputActivity extends BaseControlActivity {
 			}
 			etText.setText(beforeHold);
 			etText.setSelection(etText.length());
-			renderListening(false, "已取消");
+			renderListening(false, getString(R.string.ui_cancelled));
 			return;
 		}
 		if (listening) {
 			awaitingHoldResult = true;
 			recognizer.stopListening();
-			tvMicStatus.setText("正在识别…");
+			tvMicStatus.setText(getString(R.string.ui_recognizing));
 		} else if (holdResultReady) {
 			finishHold();
 		}
@@ -289,7 +289,7 @@ public class VoiceInputActivity extends BaseControlActivity {
 	/** 按住期间重新开始识别，新结果追加在已识别文字后面 */
 	private void continueHold() {
 		startListening(true);
-		tvMicStatus.setText(cancelZone ? "松开手指，取消这次输入" : "正在聆听，松手结束 · 上滑取消");
+		tvMicStatus.setText(cancelZone ? getString(R.string.ui_release_to_cancel_this_input) : getString(R.string.ui_listening_release_to_finish_slide_up_to_cancel));
 	}
 
 	/** 按住说话得到最终结果后：按设置直接发送，或留给用户确认 */
@@ -299,7 +299,7 @@ public class VoiceInputActivity extends BaseControlActivity {
 		if (AppPrefs.get(this, IMyPreference.VOICE_HOLD_SEND, true) && !etText.getText().toString().trim().isEmpty()) {
 			send();
 		} else {
-			renderListening(false, "识别完成，可修改后发送");
+			renderListening(false, getString(R.string.ui_recognition_complete_edit_before_sending));
 		}
 	}
 
@@ -315,9 +315,9 @@ public class VoiceInputActivity extends BaseControlActivity {
 			return;
 		}
 		if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-			renderListening(false, IDLE_HINT);
+			renderListening(false, getString(IDLE_HINT));
 		} else {
-			renderListening(false, "没有录音权限，可以直接打字，或在设置里改用系统输入法");
+			renderListening(false, getString(R.string.ui_microphone_permission_denied_type_directly_or_switch_to_the_syste));
 		}
 	}
 
@@ -345,20 +345,20 @@ public class VoiceInputActivity extends BaseControlActivity {
 			intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS, HOLD_SILENCE_MS);
 		}
 		recognizer.startListening(intent);
-		renderListening(true, "正在聆听…");
+		renderListening(true, getString(R.string.ui_listening));
 	}
 
 	private void stopListening() {
 		if (recognizer != null && listening) {
 			recognizer.cancel();
 		}
-		renderListening(false, IDLE_HINT);
+		renderListening(false, getString(IDLE_HINT));
 	}
 
 	private void renderListening(boolean on, String status) {
 		listening = on;
 		tvMicStatus.setText(status);
-		btnMic.setContentDescription(on ? "停止说话" : "开始说话，长按可按住说话");
+		btnMic.setContentDescription(on ? getString(R.string.ui_stop_speaking) : getString(R.string.ui_start_speaking_long_press_to_hold_to_speak));
 		haloOuter.setVisibility(on ? View.VISIBLE : View.INVISIBLE);
 		haloInner.setVisibility(on ? View.VISIBLE : View.INVISIBLE);
 		wave.setVisibility(on ? View.VISIBLE : View.INVISIBLE);
@@ -416,7 +416,7 @@ public class VoiceInputActivity extends BaseControlActivity {
 
 		@Override
 		public void onEndOfSpeech() {
-			tvMicStatus.setText("正在识别…");
+			tvMicStatus.setText(getString(R.string.ui_recognizing));
 		}
 
 		@Override
@@ -455,7 +455,7 @@ public class VoiceInputActivity extends BaseControlActivity {
 				finishHold();
 				return;
 			}
-			renderListening(false, "识别完成，可修改后发送");
+			renderListening(false, getString(R.string.ui_recognition_complete_edit_before_sending));
 		}
 
 		@Override
@@ -468,22 +468,22 @@ public class VoiceInputActivity extends BaseControlActivity {
 		}
 	}
 
-	private static String errorText(int error) {
+	private String errorText(int error) {
 		switch (error) {
 		case SpeechRecognizer.ERROR_NO_MATCH:
 		case SpeechRecognizer.ERROR_SPEECH_TIMEOUT:
-			return "没有听清，点击麦克风再说一次";
+			return getString(R.string.ui_no_speech_recognized_tap_the_microphone_to_try_again);
 		case SpeechRecognizer.ERROR_NETWORK:
 		case SpeechRecognizer.ERROR_NETWORK_TIMEOUT:
-			return "网络不可用，识别失败";
+			return getString(R.string.ui_network_unavailable_recognition_failed);
 		case SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS:
-			return "没有录音权限";
+			return getString(R.string.ui_microphone_permission_denied);
 		case SpeechRecognizer.ERROR_RECOGNIZER_BUSY:
-			return "识别服务忙，请稍后再试";
+			return getString(R.string.ui_recognition_service_busy_try_again_later);
 		case SpeechRecognizer.ERROR_AUDIO:
-			return "录音失败，麦克风可能被占用";
+			return getString(R.string.ui_recording_failed_the_microphone_may_be_in_use);
 		default:
-			return "识别出错（" + error + "），点击麦克风重试";
+			return getString(R.string.recognition_error_code, error);
 		}
 	}
 
@@ -510,9 +510,9 @@ public class VoiceInputActivity extends BaseControlActivity {
 	}
 
 	private void renderLanguage() {
-		String name = SettingsActivity.langName(currentLanguage());
+		String name = SettingsActivity.langName(this, currentLanguage());
 		btnLanguage.setText(name);
-		btnLanguage.setContentDescription("识别语言：" + name + "，点击切换");
+		btnLanguage.setContentDescription(getString(R.string.recognition_language_description, name));
 	}
 
 	// ---------------------------------------------------------------- 发送
@@ -525,13 +525,13 @@ public class VoiceInputActivity extends BaseControlActivity {
 			text = text.replaceAll("[\r\n]+$", "");
 		}
 		if (text.trim().isEmpty() && !enter) {
-			ActivityUtil.toastShow(this, "还没有要发送的文字");
+			ActivityUtil.toastShow(this, getString(R.string.ui_no_text_to_send));
 			return;
 		}
 		stopListening();
 		connection.sendText(text, enter);
 		etText.setText("");
-		ActivityUtil.toastShow(this, "已发送到电脑");
+		ActivityUtil.toastShow(this, getString(R.string.ui_sent_to_computer));
 	}
 
 	// ---------------------------------------------------------------- 生命周期

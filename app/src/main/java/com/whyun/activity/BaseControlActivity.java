@@ -96,9 +96,9 @@ public abstract class BaseControlActivity extends AppCompatActivity implements C
 		ConnectionManager.State state = connection.getState();
 		TextView text = (TextView) findViewById(R.id.status_text);
 		if (text != null) {
-			String type = connection.getConnectType() == IBlueToothConst.BLUETOOTH_TYPE ? "蓝牙" : "Wi‑Fi";
-			text.setText(state == ConnectionManager.State.CONNECTED ? "已连接 · " + type
-					: state == ConnectionManager.State.WAITING ? "等待重新连接…" : "未连接");
+			String type = connection.getConnectType() == IBlueToothConst.BLUETOOTH_TYPE ? getString(R.string.ui_bluetooth) : "Wi‑Fi";
+			text.setText(state == ConnectionManager.State.CONNECTED ? getString(R.string.connected_via, type)
+					: state == ConnectionManager.State.WAITING ? getString(R.string.ui_waiting_to_reconnect) : getString(R.string.ui_not_connected));
 		}
 		View dot = findViewById(R.id.status_dot);
 		if (dot != null) {
@@ -115,16 +115,16 @@ public abstract class BaseControlActivity extends AppCompatActivity implements C
 		((android.widget.ImageView) key.findViewById(R.id.key_icon)).setImageResource(icon);
 		((TextView) key.findViewById(R.id.key_label)).setText(label);
 		((TextView) key.findViewById(R.id.key_hint)).setText(hint);
-		key.setContentDescription(label + "，" + hint);
+		key.setContentDescription(getString(R.string.remote_key_description, label, hint));
 		return key;
 	}
 
 	/** 主动断开：先结束界面，避免断开回调再弹“连接已断开” */
 	protected void confirmDisconnect() {
 		new AlertDialog.Builder(this)
-		.setMessage("断开与电脑的连接？")
-		.setNegativeButton("取消", null)
-		.setPositiveButton("断开", new DialogInterface.OnClickListener() {
+		.setMessage(getString(R.string.ui_disconnect_from_your_computer))
+		.setNegativeButton(getString(R.string.ui_cancel), null)
+		.setPositiveButton(getString(R.string.ui_disconnect), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				finish();
 				connection.stop();
@@ -137,17 +137,17 @@ public abstract class BaseControlActivity extends AppCompatActivity implements C
 			return;
 		}
 		String message = connection.getState() == ConnectionManager.State.WAITING
-				? "与电脑的连接已中断，正在等待电脑端重新连接。连上后这个提示会自动消失，也可以回到首页。"
-				: "与电脑的连接已中断，电脑端可能已经退出。请回到首页重新连接。";
+				? getString(R.string.ui_connection_lost_waiting_for_your_computer_to_reconnect_this_messa)
+				: getString(R.string.ui_connection_lost_the_desktop_app_may_have_closed_return_home_to_re);
 		if (lostDialog != null && lostDialog.isShowing()) {
 			lostDialog.setMessage(message);// 例如重新等待失败，转为未连接
 			return;
 		}
 		lostDialog = new AlertDialog.Builder(this)
-		.setTitle("连接已断开")
+		.setTitle(getString(R.string.ui_disconnected))
 		.setMessage(message)
 		.setCancelable(false)
-		.setPositiveButton("回到首页", new DialogInterface.OnClickListener() {
+		.setPositiveButton(getString(R.string.ui_return_home), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				finish();
 			}

@@ -73,9 +73,9 @@ public class PptActivity extends BaseControlActivity {
 		});
 
 		KeyButtonBinder keys = new KeyButtonBinder(this);
-		keys.tap(setupKey(R.id.key_from_current, R.drawable.bh_ic_ppt, "从当前页", "Shift+F5"), Vk.SHIFT, Vk.F5);
-		keys.tap(setupKey(R.id.key_black, R.drawable.bh_ic_black_screen, "黑屏", "B"), Vk.KEY_B);
-		keys.tap(setupKey(R.id.key_exit, R.drawable.bh_ic_close, "退出放映", "Esc"), Vk.ESC);
+		keys.tap(setupKey(R.id.key_from_current, R.drawable.bh_ic_ppt, getString(R.string.ui_from_current_slide), "Shift+F5"), Vk.SHIFT, Vk.F5);
+		keys.tap(setupKey(R.id.key_black, R.drawable.bh_ic_black_screen, getString(R.string.ui_black_screen), "B"), Vk.KEY_B);
+		keys.tap(setupKey(R.id.key_exit, R.drawable.bh_ic_close, getString(R.string.ui_end_slideshow), "Esc"), Vk.ESC);
 
 		findViewById(R.id.btn_prev).setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -126,8 +126,8 @@ public class PptActivity extends BaseControlActivity {
 		volumeKeys = AppPrefs.get(this, IMyPreference.PPT_VOLUME_KEYS, true);
 		findViewById(R.id.tv_volume_hint).setVisibility(volumeKeys ? View.VISIBLE : View.GONE);
 		((TextView) findViewById(R.id.tv_feedback_status)).setText(
-				"翻页震动 " + (vibrateOnFlip ? "已开启" : "已关闭") + "    屏幕常亮 "
-						+ (AppPrefs.get(this, IMyPreference.KEEP_SCREEN_ON, true) ? "已开启" : "已关闭"));
+				getString(R.string.presentation_feedback, vibrateOnFlip ? getString(R.string.ui_on) : getString(R.string.ui_off),
+				AppPrefs.get(this, IMyPreference.KEEP_SCREEN_ON, true) ? getString(R.string.ui_on) : getString(R.string.ui_off)));
 		handler.post(tick);
 	}
 
@@ -188,7 +188,7 @@ public class PptActivity extends BaseControlActivity {
 
 	private void renderTimerButton() {
 		btnTimerToggle.setImageResource(running ? R.drawable.bh_ic_pause : R.drawable.bh_ic_play);
-		btnTimerToggle.setContentDescription(running ? "暂停计时" : "继续计时");
+		btnTimerToggle.setContentDescription(running ? getString(R.string.ui_pause_timer) : getString(R.string.ui_resume_timer));
 	}
 
 	private void renderTimer() {
@@ -197,11 +197,11 @@ public class PptActivity extends BaseControlActivity {
 		int targetMin = AppPrefs.get(this, IMyPreference.PPT_TARGET_MINUTES, IMyPreference.DEFAULT_PPT_MINUTES);
 		long remaining = targetMin * 60_000L - elapsed;
 		if (remaining >= 0) {
-			tvRemaining.setText("距 " + targetMin + " 分钟还剩 " + format(remaining));
+			tvRemaining.setText(getString(R.string.presentation_remaining, targetMin, format(remaining)));
 			tvRemaining.setTextColor(ContextCompat.getColor(this,
 					remaining <= REMIND_BEFORE_MS ? R.color.bh_action : R.color.bh_text_secondary));
 		} else {
-			tvRemaining.setText("已超时 " + format(-remaining));
+			tvRemaining.setText(getString(R.string.presentation_overtime, format(-remaining)));
 			tvRemaining.setTextColor(ContextCompat.getColor(this, R.color.bh_action));
 		}
 		if (running && !reminded && remaining <= REMIND_BEFORE_MS && remaining > 0

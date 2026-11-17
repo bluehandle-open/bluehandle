@@ -33,7 +33,7 @@
             android:minWidth="@dimen/bh_touch_min"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
-            android:text="跳过"
+            android:text="@string/ui_skip"
             android:textColor="@color/bh_text_secondary"
             android:textSize="14sp" />
     </LinearLayout>
@@ -61,7 +61,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/bh_bg_card"
         android:gravity="center"
-        android:text="把下载地址发到电脑"
+        android:text="@string/ui_send_the_download_link_to_your_computer"
         android:textColor="@color/bh_text"
         android:textSize="15sp"
         android:visibility="gone" />

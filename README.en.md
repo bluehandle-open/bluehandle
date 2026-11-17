@@ -94,3 +94,7 @@ For more, see the [FAQ in the manual](https://bluehandle.pages.dev/manual#faq) o
 ## License
 
 [MIT](LICENSE)
+
+## App language
+
+The Android interface supports Chinese and English and follows your phone's system language. English locales use English; other locales fall back to Chinese. Speech recognition language is configured separately in Settings.

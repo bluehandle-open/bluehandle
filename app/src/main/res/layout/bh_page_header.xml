@@ -12,7 +12,7 @@
         android:layout_width="@dimen/bh_touch_min"
         android:layout_height="@dimen/bh_touch_min"
         android:background="@drawable/bh_bg_card"
-        android:contentDescription="返回"
+        android:contentDescription="@string/ui_back"
         android:scaleType="center"
         app:srcCompat="@drawable/bh_ic_chevron_left"
         app:tint="@color/bh_text" />

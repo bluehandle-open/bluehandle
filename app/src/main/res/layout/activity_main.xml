@@ -44,7 +44,7 @@
                 android:layout_width="@dimen/bh_touch_min"
                 android:layout_height="@dimen/bh_touch_min"
                 android:background="@drawable/bh_bg_card"
-                android:contentDescription="设置"
+                android:contentDescription="@string/ui_settings"
                 android:scaleType="center"
                 app:srcCompat="@drawable/bh_ic_settings"
                 app:tint="@color/bh_text" />
@@ -83,7 +83,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="蓝牙"
+                    android:text="@string/ui_bluetooth"
                     android:textSize="15sp" />
             </LinearLayout>
 
@@ -111,7 +111,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    android:text="开始连接"
+                    android:text="@string/ui_start_connection"
                     android:textColor="@color/bh_on_primary"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -153,7 +153,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="遥控模式"
+            android:text="@string/ui_remote_mode"
             android:textColor="@color/bh_text"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -189,7 +189,7 @@
                 android:background="@drawable/bh_bg_card"
                 android:drawablePadding="8dp"
                 android:gravity="center"
-                android:text="下载电脑端"
+                android:text="@string/ui_get_desktop_app"
                 android:textColor="@color/bh_text"
                 android:textSize="14sp" />
 
@@ -205,7 +205,7 @@
                 android:background="@drawable/bh_bg_card"
                 android:drawablePadding="8dp"
                 android:gravity="center"
-                android:text="使用帮助"
+                android:text="@string/ui_help"
                 android:textColor="@color/bh_text"
                 android:textSize="14sp" />
         </LinearLayout>

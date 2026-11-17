@@ -67,7 +67,7 @@ public class KeyEditActivity extends AppCompatActivity {
 			combos.put(b.field, keys);
 		}
 
-		((TextView) findViewById(R.id.header_title)).setText(editing == null ? "新建方案" : "编辑方案");
+		((TextView) findViewById(R.id.header_title)).setText(editing == null ? getString(R.string.ui_new_scheme) : getString(R.string.ui_edit_scheme_title));
 		findViewById(R.id.header_back).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -137,7 +137,7 @@ public class KeyEditActivity extends AppCompatActivity {
 		lp.width = ViewGroup.LayoutParams.WRAP_CONTENT;
 		right.setLayoutParams(lp);
 		TextView save = new TextView(this);
-		save.setText("保存");
+		save.setText(getString(R.string.ui_save));
 		save.setTextColor(ContextCompat.getColor(this, R.color.bh_on_primary));
 		save.setTextSize(15);
 		save.setGravity(Gravity.CENTER);
@@ -162,7 +162,7 @@ public class KeyEditActivity extends AppCompatActivity {
 		String[] keys = currentCombo();
 		for (int i = 0; i < SLOTS; i++) {
 			if (i != selectedSlot && keyName.equals(keys[i])) {
-				ActivityUtil.toastShow(this, "组合里已有这个键");
+				ActivityUtil.toastShow(this, getString(R.string.ui_this_key_is_already_in_the_combination));
 				return;
 			}
 		}
@@ -181,15 +181,15 @@ public class KeyEditActivity extends AppCompatActivity {
 
 	private void renderEditor() {
 		GamepadButtons.Button b = GamepadButtons.ALL.get(selectedButton);
-		tvEditTitle.setText("“" + b.label + "” 键 · 最多 3 键组合");
+		tvEditTitle.setText(getString(R.string.edit_button_title, b.label(this)));
 		String[] keys = currentCombo();
 		Set<String> used = new HashSet<String>();
 		for (int i = 0; i < SLOTS; i++) {
 			boolean empty = keys[i] == null;
-			slotViews[i].setText(empty ? "空" : GamepadButtons.display(keys[i]));
+			slotViews[i].setText(empty ? getString(R.string.ui_empty) : GamepadButtons.display(this, keys[i]));
 			slotViews[i].setTextColor(ContextCompat.getColor(this, empty ? R.color.bh_text_secondary : R.color.bh_text));
 			slotViews[i].setSelected(i == selectedSlot);
-			slotViews[i].setContentDescription("第" + (i + 1) + "个键 " + slotViews[i].getText());
+			slotViews[i].setContentDescription(getString(R.string.key_slot_description, i + 1, slotViews[i].getText()));
 			if (!empty) {
 				used.add(keys[i]);
 			}
@@ -219,7 +219,7 @@ public class KeyEditActivity extends AppCompatActivity {
 			cell.setClickable(true);
 
 			TextView label = new TextView(this);
-			label.setText(GamepadButtons.ALL.get(i).label);
+			label.setText(GamepadButtons.ALL.get(i).label(this));
 			label.setTextSize(14);
 			label.setTextColor(ContextCompat.getColor(this, R.color.bh_text_secondary));
 			cell.addView(label, new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
@@ -257,17 +257,17 @@ public class KeyEditActivity extends AppCompatActivity {
 			LinearLayout cell = (LinearLayout) row.getChildAt(i % 2);
 			GamepadButtons.Button b = GamepadButtons.ALL.get(i);
 			String[] k = combos.get(b.field);
-			String c = GamepadButtons.combo(k[0], k[1], k[2]);
-			((TextView) cell.getChildAt(1)).setText(c.length() == 0 ? "未设置" : c);
+			String c = GamepadButtons.combo(this, k[0], k[1], k[2]);
+			((TextView) cell.getChildAt(1)).setText(c.length() == 0 ? getString(R.string.ui_not_set) : c);
 			cell.setSelected(i == selectedButton);
-			cell.setContentDescription(b.label + " 映射为 " + (c.length() == 0 ? "未设置" : c));
+			cell.setContentDescription(getString(R.string.key_mapping_description, b.label(this), c.length() == 0 ? getString(R.string.ui_not_set) : c));
 		}
 	}
 
 	private void save() {
 		String name = etName.getText().toString().trim();
 		if (name.length() == 0) {
-			ActivityUtil.toastShow(this, "请填写方案名称");
+			ActivityUtil.toastShow(this, getString(R.string.ui_enter_a_scheme_name));
 			etName.requestFocus();
 			return;
 		}
@@ -289,10 +289,10 @@ public class KeyEditActivity extends AppCompatActivity {
 		boolean ok = editing == null ? op.addKey(name, values) : op.updateKey(editing.getKeyId(), values);
 		op.readFinish();
 		if (!ok) {
-			ActivityUtil.toastShow(this, "保存失败，请稍后重试");
+			ActivityUtil.toastShow(this, getString(R.string.ui_unable_to_save_try_again_later));
 			return;
 		}
-		ActivityUtil.toastShow(this, "已保存");
+		ActivityUtil.toastShow(this, getString(R.string.ui_saved));
 		dirty = false;
 		finish();
 	}
@@ -304,9 +304,9 @@ public class KeyEditActivity extends AppCompatActivity {
 			return;
 		}
 		new AlertDialog.Builder(this)
-		.setMessage("修改尚未保存，确定放弃？")
-		.setNegativeButton("继续编辑", null)
-		.setPositiveButton("放弃", new DialogInterface.OnClickListener() {
+		.setMessage(getString(R.string.ui_discard_unsaved_changes))
+		.setNegativeButton(getString(R.string.ui_keep_editing), null)
+		.setPositiveButton(getString(R.string.ui_discard), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				dirty = false;
 				finish();

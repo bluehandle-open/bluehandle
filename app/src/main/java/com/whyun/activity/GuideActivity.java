@@ -132,10 +132,10 @@ public class GuideActivity extends AppCompatActivity {
 	private void render(int position) {
 		boolean last = position == PAGES.length - 1;
 		boolean step = position == PAGE_PC || position == PAGE_CONNECT;
-		tvStep.setText(step ? "第 " + position + " 步 / 共 2 步" : "");
+		tvStep.setText(step ? getString(R.string.guide_step, position) : "");
 		btnSkip.setVisibility(last ? View.INVISIBLE : View.VISIBLE);
 		btnShare.setVisibility(position == PAGE_PC ? View.VISIBLE : View.GONE);
-		btnNext.setText(last ? "开始使用" : position == PAGE_PC ? "已经装好，下一步" : "下一步");
+		btnNext.setText(last ? getString(R.string.ui_get_started) : position == PAGE_PC ? getString(R.string.ui_installed_next) : getString(R.string.ui_next));
 		btnNext.setBackgroundResource(last ? R.drawable.bh_bg_action : R.drawable.bh_bg_primary);
 		btnNext.setTextColor(getResources().getColor(last ? R.color.bh_on_action : R.color.bh_on_primary));
 
@@ -156,6 +156,6 @@ public class GuideActivity extends AppCompatActivity {
 			return;
 		}
 		String ip = MainActivity.localWifiIp(this);
-		tvIp.setText(ip == null ? "请先连接 Wi‑Fi" : ip);
+		tvIp.setText(ip == null ? getString(R.string.ui_connect_to_wi_fi_first) : ip);
 	}
 }

@@ -68,7 +68,7 @@ public class GamepadActivity extends BaseControlActivity implements IBlueToothCo
 			public void onClick(View v) {
 				boolean on = !AppPrefs.get(GamepadActivity.this, IMyPreference.ENABLE_GRAVITY, false);
 				AppPrefs.put(GamepadActivity.this, IMyPreference.ENABLE_GRAVITY, on);
-				ActivityUtil.toastShow(GamepadActivity.this, on ? "重力感应已开启，左右倾斜手机转向" : "重力感应已关闭");
+				ActivityUtil.toastShow(GamepadActivity.this, on ? getString(R.string.ui_tilt_steering_on_tilt_your_phone_left_or_right_to_steer) : getString(R.string.ui_tilt_steering_off));
 				applyToggles();
 			}
 		});
@@ -129,8 +129,8 @@ public class GamepadActivity extends BaseControlActivity implements IBlueToothCo
 	}
 
 	private void applyScheme() {
-		tvScheme.setText("键位：" + GamepadSchemeActivity.applySelectedScheme(this));
-		findViewById(R.id.btn_scheme).setContentDescription("当前键位 " + tvScheme.getText() + "，点击更换或编辑键位方案");
+		tvScheme.setText(getString(R.string.current_scheme, GamepadSchemeActivity.applySelectedScheme(this)));
+		findViewById(R.id.btn_scheme).setContentDescription(getString(R.string.current_scheme_description, tvScheme.getText()));
 	}
 
 	/** 按偏好刷新重力感应与震动开关的显示和行为 */

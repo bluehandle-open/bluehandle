@@ -29,7 +29,7 @@ import com.whyun.util.AppPrefs;
  */
 public class GamepadSchemeActivity extends AppCompatActivity implements IBlueToothConst {
 
-	private static final String DEFAULT_NAME = "默认键位";
+	private static final int DEFAULT_NAME = R.string.ui_default_keys;
 
 	private final ArrayList<KeyInfo> schemes = new ArrayList<KeyInfo>();
 	private int selectedId = SET_KEY_HANDLE;
@@ -42,7 +42,7 @@ public class GamepadSchemeActivity extends AppCompatActivity implements IBlueToo
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_gamepad_scheme);
 
-		((TextView) findViewById(R.id.header_title)).setText("选择键位方案");
+		((TextView) findViewById(R.id.header_title)).setText(getString(R.string.ui_choose_key_scheme));
 		findViewById(R.id.header_back).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -53,7 +53,7 @@ public class GamepadSchemeActivity extends AppCompatActivity implements IBlueToo
 		listView = (LinearLayout) findViewById(R.id.scheme_list);
 		defaultRow = findViewById(R.id.scheme_default);
 		((TextView) defaultRow.findViewById(R.id.scheme_name)).setText(DEFAULT_NAME);
-		((TextView) defaultRow.findViewById(R.id.scheme_summary)).setText(GamepadButtons.defaultSummary());
+		((TextView) defaultRow.findViewById(R.id.scheme_summary)).setText(GamepadButtons.defaultSummary(this));
 		defaultRow.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -100,10 +100,10 @@ public class GamepadSchemeActivity extends AppCompatActivity implements IBlueToo
 		for (final KeyInfo info : schemes) {
 			View row = inflater.inflate(R.layout.bh_item_scheme, listView, false);
 			((TextView) row.findViewById(R.id.scheme_name)).setText(info.getKeyname());
-			((TextView) row.findViewById(R.id.scheme_summary)).setText(GamepadButtons.summary(info));
+			((TextView) row.findViewById(R.id.scheme_summary)).setText(GamepadButtons.summary(this, info));
 			View edit = row.findViewById(R.id.scheme_edit);
 			edit.setVisibility(View.VISIBLE);
-			edit.setContentDescription("编辑方案 " + info.getKeyname());
+			edit.setContentDescription(getString(R.string.edit_scheme_description, info.getKeyname()));
 			edit.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -128,7 +128,7 @@ public class GamepadSchemeActivity extends AppCompatActivity implements IBlueToo
 			});
 			listView.addView(row);
 		}
-		((TextView) findViewById(R.id.scheme_count)).setText(schemes.isEmpty() ? "还没有" : schemes.size() + " 套");
+		((TextView) findViewById(R.id.scheme_count)).setText(schemes.isEmpty() ? getString(R.string.ui_none_yet) : getString(R.string.scheme_count, schemes.size()));
 		render();
 	}
 
@@ -160,23 +160,23 @@ public class GamepadSchemeActivity extends AppCompatActivity implements IBlueToo
 			row.setSelected(on);
 			row.findViewById(R.id.scheme_current).setVisibility(on ? View.VISIBLE : View.GONE);
 		}
-		btnOpen.setText("用「" + selectedName() + "」打开手柄");
+		btnOpen.setText(getString(R.string.open_scheme, selectedName()));
 	}
 
 	private String selectedName() {
 		if (selectedId < 0) {
-			return DEFAULT_NAME;
+			return getString(DEFAULT_NAME);
 		}
 		KeyInfo info = find(selectedId);
-		return info == null ? DEFAULT_NAME : info.getKeyname();
+		return info == null ? getString(DEFAULT_NAME) : info.getKeyname();
 	}
 
 	private void confirmDelete(final KeyInfo info) {
 		new AlertDialog.Builder(this)
-		.setTitle("删除方案")
-		.setMessage("确定删除「" + info.getKeyname() + "」？删除后无法恢复。")
-		.setNegativeButton("取消", null)
-		.setPositiveButton("删除", new DialogInterface.OnClickListener() {
+		.setTitle(getString(R.string.ui_delete_scheme))
+		.setMessage(getString(R.string.delete_scheme_confirmation, info.getKeyname()))
+		.setNegativeButton(getString(R.string.ui_cancel), null)
+		.setPositiveButton(getString(R.string.ui_delete_action), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				KeyTableOperator op = new KeyTableOperator(GamepadSchemeActivity.this);
 				op.deleteKey(info.getKeyId());
@@ -188,7 +188,7 @@ public class GamepadSchemeActivity extends AppCompatActivity implements IBlueToo
 
 	private void openGamepad() {
 		if (!ConnectionManager.get().isConnected()) {
-			ActivityUtil.toastShow(this, "请先在首页连接电脑");
+			ActivityUtil.toastShow(this, getString(R.string.ui_connect_to_your_computer_on_the_home_screen_first));
 			return;
 		}
 		applySelectedScheme(this);
@@ -215,6 +215,6 @@ public class GamepadSchemeActivity extends AppCompatActivity implements IBlueToo
 			AppPrefs.put(context, IMyPreference.KEY_TYPE, SET_KEY_HANDLE);
 		}
 		HandleKeys.getInstance().setKeys(null, SET_KEY_HANDLE, null);
-		return DEFAULT_NAME;
+		return context.getString(DEFAULT_NAME);
 	}
 }

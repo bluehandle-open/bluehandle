@@ -29,10 +29,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
                 android:lineSpacingMultiplier="1.3"
-                android:text="手柄界面不变，只改变每个按钮发给电脑的键。上次使用的方案会自动选中。"
+                android:text="@string/ui_the_gamepad_layout_stays_the_same_only_the_keys_sent_to_your_comp"
                 android:textSize="13sp" />
 
-            <TextView style="@style/BhText.Section" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="内置" />
+            <TextView style="@style/BhText.Section" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="@string/ui_built_in" />
 
             <include android:id="@+id/scheme_default" layout="@layout/bh_item_scheme" />
 
@@ -42,7 +42,7 @@
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal">
 
-                <TextView style="@style/BhText.Section" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="我的方案" />
+                <TextView style="@style/BhText.Section" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/ui_my_schemes" />
 
                 <TextView
                     android:id="@+id/scheme_count"
@@ -65,7 +65,7 @@
                 android:layout_marginTop="@dimen/bh_gap"
                 android:background="@drawable/bh_bg_dashed"
                 android:gravity="center"
-                android:text="＋ 新建方案"
+                android:text="@string/ui_new_scheme_action"
                 android:textColor="@color/bh_primary_text"
                 android:textSize="15sp" />
 
@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:paddingStart="4dp"
-                android:text="长按方案可删除" />
+                android:text="@string/ui_long_press_a_scheme_to_delete_it" />
         </LinearLayout>
     </ScrollView>
 

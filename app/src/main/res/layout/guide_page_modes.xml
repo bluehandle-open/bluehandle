@@ -5,9 +5,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView style="@style/BhGuide.Title" android:text="连上以后，选一种用法" />
+    <TextView style="@style/BhGuide.Title" android:text="@string/ui_once_connected_choose_a_mode" />
 
-    <TextView style="@style/BhGuide.Desc" android:text="随时可以回首页换，连接不会断开。" />
+    <TextView style="@style/BhGuide.Desc" android:text="@string/ui_return_home_to_switch_modes_at_any_time_and_stay_connected" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="游戏手柄"
+                android:text="@string/ui_gamepad"
                 android:textColor="@color/bh_text"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
                 android:lineSpacingMultiplier="1.2"
-                android:text="横屏手柄，按键可以自定义" />
+                android:text="@string/ui_landscape_gamepad_with_customizable_keys" />
         </LinearLayout>
 
         <LinearLayout
@@ -83,7 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="遥控器"
+                android:text="@string/ui_remote"
                 android:textColor="@color/bh_text"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
                 android:lineSpacingMultiplier="1.2"
-                android:text="音量、方向、数字键，躺着看视频" />
+                android:text="@string/ui_volume_arrows_and_numbers_for_watching_videos" />
         </LinearLayout>
 
     </LinearLayout>
@@ -132,7 +132,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="PPT 演示"
+                android:text="@string/ui_presentation"
                 android:textColor="@color/bh_text"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -143,7 +143,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
                 android:lineSpacingMultiplier="1.2"
-                android:text="翻页、计时，音量键也能翻" />
+                android:text="@string/ui_slides_timer_and_volume_key_navigation" />
         </LinearLayout>
 
         <LinearLayout
@@ -173,7 +173,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="语音输入"
+                android:text="@string/ui_voice_input"
                 android:textColor="@color/bh_text"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -184,7 +184,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
                 android:lineSpacingMultiplier="1.2"
-                android:text="在遥控器里，按住说话，文字直接打到电脑上" />
+                android:text="@string/ui_in_the_remote_speak_to_type_directly_on_your_computer" />
         </LinearLayout>
 
     </LinearLayout>
