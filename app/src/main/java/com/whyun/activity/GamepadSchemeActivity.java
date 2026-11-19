@@ -160,7 +160,8 @@ public class GamepadSchemeActivity extends AppCompatActivity implements IBlueToo
 			row.setSelected(on);
 			row.findViewById(R.id.scheme_current).setVisibility(on ? View.VISIBLE : View.GONE);
 		}
-		btnOpen.setText(getString(R.string.open_scheme, selectedName()));
+		btnOpen.setText(R.string.open_gamepad_action);
+		btnOpen.setContentDescription(getString(R.string.open_scheme, selectedName()));
 	}
 
 	private String selectedName() {

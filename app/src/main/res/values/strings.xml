@@ -260,6 +260,7 @@
     <string name="ui_turn_your_phone_into_a_ngamepad_remote_and_keyboard">"把手机变成电脑的\n手柄、遥控器和键盘"</string>
     <string name="ui_play_games_watch_videos_present_slides_or_dictate_text_without_wa">"打游戏、躺着看视频、上台讲 PPT、对着手机说话打字——都不用再走到电脑前。"</string>
     <string name="guide_step">"第 %1$d 步 / 共 2 步"</string>
+    <string name="open_gamepad_action">"打开手柄"</string>
     <string name="open_scheme">"用「%1$s」打开手柄"</string>
     <string name="delete_scheme_confirmation">"确定删除「%1$s」？删除后无法恢复。"</string>
     <string name="edit_scheme_description">"编辑方案 %1$s"</string>

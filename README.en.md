@@ -4,16 +4,16 @@
 
 Turn your phone into a gamepad, remote control and keyboard for your PC. The phone and the PC talk directly over Wi‑Fi or Bluetooth — no server in between.
 
-> The app's interface is currently available in Simplified Chinese only.
+> The Android app supports English and Simplified Chinese and follows your phone's system language.
 
 <p align="center">
-  <picture><source media="(prefers-color-scheme: dark)" srcset="website/assets/screens/main.webp"><img src="website/assets/screens/main-light.webp" width="180" alt="Home"></picture>
-  <picture><source media="(prefers-color-scheme: dark)" srcset="website/assets/screens/ppt.webp"><img src="website/assets/screens/ppt-light.webp" width="180" alt="Presentation"></picture>
-  <picture><source media="(prefers-color-scheme: dark)" srcset="website/assets/screens/tvvoice.webp"><img src="website/assets/screens/tvvoice-light.webp" width="180" alt="Voice input"></picture>
-  <picture><source media="(prefers-color-scheme: dark)" srcset="website/assets/screens/gamepadscheme.webp"><img src="website/assets/screens/gamepadscheme-light.webp" width="180" alt="Key mapping profiles"></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="website/assets/screens/en/main.webp"><img src="website/assets/screens/en/main-light.webp" width="180" alt="Home"></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="website/assets/screens/en/ppt.webp"><img src="website/assets/screens/en/ppt-light.webp" width="180" alt="Presentation"></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="website/assets/screens/en/tvvoice.webp"><img src="website/assets/screens/en/tvvoice-light.webp" width="180" alt="Voice input"></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="website/assets/screens/en/gamepadscheme.webp"><img src="website/assets/screens/en/gamepadscheme-light.webp" width="180" alt="Key mapping profiles"></picture>
 </p>
 <p align="center">
-  <picture><source media="(prefers-color-scheme: dark)" srcset="website/assets/screens/gamepad.webp"><img src="website/assets/screens/gamepad-light.webp" width="560" alt="Gamepad"></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="website/assets/screens/en/gamepad.webp"><img src="website/assets/screens/en/gamepad-light.webp" width="560" alt="Gamepad"></picture>
 </p>
 
 - **Gamepad**: landscape, two hands — D‑pad, A / B / X / Y, Select and Start. Multi‑touch, tilt control, and a separate key‑mapping profile per game; each button can send a combination of up to 3 keys.
@@ -37,14 +37,14 @@ The PC app's source code lives in [bluehandle-go](https://github.com/bluehandle-
 ## Quick start
 
 1. Run `bluehandle.exe` on your PC.
-2. Open BlueHandle on your phone, choose Wi‑Fi or Bluetooth, and tap 开始连接 (Connect).
+2. Open BlueHandle on your phone, choose Wi‑Fi or Bluetooth, and tap Connect.
    - Wi‑Fi: put the phone and the PC on the same network, then enter the address shown on the phone's home screen into the PC app (default port 8088).
    - Bluetooth: pair the phone with the PC in system settings first, then pick the phone from the PC app's Bluetooth list.
 3. Once connected, choose a mode on the home screen. Switching modes or going back home keeps the connection alive.
 
 <p align="center">
-  <img src="website/assets/screens/pc-connect.webp" width="280" alt="PC app: choose a connection">
-  <img src="website/assets/screens/pc-connected.webp" width="280" alt="PC app: connected">
+  <img src="website/assets/screens/en/pc-connect.webp" width="280" alt="PC app: choose a connection">
+  <img src="website/assets/screens/en/pc-connected.webp" width="280" alt="PC app: connected">
 </p>
 
 See the user manual [bluehandle.pages.dev/manual](https://bluehandle.pages.dev/manual) (Chinese) for details.
@@ -60,11 +60,11 @@ See the user manual [bluehandle.pages.dev/manual](https://bluehandle.pages.dev/m
 
 **The PC app says "the phone refused the connection"**
 
-The PC found the phone, but the phone isn't waiting for a connection. Tap 开始连接 (Connect) on the phone and make sure both sides use the same port.
+The PC found the phone, but the phone isn't waiting for a connection. Tap Connect on the phone and make sure both sides use the same port.
 
 **My phone doesn't appear in the Bluetooth list**
 
-Pair the phone with the PC in Windows settings first, then click Refresh in the PC app. On the phone, select Bluetooth and tap 开始连接 (Connect).
+Pair the phone with the PC in Windows settings first, then click Refresh in the PC app. On the phone, select Bluetooth and tap Connect.
 
 **Connected, but keys do nothing in a certain program**
 
@@ -88,7 +88,6 @@ For more, see the [FAQ in the manual](https://bluehandle.pages.dev/manual#faq) o
 
 - Building requires JDK 21: `./gradlew assembleDebug`
 - The phone–PC protocol is documented in [`docs/protocol.md`](docs/protocol.md); the PC repository contains an identical copy.
-- `website/` holds the landing page and user manual (static pages); `design/` holds design mockups and the scripts that generate the logo and screenshots.
 - Pushing a `v*` tag makes GitHub Actions build, sign and publish the APK as a Release.
 
 ## License
