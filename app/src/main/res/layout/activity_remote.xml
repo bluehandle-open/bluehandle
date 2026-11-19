@@ -29,7 +29,7 @@
                 android:layout_width="@dimen/bh_touch_min"
                 android:layout_height="@dimen/bh_touch_min"
                 android:background="@drawable/bh_bg_card"
-                android:contentDescription="返回首页，连接保持"
+                android:contentDescription="@string/ui_return_home_and_stay_connected"
                 android:scaleType="center"
                 app:srcCompat="@drawable/bh_ic_chevron_left"
                 app:tint="@color/bh_text" />
@@ -45,7 +45,7 @@
                     style="@style/BhText.Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="电脑遥控器" />
+                    android:text="@string/ui_remote_control" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -102,7 +102,7 @@
                 android:layout_gravity="top|center_horizontal"
                 android:layout_marginTop="6dp"
                 android:background="@drawable/bh_bg_ring_btn"
-                android:contentDescription="方向上">
+                android:contentDescription="@string/ui_up_arrow">
 
                 <ImageView android:layout_width="26dp" android:layout_height="26dp" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_chevron_up" app:tint="@color/bh_text" />
             </FrameLayout>
@@ -114,7 +114,7 @@
                 android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginBottom="6dp"
                 android:background="@drawable/bh_bg_ring_btn"
-                android:contentDescription="方向下">
+                android:contentDescription="@string/ui_down_arrow">
 
                 <ImageView android:layout_width="26dp" android:layout_height="26dp" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_chevron_down" app:tint="@color/bh_text" />
             </FrameLayout>
@@ -126,7 +126,7 @@
                 android:layout_gravity="start|center_vertical"
                 android:layout_marginStart="6dp"
                 android:background="@drawable/bh_bg_ring_btn"
-                android:contentDescription="方向左">
+                android:contentDescription="@string/ui_left_arrow">
 
                 <ImageView android:layout_width="26dp" android:layout_height="26dp" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_chevron_left" app:tint="@color/bh_text" />
             </FrameLayout>
@@ -138,7 +138,7 @@
                 android:layout_gravity="end|center_vertical"
                 android:layout_marginEnd="6dp"
                 android:background="@drawable/bh_bg_ring_btn"
-                android:contentDescription="方向右">
+                android:contentDescription="@string/ui_right_arrow">
 
                 <ImageView android:layout_width="26dp" android:layout_height="26dp" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_chevron_right" app:tint="@color/bh_text" />
             </FrameLayout>
@@ -149,7 +149,7 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:background="@drawable/bh_bg_ok"
-                android:contentDescription="确定，回车"
+                android:contentDescription="@string/ui_ok_enter"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -190,11 +190,11 @@
                 android:paddingTop="6dp"
                 android:paddingBottom="6dp">
 
-                <FrameLayout android:id="@+id/key_vol_up" android:layout_width="64dp" android:layout_height="52dp" android:background="@drawable/bh_bg_ring_btn" android:contentDescription="音量加">
+                <FrameLayout android:id="@+id/key_vol_up" android:layout_width="64dp" android:layout_height="52dp" android:background="@drawable/bh_bg_ring_btn" android:contentDescription="@string/ui_volume_up">
                     <ImageView android:layout_width="22dp" android:layout_height="22dp" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_plus" app:tint="@color/bh_text" />
                 </FrameLayout>
-                <TextView android:layout_width="wrap_content" android:layout_height="0dp" android:layout_weight="1" android:gravity="center" android:text="音量" android:textColor="@color/bh_text_secondary" android:textSize="12sp" />
-                <FrameLayout android:id="@+id/key_vol_down" android:layout_width="64dp" android:layout_height="52dp" android:background="@drawable/bh_bg_ring_btn" android:contentDescription="音量减">
+                <TextView android:layout_width="wrap_content" android:layout_height="0dp" android:layout_weight="1" android:gravity="center" android:text="@string/ui_volume_label" android:textColor="@color/bh_text_secondary" android:textSize="12sp" />
+                <FrameLayout android:id="@+id/key_vol_down" android:layout_width="64dp" android:layout_height="52dp" android:background="@drawable/bh_bg_ring_btn" android:contentDescription="@string/ui_volume_down">
                     <ImageView android:layout_width="22dp" android:layout_height="22dp" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_minus" app:tint="@color/bh_text" />
                 </FrameLayout>
             </LinearLayout>
@@ -214,13 +214,13 @@
                     android:layout_weight="3"
                     android:background="@drawable/bh_bg_card_selected"
                     android:clickable="true"
-                    android:contentDescription="语音输入"
+                    android:contentDescription="@string/ui_voice_input"
                     android:focusable="true"
                     android:gravity="center"
                     android:orientation="vertical">
 
                     <ImageView android:layout_width="28dp" android:layout_height="28dp" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_mic" app:tint="@color/bh_primary_text" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="语音输入" android:textColor="@color/bh_primary_text" android:textSize="13sp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="@string/ui_voice_input" android:textColor="@color/bh_primary_text" android:textSize="13sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -231,13 +231,13 @@
                     android:layout_weight="2"
                     android:background="@drawable/bh_bg_card"
                     android:clickable="true"
-                    android:contentDescription="数字键"
+                    android:contentDescription="@string/ui_number_pad"
                     android:focusable="true"
                     android:gravity="center"
                     android:orientation="horizontal">
 
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="123" android:textColor="@color/bh_text" android:textSize="17sp" android:textStyle="bold" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="8dp" android:text="数字键" android:textColor="@color/bh_text_secondary" android:textSize="11sp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="8dp" android:text="@string/ui_number_pad" android:textColor="@color/bh_text_secondary" android:textSize="11sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -250,14 +250,14 @@
                 android:paddingTop="6dp"
                 android:paddingBottom="6dp">
 
-                <FrameLayout android:id="@+id/key_page_up" android:layout_width="64dp" android:layout_height="52dp" android:background="@drawable/bh_bg_ring_btn" android:contentDescription="向上翻页">
+                <FrameLayout android:id="@+id/key_page_up" android:layout_width="64dp" android:layout_height="52dp" android:background="@drawable/bh_bg_ring_btn" android:contentDescription="@string/ui_page_up">
                     <ImageView android:layout_width="22dp" android:layout_height="22dp" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_chevron_up" app:tint="@color/bh_text" />
                 </FrameLayout>
                 <LinearLayout android:layout_width="wrap_content" android:layout_height="0dp" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="翻页" android:textColor="@color/bh_text_secondary" android:textSize="12sp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/ui_pages" android:textColor="@color/bh_text_secondary" android:textSize="12sp" />
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="PgUp/Dn" android:textColor="@color/bh_text_secondary" android:textSize="9sp" />
                 </LinearLayout>
-                <FrameLayout android:id="@+id/key_page_down" android:layout_width="64dp" android:layout_height="52dp" android:background="@drawable/bh_bg_ring_btn" android:contentDescription="向下翻页">
+                <FrameLayout android:id="@+id/key_page_down" android:layout_width="64dp" android:layout_height="52dp" android:background="@drawable/bh_bg_ring_btn" android:contentDescription="@string/ui_page_down">
                     <ImageView android:layout_width="22dp" android:layout_height="22dp" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_chevron_down" app:tint="@color/bh_text" />
                 </FrameLayout>
             </LinearLayout>
@@ -276,13 +276,13 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <FrameLayout android:id="@+id/key_prev" android:layout_width="56dp" android:layout_height="56dp" android:background="@drawable/bh_pad_round" android:contentDescription="上一曲">
+            <FrameLayout android:id="@+id/key_prev" android:layout_width="56dp" android:layout_height="56dp" android:background="@drawable/bh_pad_round" android:contentDescription="@string/ui_previous_track">
                 <ImageView android:layout_width="22dp" android:layout_height="22dp" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_media_prev" app:tint="@color/bh_text" />
             </FrameLayout>
-            <FrameLayout android:id="@+id/key_play" android:layout_width="72dp" android:layout_height="72dp" android:layout_marginStart="20dp" android:layout_marginEnd="20dp" android:background="@drawable/bh_pad_round_action" android:contentDescription="播放或暂停">
+            <FrameLayout android:id="@+id/key_play" android:layout_width="72dp" android:layout_height="72dp" android:layout_marginStart="20dp" android:layout_marginEnd="20dp" android:background="@drawable/bh_pad_round_action" android:contentDescription="@string/ui_play_or_pause">
                 <ImageView android:layout_width="26dp" android:layout_height="26dp" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_media_play_pause" app:tint="@color/bh_on_action" />
             </FrameLayout>
-            <FrameLayout android:id="@+id/key_next" android:layout_width="56dp" android:layout_height="56dp" android:background="@drawable/bh_pad_round" android:contentDescription="下一曲">
+            <FrameLayout android:id="@+id/key_next" android:layout_width="56dp" android:layout_height="56dp" android:background="@drawable/bh_pad_round" android:contentDescription="@string/ui_next_track">
                 <ImageView android:layout_width="22dp" android:layout_height="22dp" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_media_next" app:tint="@color/bh_text" />
             </FrameLayout>
         </LinearLayout>

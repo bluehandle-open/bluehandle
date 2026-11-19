@@ -1,15 +1,17 @@
 """Store listing graphics under fastlane/metadata/android/<locale>/images/.
 
 Run: python -I design/fastlane_assets.py
-Writes, for every locale:
+Writes, for every locale (or one locale with --locale en-US):
   icon.png                 512x512 full-bleed icon (stores apply their own mask)
   featureGraphic.png       1024x500 banner
-  phoneScreenshots/N.png   PNG copies of website/assets/screens/*-light.webp
+  phoneScreenshots/N.png   PNG copies of the locale's *-light.webp images
+English images are read from website/assets/screens/en/.
 Screenshots taller than 2:1 are padded sideways with the screen's own
 background colour, because Google Play rejects a long side over twice the short
 side. The texts next to the images are hand-written; this only draws pixels.
 """
 import sys
+import argparse
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
@@ -57,12 +59,12 @@ def max_ratio(im, ratio=2.0):
     return out
 
 
-def feature(title, subtitle, bold, regular):
+def feature(title, subtitle, bold, regular, screens):
     W, H = 1024, 500
     im = Image.new("RGB", (W, H), logo.BLUE)
     d = ImageDraw.Draw(im)
     # phone screenshot on the right, cut off by the bottom edge
-    shot = Image.open(SCREENS / "main-light.webp").convert("RGB")
+    shot = Image.open(screens / "main-light.webp").convert("RGB")
     sw = 300
     shot = shot.resize((sw, round(shot.height * sw / shot.width)), Image.LANCZOS)
     frame = Image.new("RGB", (sw + 24, shot.height + 24), "#1B4FB8")
@@ -94,15 +96,21 @@ def feature(title, subtitle, bold, regular):
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--locale", choices=LOCALES)
+    args = parser.parse_args()
     ic = icon()
-    shots = [max_ratio(Image.open(SCREENS / f"{n}-light.webp").convert("RGB")) for n in SHOTS]
     for loc, (title, subtitle, bold, regular) in LOCALES.items():
+        if args.locale and loc != args.locale:
+            continue
+        screens = SCREENS / "en" if loc == "en-US" else SCREENS
+        shots = [max_ratio(Image.open(screens / f"{n}-light.webp").convert("RGB")) for n in SHOTS]
         out = META / loc / "images"
         (out / "phoneScreenshots").mkdir(parents=True, exist_ok=True)
         for old in (out / "phoneScreenshots").glob("*.png"):
             old.unlink()
         ic.save(out / "icon.png", optimize=True)
-        feature(title, subtitle, bold, regular).save(out / "featureGraphic.png", optimize=True)
+        feature(title, subtitle, bold, regular, screens).save(out / "featureGraphic.png", optimize=True)
         for i, s in enumerate(shots, 1):
             s.save(out / "phoneScreenshots" / f"{i}.png", optimize=True)
         print(loc, "->", out.relative_to(ROOT))

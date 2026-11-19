@@ -23,14 +23,14 @@ public final class ActivityUtil {
 		final Activity activityNow = activity;
 		new AlertDialog.Builder(activity)
 		.setMessage(title == null ? "" : title)
-		.setTitle("确定退出程序？")
-		.setNegativeButton("取消",
+		.setTitle(activity.getString(R.string.ui_exit_the_app))
+		.setNegativeButton(activity.getString(R.string.ui_cancel),
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog,
 							int which) {
 					}
 				})
-		.setPositiveButton("确定",
+		.setPositiveButton(activity.getString(R.string.ui_ok),
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog,
 							int whichButton) {

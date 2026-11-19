@@ -92,22 +92,22 @@ public class MainActivity extends AppCompatActivity implements IBlueToothConst, 
 			}
 		});
 
-		setupMode(R.id.mode_gamepad, R.drawable.bh_ic_gamepad, "游戏手柄",
-				"横屏双手 · 可选默认或自定义键位", false, new Runnable() {
+		setupMode(R.id.mode_gamepad, R.drawable.bh_ic_gamepad, getString(R.string.ui_gamepad),
+				getString(R.string.ui_landscape_default_or_custom_keys), false, new Runnable() {
 					@Override
 					public void run() {
 						openGamepad();
 					}
 				});
-		setupMode(R.id.mode_remote, R.drawable.bh_ic_remote, "遥控器",
-				"竖屏单手 · 影音控制与语音输入", true, new Runnable() {
+		setupMode(R.id.mode_remote, R.drawable.bh_ic_remote, getString(R.string.ui_remote),
+				getString(R.string.ui_portrait_media_controls_and_voice_input), true, new Runnable() {
 					@Override
 					public void run() {
 						openMode(RemoteActivity.class);
 					}
 				});
-		setupMode(R.id.mode_ppt, R.drawable.bh_ic_ppt, "PPT 演示",
-				"竖屏单手 · 大按钮盲操作翻页", true, new Runnable() {
+		setupMode(R.id.mode_ppt, R.drawable.bh_ic_ppt, getString(R.string.ui_presentation),
+				getString(R.string.ui_portrait_large_slide_navigation_buttons), true, new Runnable() {
 					@Override
 					public void run() {
 						openMode(PptActivity.class);
@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements IBlueToothConst, 
 	/** 遥控器和 PPT 需要先连接 */
 	private void openMode(Class<?> activity) {
 		if (!connection.isConnected()) {
-			ActivityUtil.toastShow(this, "请先连接电脑");
+			ActivityUtil.toastShow(this, getString(R.string.ui_connect_to_your_computer_first));
 			return;
 		}
 		startActivity(new Intent(this, activity));
@@ -199,9 +199,9 @@ public class MainActivity extends AppCompatActivity implements IBlueToothConst, 
 			break;
 		case CONNECTED:
 			new AlertDialog.Builder(this)
-			.setMessage("断开与电脑的连接？")
-			.setNegativeButton("取消", null)
-			.setPositiveButton("断开", new DialogInterface.OnClickListener() {
+			.setMessage(getString(R.string.ui_disconnect_from_your_computer))
+			.setNegativeButton(getString(R.string.ui_cancel), null)
+			.setPositiveButton(getString(R.string.ui_disconnect), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					connection.stop();
 				}
@@ -212,7 +212,7 @@ public class MainActivity extends AppCompatActivity implements IBlueToothConst, 
 
 	private void startWifiMode() {
 		if (localWifiIp(this) == null) {
-			ActivityUtil.toastShow(this, "当前 Wi‑Fi 不可用，请连接 Wi‑Fi 后重试");
+			ActivityUtil.toastShow(this, getString(R.string.ui_wi_fi_is_unavailable_connect_to_wi_fi_and_try_again));
 			return;
 		}
 		connection.start(WIFI_TYPE, AppPrefs.wifiPort(this));
@@ -259,7 +259,7 @@ public class MainActivity extends AppCompatActivity implements IBlueToothConst, 
 	 */
 	private void startBluetoothMode() {
 		if (BluetoothAdapter.getDefaultAdapter() == null) {
-			ActivityUtil.toastShow(this, "当前设备不支持蓝牙");
+			ActivityUtil.toastShow(this, getString(R.string.ui_this_device_does_not_support_bluetooth));
 			return;
 		}
 		String[] missing = missingBluetoothPermissions();
@@ -281,7 +281,7 @@ public class MainActivity extends AppCompatActivity implements IBlueToothConst, 
 		}
 		for (int result : grantResults) {
 			if (result != PackageManager.PERMISSION_GRANTED) {
-				ActivityUtil.toastShow(this, "未授予蓝牙权限，无法使用蓝牙方式，可改用 Wi‑Fi 方式");
+				ActivityUtil.toastShow(this, getString(R.string.ui_bluetooth_permission_denied_use_wi_fi_or_grant_bluetooth_permissi));
 				return;
 			}
 		}
@@ -295,7 +295,7 @@ public class MainActivity extends AppCompatActivity implements IBlueToothConst, 
 			return;
 		}
 		if (resultCode == RESULT_CANCELED) {
-			ActivityUtil.toastShow(this, "您拒绝了蓝牙可见性请求，无法等待电脑端接入");
+			ActivityUtil.toastShow(this, getString(R.string.ui_bluetooth_visibility_was_denied_unable_to_wait_for_your_computer));
 			return;
 		}
 		// 允许可见时，resultCode 为用户同意的可见时长（秒）
@@ -305,10 +305,10 @@ public class MainActivity extends AppCompatActivity implements IBlueToothConst, 
 	@Override
 	public void onConnectionChanged(ConnectionManager.State state, int connectType, int reason) {
 		if (reason == ConnectionManager.REASON_FAILED) {
-			ActivityUtil.toastShow(this, "开启服务失败，请检查网络或蓝牙权限");
+			ActivityUtil.toastShow(this, getString(R.string.ui_unable_to_start_check_your_network_or_bluetooth_permissions));
 		} else if (reason == ConnectionManager.REASON_LOST) {
 			ActivityUtil.toastShow(this, state == ConnectionManager.State.WAITING
-					? "连接已断开，正在等待电脑端重新连接" : "与电脑的连接已断开");
+					? getString(R.string.ui_disconnected_waiting_for_your_computer_to_reconnect) : getString(R.string.ui_connection_to_your_computer_lost));
 		}
 		render();
 	}
@@ -320,7 +320,7 @@ public class MainActivity extends AppCompatActivity implements IBlueToothConst, 
 				? AppPrefs.connectType(this) : connection.getConnectType();
 		connectTypeSeg.select(type == BLUETOOTH_TYPE ? 1 : 0);
 		connectTypeSeg.setEnabled(state == ConnectionManager.State.IDLE);
-		String typeName = type == BLUETOOTH_TYPE ? "蓝牙" : "Wi‑Fi";
+		String typeName = type == BLUETOOTH_TYPE ? getString(R.string.ui_bluetooth) : "Wi‑Fi";
 
 		int dotColor;
 		int fg;
@@ -328,26 +328,26 @@ public class MainActivity extends AppCompatActivity implements IBlueToothConst, 
 		case WAITING:
 			btnConnect.setBackgroundResource(R.drawable.bh_bg_connect_waiting);
 			btnConnectIcon.setImageResource(R.drawable.bh_ic_close);
-			btnConnectText.setText("取消等待");
+			btnConnectText.setText(getString(R.string.ui_cancel_waiting));
 			fg = R.color.bh_text;
 			dotColor = R.color.bh_action;
-			statusText.setText("等待电脑端接入…");
+			statusText.setText(getString(R.string.ui_waiting_for_computer));
 			break;
 		case CONNECTED:
 			btnConnect.setBackgroundResource(R.drawable.bh_bg_connect_connected);
 			btnConnectIcon.setImageResource(R.drawable.bh_ic_power);
-			btnConnectText.setText("断开连接");
+			btnConnectText.setText(getString(R.string.ui_disconnect_action));
 			fg = R.color.bh_action;
 			dotColor = R.color.bh_status_connected;
-			statusText.setText("已连接 · " + typeName);
+			statusText.setText(getString(R.string.connected_via, typeName));
 			break;
 		default:
 			btnConnect.setBackgroundResource(R.drawable.bh_bg_connect_idle);
 			btnConnectIcon.setImageResource(R.drawable.bh_ic_power);
-			btnConnectText.setText("开始连接");
+			btnConnectText.setText(getString(R.string.ui_start_connection));
 			fg = R.color.bh_on_primary;
 			dotColor = R.color.bh_text_secondary;
-			statusText.setText("未连接");
+			statusText.setText(getString(R.string.ui_not_connected));
 			break;
 		}
 		btnConnectText.setTextColor(ContextCompat.getColor(this, fg));
@@ -357,15 +357,15 @@ public class MainActivity extends AppCompatActivity implements IBlueToothConst, 
 		((GradientDrawable) statusDot.getBackground().mutate()).setColor(ContextCompat.getColor(this, dotColor));
 
 		if (state == ConnectionManager.State.CONNECTED) {
-			statusDetail.setText("选择下面的一种用法开始");
+			statusDetail.setText(getString(R.string.ui_choose_a_mode_below_to_start));
 		} else if (type == BLUETOOTH_TYPE) {
 			statusDetail.setText(state == ConnectionManager.State.WAITING
-					? "在电脑端的「蓝牙」列表里选择本机"
-					: "首次使用需先在系统设置里与电脑配对");
+					? getString(R.string.ui_select_this_phone_in_the_desktop_app_s_bluetooth_list)
+					: getString(R.string.ui_first_pair_with_your_computer_in_system_settings));
 		} else {
 			String ip = localWifiIp(this);
-			statusDetail.setText(ip == null ? "请先连接 Wi‑Fi"
-					: "本机地址 " + ip + ":" + AppPrefs.wifiPort(this));
+			statusDetail.setText(ip == null ? getString(R.string.ui_connect_to_wi_fi_first)
+					: getString(R.string.phone_address, ip, AppPrefs.wifiPort(this)));
 		}
 	}
 
@@ -380,7 +380,7 @@ public class MainActivity extends AppCompatActivity implements IBlueToothConst, 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
 			ActivityUtil.exit(this, connection.getState() == ConnectionManager.State.IDLE
-					? null : "退出后与电脑的连接将断开");
+					? null : getString(R.string.ui_exiting_will_disconnect_your_computer));
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);

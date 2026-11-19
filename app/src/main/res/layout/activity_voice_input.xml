@@ -30,7 +30,7 @@
             android:layout_width="@dimen/bh_touch_min"
             android:layout_height="@dimen/bh_touch_min"
             android:background="@drawable/bh_bg_card"
-            android:contentDescription="关闭语音输入"
+            android:contentDescription="@string/ui_close_voice_input"
             android:scaleType="center"
             app:srcCompat="@drawable/bh_ic_close"
             app:tint="@color/bh_text" />
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="语音输入" />
+            android:text="@string/ui_voice_input" />
 
         <TextView
             android:id="@+id/btn_language"
@@ -81,14 +81,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:labelFor="@+id/et_text"
-                android:text="识别结果 · 点击可修改" />
+                android:text="@string/ui_recognition_result_tap_to_edit" />
 
             <ImageButton
                 android:id="@+id/btn_clear"
                 android:layout_width="@dimen/bh_touch_min"
                 android:layout_height="@dimen/bh_touch_min"
                 android:background="@drawable/bh_bg_row"
-                android:contentDescription="清空识别结果"
+                android:contentDescription="@string/ui_clear_recognition_result"
                 android:scaleType="center"
                 app:srcCompat="@drawable/bh_ic_trash"
                 app:tint="@color/bh_text_secondary" />
@@ -101,7 +101,7 @@
             android:layout_marginEnd="12dp"
             android:background="@android:color/transparent"
             android:gravity="top|start"
-            android:hint="说话或打字，文字会输入到电脑光标处"
+            android:hint="@string/ui_speak_or_type_to_enter_text_at_your_computer_s_cursor"
             android:importantForAutofill="no"
             android:inputType="textMultiLine"
             android:maxLines="6"
@@ -145,7 +145,7 @@
                 android:layout_gravity="center"
                 android:background="@drawable/bh_bg_mic"
                 android:clickable="true"
-                android:contentDescription="开始说话"
+                android:contentDescription="@string/ui_start_speaking"
                 android:focusable="true">
 
                 <ImageView
@@ -183,7 +183,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:gravity="center"
-            android:text="上滑取消 · 点一下也能开始，停顿后自动结束" />
+            android:text="@string/ui_slide_up_to_cancel_tap_to_start_and_stop_automatically_after_a_pa" />
     </LinearLayout>
 
     <!-- 系统输入法：提示 -->
@@ -195,7 +195,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:lineSpacingMultiplier="1.4"
-        android:text="点输入法键盘上的麦克风说话\n也可以直接打字"
+        android:text="@string/ui_tap_the_microphone_on_your_keyboard_to_speak_nyou_can_also_type_d"
         android:textSize="14sp"
         android:visibility="gone" />
 
@@ -211,7 +211,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="12dp"
-        android:text="发送后" />
+        android:text="@string/ui_after_sending" />
 
     <LinearLayout
         android:id="@+id/seg_send_mode"
@@ -222,8 +222,8 @@
         android:orientation="horizontal"
         android:padding="4dp">
 
-        <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="只输入文字" android:textSize="14sp" />
-        <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="输入并回车" android:textSize="14sp" />
+        <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="@string/ui_text_only" android:textSize="14sp" />
+        <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="@string/ui_text_and_enter" android:textSize="14sp" />
     </LinearLayout>
     </LinearLayout>
 
@@ -240,7 +240,7 @@
             android:layout_weight="1"
             android:background="@drawable/bh_bg_card"
             android:gravity="center"
-            android:text="重说"
+            android:text="@string/ui_try_again"
             android:textColor="@color/bh_text"
             android:textSize="15sp" />
 
@@ -252,7 +252,7 @@
             android:layout_weight="2"
             android:background="@drawable/bh_bg_action"
             android:gravity="center"
-            android:text="发送到电脑"
+            android:text="@string/ui_send_to_computer"
             android:textColor="@color/bh_on_action"
             android:textSize="16sp"
             android:textStyle="bold" />

@@ -25,7 +25,7 @@ public class KeyPicker {
 		void onPicked(String keyName);
 	}
 
-	private static final String[] CATEGORY_NAMES = { "字母数字", "功能键", "方向与小键盘", "媒体与符号" };
+	private static final int[] CATEGORY_NAMES = { R.string.ui_letters_and_numbers, R.string.ui_function_keys, R.string.ui_arrows_and_numpad, R.string.ui_media_and_symbols };
 
 	private static final List<List<String>> CATEGORIES = Arrays.asList(
 			Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P",
@@ -121,7 +121,7 @@ public class KeyPicker {
 			}
 			final String name = keys.get(i);
 			TextView key = new TextView(context);
-			String label = GamepadButtons.display(name);
+			String label = GamepadButtons.display(context, name);
 			key.setText(label);
 			key.setTag(name);
 			key.setGravity(Gravity.CENTER);

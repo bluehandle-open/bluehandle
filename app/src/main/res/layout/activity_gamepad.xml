@@ -23,7 +23,7 @@
             android:layout_width="44dp"
             android:layout_height="44dp"
             android:background="@drawable/bh_bg_card"
-            android:contentDescription="返回首页，连接保持"
+            android:contentDescription="@string/ui_return_home_and_stay_connected"
             android:scaleType="center"
             app:srcCompat="@drawable/bh_ic_chevron_left"
             app:tint="@color/bh_text" />
@@ -49,7 +49,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="游戏手柄"
+                    android:text="@string/ui_gamepad"
                     android:textColor="@color/bh_text"
                     android:textSize="13sp"
                     android:textStyle="bold" />
@@ -100,7 +100,7 @@
             android:layout_width="44dp"
             android:layout_height="44dp"
             android:background="@drawable/bh_bg_card_selectable"
-            android:contentDescription="重力感应"
+            android:contentDescription="@string/ui_tilt_steering"
             android:scaleType="center"
             app:srcCompat="@drawable/bh_ic_gravity" />
 
@@ -110,7 +110,7 @@
             android:layout_height="44dp"
             android:layout_marginStart="8dp"
             android:background="@drawable/bh_bg_card_selectable"
-            android:contentDescription="按键震动"
+            android:contentDescription="@string/ui_key_vibration"
             android:scaleType="center"
             app:srcCompat="@drawable/bh_ic_vibrate" />
 
@@ -120,7 +120,7 @@
             android:layout_height="44dp"
             android:layout_marginStart="8dp"
             android:background="@drawable/bh_bg_card"
-            android:contentDescription="断开连接"
+            android:contentDescription="@string/ui_disconnect_action"
             android:scaleType="center"
             app:srcCompat="@drawable/bh_ic_power"
             app:tint="@color/bh_action" />
@@ -147,7 +147,7 @@
                 android:layout_height="@dimen/bh_gp_dpad_key_along"
                 android:layout_gravity="top|center_horizontal"
                 android:background="@drawable/bh_pad_key"
-                android:contentDescription="上">
+                android:contentDescription="@string/ui_up">
 
                 <ImageView android:layout_width="@dimen/bh_gp_dpad_icon" android:layout_height="@dimen/bh_gp_dpad_icon" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_dpad_up" app:tint="@color/bh_text" />
             </FrameLayout>
@@ -158,7 +158,7 @@
                 android:layout_height="@dimen/bh_gp_dpad_key_along"
                 android:layout_gravity="bottom|center_horizontal"
                 android:background="@drawable/bh_pad_key"
-                android:contentDescription="下">
+                android:contentDescription="@string/ui_down">
 
                 <ImageView android:layout_width="@dimen/bh_gp_dpad_icon" android:layout_height="@dimen/bh_gp_dpad_icon" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_dpad_down" app:tint="@color/bh_text" />
             </FrameLayout>
@@ -169,7 +169,7 @@
                 android:layout_height="@dimen/bh_gp_dpad_key_cross"
                 android:layout_gravity="start|center_vertical"
                 android:background="@drawable/bh_pad_key"
-                android:contentDescription="左">
+                android:contentDescription="@string/ui_left">
 
                 <ImageView android:layout_width="@dimen/bh_gp_dpad_icon" android:layout_height="@dimen/bh_gp_dpad_icon" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_dpad_left" app:tint="@color/bh_text" />
             </FrameLayout>
@@ -180,7 +180,7 @@
                 android:layout_height="@dimen/bh_gp_dpad_key_cross"
                 android:layout_gravity="end|center_vertical"
                 android:background="@drawable/bh_pad_key"
-                android:contentDescription="右">
+                android:contentDescription="@string/ui_right">
 
                 <ImageView android:layout_width="@dimen/bh_gp_dpad_icon" android:layout_height="@dimen/bh_gp_dpad_icon" android:layout_gravity="center" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_dpad_right" app:tint="@color/bh_text" />
             </FrameLayout>
@@ -234,7 +234,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="支持多指同时按下" />
+                android:text="@string/ui_supports_multiple_simultaneous_touches" />
         </LinearLayout>
 
         <!-- XYAB -->

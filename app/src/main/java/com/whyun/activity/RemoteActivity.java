@@ -27,7 +27,7 @@ public class RemoteActivity extends BaseControlActivity {
 
 		KeyButtonBinder keys = new KeyButtonBinder(this);
 
-		View lock = setupKey(R.id.key_lock, R.drawable.bh_ic_lock, "锁屏", "Win+L");
+		View lock = setupKey(R.id.key_lock, R.drawable.bh_ic_lock, getString(R.string.ui_lock_screen), "Win+L");
 		lock.setBackgroundResource(R.drawable.bh_bg_action_soft);
 		tintKey(lock, R.color.bh_action);
 		keys.action(lock, new KeyButtonBinder.Action() {
@@ -36,8 +36,8 @@ public class RemoteActivity extends BaseControlActivity {
 				connection.lockScreen();// Win+L 模拟按键会被系统拦截，由电脑端调用锁屏接口
 			}
 		});
-		keys.tap(setupKey(R.id.key_switch, R.drawable.bh_ic_switch_window, "切换窗口", "Alt+Tab"), Vk.ALT, Vk.TAB);
-		keys.tap(setupKey(R.id.key_mute, R.drawable.bh_ic_mute, "静音", "媒体键"), Vk.VOLUME_MUTE);
+		keys.tap(setupKey(R.id.key_switch, R.drawable.bh_ic_switch_window, getString(R.string.ui_switch_window), "Alt+Tab"), Vk.ALT, Vk.TAB);
+		keys.tap(setupKey(R.id.key_mute, R.drawable.bh_ic_mute, getString(R.string.ui_mute), getString(R.string.ui_media_keys)), Vk.VOLUME_MUTE);
 
 		keys.hold(findViewById(R.id.key_up), Vk.UP);
 		keys.hold(findViewById(R.id.key_down), Vk.DOWN);
@@ -45,9 +45,9 @@ public class RemoteActivity extends BaseControlActivity {
 		keys.hold(findViewById(R.id.key_right), Vk.RIGHT);
 		keys.hold(findViewById(R.id.key_ok), Vk.ENTER);
 
-		keys.tap(setupKey(R.id.key_esc, R.drawable.bh_ic_back, "返回", "Esc"), Vk.ESC);
-		keys.tap(setupKey(R.id.key_desktop, R.drawable.bh_ic_desktop, "桌面", "Win+D"), Vk.WIN, Vk.KEY_D);
-		keys.tap(setupKey(R.id.key_menu, R.drawable.bh_ic_menu, "菜单", "右键菜单"), Vk.APPS);
+		keys.tap(setupKey(R.id.key_esc, R.drawable.bh_ic_back, getString(R.string.ui_back), "Esc"), Vk.ESC);
+		keys.tap(setupKey(R.id.key_desktop, R.drawable.bh_ic_desktop, getString(R.string.ui_desktop), "Win+D"), Vk.WIN, Vk.KEY_D);
+		keys.tap(setupKey(R.id.key_menu, R.drawable.bh_ic_menu, getString(R.string.ui_menu), getString(R.string.ui_context_menu)), Vk.APPS);
 
 		keys.hold(findViewById(R.id.key_vol_up), Vk.VOLUME_UP);
 		keys.hold(findViewById(R.id.key_vol_down), Vk.VOLUME_DOWN);

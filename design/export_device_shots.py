@@ -1,6 +1,9 @@
 """Turn raw device screenshots into the website's phone images.
 
 Run: python -I design/export_device_shots.py <raw_dir> website/assets/screens
+English: use website/assets/screens/en as the output directory.
+Use --status-bar <pixels> for a different status bar height. If the remote
+fits in one screen, pass --single-screen-remote to skip stitching.
 
 <raw_dir> holds `adb exec-out screencap -p` PNGs from a 1080x1920 phone, one set
 per theme (switch it in 设置 → 外观), named <page>-<dark|light>.png for
@@ -9,11 +12,19 @@ tvremote-<theme>.png and tvremote-<theme>-bottom.png (the remote scrolled to
 its end; the two are stitched). The status bar is cropped and the landscape
 gamepad, which screencap returns sideways, is rotated upright.
 """
-import os, sys
+import argparse
+import os
 from PIL import Image, ImageChops
 
-src, dst = sys.argv[1], sys.argv[2]
-BAR = 60          # status bar height on the device
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('src')
+parser.add_argument('dst')
+parser.add_argument('--status-bar', type=int, default=60)
+parser.add_argument('--single-screen-remote', action='store_true')
+args = parser.parse_args()
+src, dst = args.src, args.dst
+os.makedirs(dst, exist_ok=True)
+BAR = args.status_bar  # status bar height on the device
 PHONE_W = 720     # output width for portrait shots
 
 
@@ -62,6 +73,11 @@ for theme, suffix in (('dark', ''), ('light', '-light')):
     for page in ('main', 'gamepadscheme', 'keyedit', 'ppt', 'tvnumpad', 'tvvoice'):
         im = load('%s-%s' % (page, theme))
         save(im.crop((0, BAR, im.width, im.height)), page + suffix, PHONE_W)
-    save(stitch(load('tvremote-' + theme), load('tvremote-%s-bottom' % theme)), 'tvremote' + suffix, PHONE_W)
+    remote = load('tvremote-' + theme)
+    if args.single_screen_remote:
+        remote = remote.crop((0, BAR, remote.width, remote.height))
+    else:
+        remote = stitch(remote, load('tvremote-%s-bottom' % theme))
+    save(remote, 'tvremote' + suffix, PHONE_W)
     gp = load('gamepad-' + theme).rotate(90, expand=True)
     save(gp, 'gamepad' + suffix, 1440)

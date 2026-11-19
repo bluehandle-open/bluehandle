@@ -13,7 +13,7 @@
         android:scaleType="centerInside"
         app:srcCompat="@drawable/bh_guide_pc" />
 
-    <TextView style="@style/BhGuide.Title" android:text="先在电脑上安装&#10;蓝色手柄电脑端" />
+    <TextView style="@style/BhGuide.Title" android:text="@string/ui_first_install_the_blue_handle_ndesktop_app_on_your_computer" />
 
-    <TextView style="@style/BhGuide.Desc" android:text="支持 Windows。手机发出的按键和文字，由它在电脑上执行。" />
+    <TextView style="@style/BhGuide.Desc" android:text="@string/ui_for_windows_it_receives_keys_and_text_from_your_phone_and_enters" />
 </LinearLayout>

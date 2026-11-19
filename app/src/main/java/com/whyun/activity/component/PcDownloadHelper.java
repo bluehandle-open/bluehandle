@@ -1,5 +1,6 @@
 package com.whyun.activity.component;
 
+import com.whyun.bluetooth.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ClipData;
@@ -21,15 +22,14 @@ public final class PcDownloadHelper {
 
 	public static void show(final Activity activity) {
 		new AlertDialog.Builder(activity)
-		.setTitle("获取电脑端")
-		.setMessage("在电脑浏览器中打开下面的网址，下载并运行 bluehandle.exe（Windows 10 / 11）：\n\n"
-				+ IBlueToothConst.URL_PC_SITE_DISPLAY)
-		.setNegativeButton("复制网址", new DialogInterface.OnClickListener() {
+		.setTitle(activity.getString(R.string.ui_get_desktop_app_title))
+		.setMessage(activity.getString(R.string.desktop_download_instructions, IBlueToothConst.URL_PC_SITE_DISPLAY))
+		.setNegativeButton(activity.getString(R.string.ui_copy_link), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				copyUrl(activity);
 			}
 		})
-		.setPositiveButton("分享到电脑", new DialogInterface.OnClickListener() {
+		.setPositiveButton(activity.getString(R.string.ui_share_to_computer), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				share(activity);
 			}
@@ -42,15 +42,15 @@ public final class PcDownloadHelper {
 		if (cm == null) {
 			return;
 		}
-		cm.setPrimaryClip(ClipData.newPlainText("蓝色手柄电脑端", IBlueToothConst.URL_PC_SITE));
-		ActivityUtil.toastShow(context, "已复制：" + IBlueToothConst.URL_PC_SITE_DISPLAY);
+		cm.setPrimaryClip(ClipData.newPlainText(context.getString(R.string.ui_blue_handle_desktop_app), IBlueToothConst.URL_PC_SITE));
+		ActivityUtil.toastShow(context, context.getString(R.string.copied_url, IBlueToothConst.URL_PC_SITE_DISPLAY));
 	}
 
 	/** 通过系统分享发到微信、邮件等，在电脑上打开 */
 	public static void share(Activity context) {
 		Intent send = new Intent(Intent.ACTION_SEND);
 		send.setType("text/plain");
-		send.putExtra(Intent.EXTRA_TEXT, "蓝色手柄电脑端下载地址：" + IBlueToothConst.URL_PC_SITE);
-		context.startActivity(Intent.createChooser(send, "把下载地址发到电脑"));
+		send.putExtra(Intent.EXTRA_TEXT, context.getString(R.string.desktop_download_share, IBlueToothConst.URL_PC_SITE));
+		context.startActivity(Intent.createChooser(send, context.getString(R.string.ui_send_the_download_link_to_your_computer)));
 	}
 }

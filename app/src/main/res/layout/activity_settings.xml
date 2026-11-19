@@ -18,7 +18,7 @@
         <include layout="@layout/bh_page_header" />
 
         <!-- 外观 -->
-        <TextView style="@style/BhText.Section" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:text="外观" />
+        <TextView style="@style/BhText.Section" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:text="@string/ui_appearance" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="主题"
+                android:text="@string/ui_theme"
                 android:textColor="@color/bh_text"
                 android:textSize="@dimen/bh_text_body" />
 
@@ -43,9 +43,9 @@
                 android:orientation="horizontal"
                 android:padding="4dp">
 
-                <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="跟随系统" android:textSize="14sp" />
-                <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="浅色" android:textSize="14sp" />
-                <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="深色" android:textSize="14sp" />
+                <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="@string/ui_system" android:textSize="14sp" />
+                <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="@string/ui_light" android:textSize="14sp" />
+                <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="@string/ui_dark" android:textSize="14sp" />
             </LinearLayout>
 
             <TextView
@@ -54,11 +54,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Android 10 以下没有系统深色模式，“跟随系统”时显示浅色" />
+                android:text="@string/ui_below_android_10_system_uses_the_light_theme_because_system_dark" />
         </LinearLayout>
 
         <!-- 连接 -->
-        <TextView style="@style/BhText.Section" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="连接" />
+        <TextView style="@style/BhText.Section" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="@string/ui_connection" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -77,7 +77,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="默认连接方式"
+                    android:text="@string/ui_default_connection_method"
                     android:textColor="@color/bh_text"
                     android:textSize="@dimen/bh_text_body" />
 
@@ -91,7 +91,7 @@
                     android:padding="4dp">
 
                     <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="Wi‑Fi" android:textSize="14sp" />
-                    <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="蓝牙" android:textSize="14sp" />
+                    <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="@string/ui_bluetooth" android:textSize="14sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -100,7 +100,7 @@
         </LinearLayout>
 
         <!-- 反馈 -->
-        <TextView style="@style/BhText.Section" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="反馈" />
+        <TextView style="@style/BhText.Section" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="@string/ui_feedback" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -115,7 +115,7 @@
         </LinearLayout>
 
         <!-- 游戏手柄 -->
-        <TextView style="@style/BhText.Section" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="游戏手柄" />
+        <TextView style="@style/BhText.Section" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="@string/ui_gamepad" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -147,7 +147,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="倾斜灵敏度"
+                        android:text="@string/ui_tilt_sensitivity"
                         android:textColor="@color/bh_text"
                         android:textSize="@dimen/bh_text_body" />
 
@@ -163,7 +163,7 @@
                     android:id="@+id/slider_sensitivity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:contentDescription="倾斜灵敏度"
+                    android:contentDescription="@string/ui_tilt_sensitivity"
                     android:stepSize="1"
                     android:valueFrom="0"
                     android:valueTo="100"
@@ -175,7 +175,7 @@
         </LinearLayout>
 
         <!-- PPT 演示 -->
-        <TextView style="@style/BhText.Section" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="PPT 演示" />
+        <TextView style="@style/BhText.Section" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="@string/ui_presentation" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -200,7 +200,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="目标演讲时长"
+                    android:text="@string/ui_target_duration"
                     android:textColor="@color/bh_text"
                     android:textSize="@dimen/bh_text_body" />
 
@@ -209,7 +209,7 @@
                     android:layout_width="48dp"
                     android:layout_height="40dp"
                     android:background="@drawable/bh_bg_small_button"
-                    android:contentDescription="减少 5 分钟"
+                    android:contentDescription="@string/ui_decrease_by_5_minutes"
                     android:scaleType="center"
                     app:srcCompat="@drawable/bh_ic_minus"
                     app:tint="@color/bh_text" />
@@ -227,7 +227,7 @@
                     android:layout_width="48dp"
                     android:layout_height="40dp"
                     android:background="@drawable/bh_bg_small_button"
-                    android:contentDescription="增加 5 分钟"
+                    android:contentDescription="@string/ui_increase_by_5_minutes"
                     android:scaleType="center"
                     app:srcCompat="@drawable/bh_ic_plus"
                     app:tint="@color/bh_text" />
@@ -237,7 +237,7 @@
         </LinearLayout>
 
         <!-- 语音输入 -->
-        <TextView style="@style/BhText.Section" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="语音输入" />
+        <TextView style="@style/BhText.Section" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="@string/ui_voice_input" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -260,7 +260,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="发送到电脑后默认"
+                    android:text="@string/ui_default_after_sending"
                     android:textColor="@color/bh_text"
                     android:textSize="@dimen/bh_text_body" />
 
@@ -273,14 +273,14 @@
                     android:orientation="horizontal"
                     android:padding="4dp">
 
-                    <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="只输入文字" android:textSize="14sp" />
-                    <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="输入并回车" android:textSize="14sp" />
+                    <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="@string/ui_text_only" android:textSize="14sp" />
+                    <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="@string/ui_text_and_enter" android:textSize="14sp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
         <!-- 游戏手柄键位 -->
-        <TextView style="@style/BhText.Section" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="游戏手柄键位" />
+        <TextView style="@style/BhText.Section" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="@string/ui_gamepad_keys" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -292,7 +292,7 @@
         </LinearLayout>
 
         <!-- 帮助与关于 -->
-        <TextView style="@style/BhText.Section" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="帮助与关于" />
+        <TextView style="@style/BhText.Section" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="@string/ui_help_and_about" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

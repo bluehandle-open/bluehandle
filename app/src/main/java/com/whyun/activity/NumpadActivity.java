@@ -33,7 +33,7 @@ public class NumpadActivity extends BaseControlActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_numpad);
-		((TextView) findViewById(R.id.header_title)).setText("数字键");
+		((TextView) findViewById(R.id.header_title)).setText(getString(R.string.ui_number_pad));
 		bindBack(R.id.header_back);
 
 		tvEcho = (TextView) findViewById(R.id.tv_echo);
@@ -121,14 +121,14 @@ public class NumpadActivity extends BaseControlActivity {
 		key.setGravity(Gravity.CENTER);
 		key.setTextColor(ContextCompat.getColor(this, R.color.bh_text));
 		key.setBackgroundResource(R.drawable.bh_pad_key);
-		key.setContentDescription(label.equals(".") ? "小数点" : label);
+		key.setContentDescription(label.equals(".") ? getString(R.string.ui_decimal_point) : label);
 		return key;
 	}
 
 	private View backspaceKey() {
 		FrameLayout key = new FrameLayout(this);
 		key.setBackgroundResource(R.drawable.bh_pad_key);
-		key.setContentDescription("退格");
+		key.setContentDescription(getString(R.string.ui_backspace));
 		ImageView icon = new ImageView(this);
 		icon.setImageResource(R.drawable.bh_ic_backspace);
 		ImageViewCompat.setImageTintList(icon, ColorStateList.valueOf(ContextCompat.getColor(this, R.color.bh_text_secondary)));

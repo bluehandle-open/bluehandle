@@ -13,7 +13,7 @@
         android:scaleType="centerInside"
         app:srcCompat="@drawable/bh_guide_welcome" />
 
-    <TextView style="@style/BhGuide.Title" android:text="把手机变成电脑的&#10;手柄、遥控器和键盘" />
+    <TextView style="@style/BhGuide.Title" android:text="@string/ui_turn_your_phone_into_a_ngamepad_remote_and_keyboard" />
 
-    <TextView style="@style/BhGuide.Desc" android:text="打游戏、躺着看视频、上台讲 PPT、对着手机说话打字——都不用再走到电脑前。" />
+    <TextView style="@style/BhGuide.Desc" android:text="@string/ui_play_games_watch_videos_present_slides_or_dictate_text_without_wa" />
 </LinearLayout>

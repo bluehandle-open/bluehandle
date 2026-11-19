@@ -23,7 +23,7 @@
             android:layout_width="@dimen/bh_touch_min"
             android:layout_height="@dimen/bh_touch_min"
             android:background="@drawable/bh_bg_card"
-            android:contentDescription="返回首页，连接保持"
+            android:contentDescription="@string/ui_return_home_and_stay_connected"
             android:scaleType="center"
             app:srcCompat="@drawable/bh_ic_chevron_left"
             app:tint="@color/bh_text" />
@@ -39,7 +39,7 @@
                 style="@style/BhText.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="PPT 演示" />
+                android:text="@string/ui_presentation" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -68,7 +68,7 @@
             android:layout_width="@dimen/bh_touch_min"
             android:layout_height="@dimen/bh_touch_min"
             android:background="@drawable/bh_bg_card"
-            android:contentDescription="演示设置"
+            android:contentDescription="@string/ui_presentation_settings"
             android:scaleType="center"
             app:srcCompat="@drawable/bh_ic_sliders"
             app:tint="@color/bh_text" />
@@ -97,7 +97,7 @@
                 style="@style/BhText.Caption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="已演讲" />
+                android:text="@string/ui_elapsed" />
 
             <TextView
                 android:id="@+id/tv_elapsed"
@@ -134,7 +134,7 @@
                     android:layout_width="44dp"
                     android:layout_height="44dp"
                     android:background="@drawable/bh_bg_small_button"
-                    android:contentDescription="暂停计时"
+                    android:contentDescription="@string/ui_pause_timer"
                     android:scaleType="center"
                     app:srcCompat="@drawable/bh_ic_pause"
                     app:tint="@color/bh_text" />
@@ -145,7 +145,7 @@
                     android:layout_height="44dp"
                     android:layout_marginStart="8dp"
                     android:background="@drawable/bh_bg_small_button"
-                    android:contentDescription="重置计时"
+                    android:contentDescription="@string/ui_reset_timer"
                     android:scaleType="center"
                     app:srcCompat="@drawable/bh_ic_refresh"
                     app:tint="@color/bh_text" />
@@ -175,13 +175,13 @@
         android:layout_marginTop="14dp"
         android:background="@drawable/bh_bg_card"
         android:clickable="true"
-        android:contentDescription="上一页"
+        android:contentDescription="@string/ui_previous_slide"
         android:focusable="true"
         android:gravity="center"
         android:orientation="horizontal">
 
         <ImageView android:layout_width="26dp" android:layout_height="26dp" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_chevron_up" app:tint="@color/bh_text" />
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="10dp" android:text="上一页" android:textColor="@color/bh_text" android:textSize="18sp" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="10dp" android:text="@string/ui_previous_slide" android:textColor="@color/bh_text" android:textSize="18sp" />
     </LinearLayout>
 
     <!-- 下一页：占满剩余高度，盲操作也容易按到 -->
@@ -193,15 +193,15 @@
         android:layout_weight="1"
         android:background="@drawable/bh_bg_primary"
         android:clickable="true"
-        android:contentDescription="下一页"
+        android:contentDescription="@string/ui_next_slide"
         android:focusable="true"
         android:gravity="center"
         android:minHeight="180dp"
         android:orientation="vertical">
 
         <ImageView android:layout_width="44dp" android:layout_height="44dp" android:importantForAccessibility="no" app:srcCompat="@drawable/bh_ic_chevron_down" app:tint="@color/bh_on_primary" />
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="下一页" android:textColor="@color/bh_on_primary" android:textSize="26sp" android:textStyle="bold" />
-        <TextView android:id="@+id/tv_volume_hint" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="也可以按手机音量键翻页" android:textColor="@color/bh_on_primary_secondary" android:textSize="13sp" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="@string/ui_next_slide" android:textColor="@color/bh_on_primary" android:textSize="26sp" android:textStyle="bold" />
+        <TextView android:id="@+id/tv_volume_hint" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="@string/ui_you_can_also_use_your_phone_s_volume_keys" android:textColor="@color/bh_on_primary_secondary" android:textSize="13sp" />
     </LinearLayout>
 
     <TextView

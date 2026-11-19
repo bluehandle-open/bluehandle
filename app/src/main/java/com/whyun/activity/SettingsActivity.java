@@ -39,7 +39,9 @@ import com.whyun.util.UnitTransformTool;
  */
 public class SettingsActivity extends AppCompatActivity implements IMyPreference {
 
-	static final String[] LANG_NAMES = { "普通话", "粤语", "English" };
+	static String[] languageNames(android.content.Context context) {
+		return new String[] { context.getString(R.string.ui_mandarin), context.getString(R.string.ui_cantonese), "English" };
+	}
 	static final String[] LANG_CODES = { "zh-CN", "yue-CN", "en-US" };
 	private static final int MINUTES_STEP = 5;
 	private static final int MINUTES_MIN = 5;
@@ -53,7 +55,7 @@ public class SettingsActivity extends AppCompatActivity implements IMyPreference
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
 
-		((TextView) findViewById(R.id.header_title)).setText("设置");
+		((TextView) findViewById(R.id.header_title)).setText(getString(R.string.ui_settings));
 		findViewById(R.id.header_back).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -107,13 +109,13 @@ public class SettingsActivity extends AppCompatActivity implements IMyPreference
 				AppPrefs.setConnectType(SettingsActivity.this, type);
 				ConnectionManager cm = ConnectionManager.get();
 				if (cm.getState() != ConnectionManager.State.IDLE && cm.getConnectType() != type) {
-					ActivityUtil.toastShow(SettingsActivity.this, "下次连接时生效");
+					ActivityUtil.toastShow(SettingsActivity.this, getString(R.string.ui_applies_to_the_next_connection));
 				}
 			}
 		});
 
 		final View rowPort = findViewById(R.id.row_port);
-		valueRow(rowPort, "Wi‑Fi 端口", null, String.valueOf(AppPrefs.wifiPort(this)), true);
+		valueRow(rowPort, getString(R.string.ui_wi_fi_port), null, String.valueOf(AppPrefs.wifiPort(this)), true);
 		rowPort.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -122,7 +124,7 @@ public class SettingsActivity extends AppCompatActivity implements IMyPreference
 		});
 
 		View rowNetwork = findViewById(R.id.row_network);
-		valueRow(rowNetwork, "系统网络设置", "打开 Wi‑Fi 与蓝牙的系统设置页", null, true);
+		valueRow(rowNetwork, getString(R.string.ui_system_network_settings), getString(R.string.ui_open_wi_fi_and_bluetooth_settings), null, true);
 		rowNetwork.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -142,11 +144,11 @@ public class SettingsActivity extends AppCompatActivity implements IMyPreference
 		box.addView(input, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
 				ViewGroup.LayoutParams.WRAP_CONTENT));
 		new AlertDialog.Builder(this)
-		.setTitle("Wi‑Fi 端口")
-		.setMessage("范围 1024–65535，电脑端需填写相同端口。下次连接时生效。")
+		.setTitle(getString(R.string.ui_wi_fi_port))
+		.setMessage(getString(R.string.ui_use_a_port_from_1024_65535_and_enter_the_same_port_on_your_comput))
 		.setView(box)
-		.setNegativeButton("取消", null)
-		.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+		.setNegativeButton(getString(R.string.ui_cancel), null)
+		.setPositiveButton(getString(R.string.ui_ok), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				int port;
 				try {
@@ -155,7 +157,7 @@ public class SettingsActivity extends AppCompatActivity implements IMyPreference
 					port = -1;
 				}
 				if (port < 1024 || port > 65535) {
-					ActivityUtil.toastShow(SettingsActivity.this, "端口需在 1024–65535 之间");
+					ActivityUtil.toastShow(SettingsActivity.this, getString(R.string.ui_port_must_be_between_1024_and_65535));
 					return;
 				}
 				AppPrefs.put(SettingsActivity.this, WIFI_PORT, port);
@@ -167,8 +169,8 @@ public class SettingsActivity extends AppCompatActivity implements IMyPreference
 	// ---------------------------------------------------------------- 反馈与手柄
 
 	private void setupFeedback() {
-		switchRow(R.id.row_shake, "按键震动", "按下任意按键时短震一下", USE_SHAKE, false, null);
-		switchRow(R.id.row_keep_screen, "屏幕常亮", "连接期间不自动熄屏", KEEP_SCREEN_ON, true, null);
+		switchRow(R.id.row_shake, getString(R.string.ui_key_vibration), getString(R.string.ui_vibrate_briefly_when_a_key_is_pressed), USE_SHAKE, false, null);
+		switchRow(R.id.row_keep_screen, getString(R.string.ui_keep_screen_on), getString(R.string.ui_keep_the_screen_awake_while_connected), KEEP_SCREEN_ON, true, null);
 	}
 
 	private void setupGamepad() {
@@ -188,7 +190,7 @@ public class SettingsActivity extends AppCompatActivity implements IMyPreference
 			}
 		});
 
-		switchRow(R.id.row_gravity, "重力感应", "左右倾斜手机发送方向键", ENABLE_GRAVITY, false,
+		switchRow(R.id.row_gravity, getString(R.string.ui_tilt_steering), getString(R.string.ui_tilt_your_phone_left_or_right_to_send_arrow_keys), ENABLE_GRAVITY, false,
 				new OnSwitch() {
 					@Override
 					public void onChanged(boolean on) {
@@ -202,8 +204,8 @@ public class SettingsActivity extends AppCompatActivity implements IMyPreference
 	// ---------------------------------------------------------------- PPT
 
 	private void setupPpt() {
-		switchRow(R.id.row_ppt_volume, "音量键翻页", "音量加上一页，音量减下一页", PPT_VOLUME_KEYS, true, null);
-		switchRow(R.id.row_ppt_remind, "剩余 2 分钟时提醒", "长震动一次，不发出声音", PPT_REMIND, true, null);
+		switchRow(R.id.row_ppt_volume, getString(R.string.ui_volume_key_navigation), getString(R.string.ui_volume_up_previous_slide_volume_down_next_slide), PPT_VOLUME_KEYS, true, null);
+		switchRow(R.id.row_ppt_remind, getString(R.string.ui_remind_with_2_minutes_left), getString(R.string.ui_one_long_vibration_without_sound), PPT_REMIND, true, null);
 
 		tvMinutes = (TextView) findViewById(R.id.tv_minutes);
 		renderMinutes();
@@ -229,24 +231,24 @@ public class SettingsActivity extends AppCompatActivity implements IMyPreference
 	}
 
 	private void renderMinutes() {
-		tvMinutes.setText(AppPrefs.get(this, PPT_TARGET_MINUTES, DEFAULT_PPT_MINUTES) + " 分钟");
+		tvMinutes.setText(getString(R.string.duration_minutes, AppPrefs.get(this, PPT_TARGET_MINUTES, DEFAULT_PPT_MINUTES)));
 	}
 
 	// ---------------------------------------------------------------- 语音
 
 	private void setupVoice() {
 		final View rowLang = findViewById(R.id.row_voice_lang);
-		valueRow(rowLang, "识别语言", null, langName(AppPrefs.get(this, VOICE_LANGUAGE, LANG_CODES[0])), true);
+		valueRow(rowLang, getString(R.string.ui_recognition_language), null, langName(this, AppPrefs.get(this, VOICE_LANGUAGE, LANG_CODES[0])), true);
 		rowLang.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				int checked = indexOf(LANG_CODES, AppPrefs.get(SettingsActivity.this, VOICE_LANGUAGE, LANG_CODES[0]));
 				new AlertDialog.Builder(SettingsActivity.this)
-				.setTitle("识别语言")
-				.setSingleChoiceItems(LANG_NAMES, checked, new DialogInterface.OnClickListener() {
+				.setTitle(getString(R.string.ui_recognition_language))
+				.setSingleChoiceItems(languageNames(SettingsActivity.this), checked, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						AppPrefs.put(SettingsActivity.this, VOICE_LANGUAGE, LANG_CODES[which]);
-						((TextView) rowLang.findViewById(R.id.row_value)).setText(LANG_NAMES[which]);
+						((TextView) rowLang.findViewById(R.id.row_value)).setText(languageNames(SettingsActivity.this)[which]);
 						dialog.dismiss();
 					}
 				}).show();
@@ -255,19 +257,19 @@ public class SettingsActivity extends AppCompatActivity implements IMyPreference
 
 		final boolean builtinAvailable = SpeechRecognizer.isRecognitionAvailable(this);
 		final View rowEngine = findViewById(R.id.row_voice_engine);
-		valueRow(rowEngine, "识别引擎", builtinAvailable ? null : "本机没有可用的内置识别服务",
+		valueRow(rowEngine, getString(R.string.ui_recognition_engine), builtinAvailable ? null : getString(R.string.ui_no_built_in_recognition_service_is_available),
 				engineName(currentEngine(builtinAvailable)), true);
 		rowEngine.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if (!builtinAvailable) {
-					ActivityUtil.toastShow(SettingsActivity.this, "本机没有可用的内置识别服务，只能使用系统输入法");
+					ActivityUtil.toastShow(SettingsActivity.this, getString(R.string.ui_no_built_in_recognition_service_use_the_system_keyboard_instead));
 					return;
 				}
 				final String[] codes = { VOICE_ENGINE_IME, VOICE_ENGINE_BUILTIN };
 				final String[] names = { engineName(codes[0]), engineName(codes[1]) };
 				new AlertDialog.Builder(SettingsActivity.this)
-				.setTitle("识别引擎")
+				.setTitle(getString(R.string.ui_recognition_engine))
 				.setSingleChoiceItems(names, indexOf(codes, currentEngine(true)),
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int which) {
@@ -279,7 +281,7 @@ public class SettingsActivity extends AppCompatActivity implements IMyPreference
 			}
 		});
 
-		switchRow(R.id.row_voice_hold_send, "按住说话，松手直接发送", "内置识别时有效；关闭则先显示结果，确认后再发送",
+		switchRow(R.id.row_voice_hold_send, getString(R.string.ui_hold_to_send_setting), getString(R.string.ui_for_built_in_recognition_turn_off_to_review_the_result_before_sen),
 				VOICE_HOLD_SEND, true, null);
 
 		SegmentedControl seg = new SegmentedControl((LinearLayout) findViewById(R.id.seg_voice_send));
@@ -297,13 +299,13 @@ public class SettingsActivity extends AppCompatActivity implements IMyPreference
 		return builtinAvailable ? e : VOICE_ENGINE_IME;
 	}
 
-	private static String engineName(String code) {
-		return VOICE_ENGINE_BUILTIN.equals(code) ? "内置识别" : "系统输入法";
+	private String engineName(String code) {
+		return VOICE_ENGINE_BUILTIN.equals(code) ? getString(R.string.ui_built_in_recognition) : getString(R.string.ui_system_keyboard);
 	}
 
-	static String langName(String code) {
+	static String langName(android.content.Context context, String code) {
 		int i = indexOf(LANG_CODES, code);
-		return LANG_NAMES[i];
+		return languageNames(context)[i];
 	}
 
 	private static int indexOf(String[] arr, String v) {
@@ -319,7 +321,7 @@ public class SettingsActivity extends AppCompatActivity implements IMyPreference
 
 	private void setupAbout() {
 		rowSchemes = findViewById(R.id.row_schemes);
-		valueRow(rowSchemes, "键位方案管理", null, "", true);
+		valueRow(rowSchemes, getString(R.string.ui_manage_key_schemes), null, "", true);
 		rowSchemes.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -328,7 +330,7 @@ public class SettingsActivity extends AppCompatActivity implements IMyPreference
 		});
 
 		View rowHelp = findViewById(R.id.row_help);
-		valueRow(rowHelp, "使用帮助", null, null, true);
+		valueRow(rowHelp, getString(R.string.ui_help), null, null, true);
 		rowHelp.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -337,7 +339,7 @@ public class SettingsActivity extends AppCompatActivity implements IMyPreference
 		});
 
 		View rowDownload = findViewById(R.id.row_download);
-		valueRow(rowDownload, "下载电脑端", null, null, true);
+		valueRow(rowDownload, getString(R.string.ui_get_desktop_app), null, null, true);
 		rowDownload.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -347,16 +349,14 @@ public class SettingsActivity extends AppCompatActivity implements IMyPreference
 
 		final String version = versionName();
 		View rowAbout = findViewById(R.id.row_about);
-		valueRow(rowAbout, "关于蓝色手柄", null, version, true);
+		valueRow(rowAbout, getString(R.string.ui_about_blue_handle), null, version, true);
 		rowAbout.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				new AlertDialog.Builder(SettingsActivity.this)
-				.setTitle("关于蓝色手柄")
-				.setMessage("版本：" + version + "\n作者：白一梓\n"
-						+ "项目主页：github.com/bluehandle-open/bluehandle\n"
-						+ "问题反馈：bluehandle@googlegroups.com")
-				.setPositiveButton("确定", null)
+				.setTitle(getString(R.string.ui_about_blue_handle))
+				.setMessage(getString(R.string.about_details, version))
+				.setPositiveButton(getString(R.string.ui_ok), null)
 				.show();
 			}
 		});
@@ -367,7 +367,7 @@ public class SettingsActivity extends AppCompatActivity implements IMyPreference
 		ArrayList<KeyInfo> list = op.getAllList();
 		op.readFinish();
 		int n = list == null ? 0 : list.size();
-		((TextView) rowSchemes.findViewById(R.id.row_value)).setText(n == 0 ? "仅默认键位" : n + " 套自定义");
+		((TextView) rowSchemes.findViewById(R.id.row_value)).setText(n == 0 ? getString(R.string.ui_default_keys_only) : getString(R.string.custom_scheme_count, n));
 	}
 
 	private String versionName() {

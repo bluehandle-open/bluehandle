@@ -27,7 +27,7 @@
             style="@style/BhText.Caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="最近发送"
+            android:text="@string/ui_recently_sent"
             android:textSize="13sp" />
 
         <TextView
@@ -46,7 +46,7 @@
             style="@style/BhText.Caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="每按一次立即发送到电脑，这里只做回显" />
+            android:text="@string/ui_each_key_is_sent_immediately_this_area_shows_recent_input" />
     </LinearLayout>
 
     <!-- 占满剩余高度，行高由代码按可用高度计算，矮屏上按键自动变矮，回车键不会被挤出屏幕 -->
@@ -65,7 +65,7 @@
         android:layout_height="56dp"
         android:background="@drawable/bh_bg_primary"
         android:gravity="center"
-        android:text="回车 Enter"
+        android:text="@string/ui_enter_label"
         android:textColor="@color/bh_on_primary"
         android:textSize="17sp"
         android:textStyle="bold" />

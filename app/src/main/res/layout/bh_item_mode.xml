@@ -57,7 +57,7 @@
                 android:background="@drawable/bh_bg_badge"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
-                android:text="新"
+                android:text="@string/ui_new"
                 android:textColor="@color/bh_on_action"
                 android:textSize="10sp"
                 android:textStyle="bold"
